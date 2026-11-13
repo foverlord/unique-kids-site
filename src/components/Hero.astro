@@ -70,6 +70,18 @@ const bandColor: Record<string, string> = { '3-5': 'pink', '5-7': 'mint', '7plus
       <div class="h3-cta" id="cta"><WhatsAppButton place="hero" ariaKey="cta.trialAria" class="btn-big btn-wa3" /></div>
       <T as="p" k="hero.ask" class="h3-ask" />
     </div>
+    <div class="age6" role="group" aria-labelledby="a6-ask">
+      <div class="a6-cub" aria-hidden="true" data-pose="3">
+        {cubs.map((c) => <img class={`p${c.p}`} src={c.src.src} width={c.src.width} height={c.src.height} alt="" loading="eager" decoding="async" />)}
+      </div>
+      <T as="p" id="a6-ask" k="hero.ask" class="a6-ask" />
+      <div class="a6-grid">
+        {[3, 4, 5, 6, 7].map((n) => (
+          <button type="button" class="a6-btn" data-set-age={n} data-c={n < 5 ? 'pink' : 'mint'} aria-pressed="false"><T k={n < 5 ? 'age.y34' : 'age.y'} vars={{ n }} /></button>
+        ))}
+        <button type="button" class="a6-btn" data-set-age="school" data-c="blue" aria-pressed="false"><T k="hero.school" /></button>
+      </div>
+    </div>
     {variants.map((v) => (
       <div class:list={['stage', v.id === 'm' ? 'st-m' : 'st-d']} style={`--W:${v.W};aspect-ratio:${v.W}/${v.H}`} data-stage data-pos={JSON.stringify(pos(v))}
         data-walk={JSON.stringify({ y: v.walkY, tx: v.tx, school: v.walkSchool })}>

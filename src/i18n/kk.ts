@@ -108,4 +108,5 @@ export const kk: Partial<Record<DictKey, string>> = {
   'facts.hours': "Дс–жм 09:00–18:30",
   'footer.hours': "Дс–жм 09:00–18:30",
   'programs.forSchool': "Мектеп оқушыларына — міне, лайық бағдарламалар",
+  'programs.showFor': "Жасқа қарай көрсету:",
 };

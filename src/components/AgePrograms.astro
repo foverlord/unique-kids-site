@@ -18,6 +18,7 @@ const def = site.defaultAgeBucket ?? 'all';
       <T as="h2" id="prog-h" k="programs.title" />
       <T as="p" k="programs.lead" class="sub" />
       {buckets.length > 1 && (
+        <T as="p" k="programs.showFor" class="tabs3-l" />
         <div class="tabs3" role="group" aria-label={t('programs.agesLabel')} data-i18n-attr="aria-label=programs.agesLabel">
           {buckets.map((b) => (
             <button type="button" class="tab3" data-bucket={b.id} data-ids={b.ids} aria-pressed={b.id === def ? 'true' : 'false'}><T k={b.labelKey as any} /></button>

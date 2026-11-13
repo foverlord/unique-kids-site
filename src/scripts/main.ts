@@ -166,9 +166,9 @@ tabs.forEach((b, i) => {
 });
 const lb = document.querySelector<HTMLDialogElement>('[data-lightbox]');
 if (lb) {
-  const img = lb.querySelector<HTMLImageElement>('[data-lb-img]')!;
+  const img = document.createElement('img'); img.className = 'lb-img'; img.decoding = 'async'; let placed = false;
   let list: { full: string; key: string }[] = [], cur = 0, opener: HTMLElement | null = null;
-  const show = (i: number) => { cur = (i + list.length) % list.length; img.hidden = false; img.src = list[cur].full; img.alt = tr(list[cur].key); };
+  const show = (i: number) => { cur = (i + list.length) % list.length; img.src = list[cur].full; if (!placed) { lb.prepend(img); placed = true; } img.alt = tr(list[cur].key); };
   $$<HTMLButtonElement>('[data-gal]').forEach((b) => b.addEventListener('click', () => {
     list = JSON.parse(b.closest<HTMLElement>('[data-photos]')!.dataset.photos!); opener = b;
     show(Number(b.dataset.gal)); lb.showModal(); document.documentElement.classList.add('no-scroll');
@@ -198,8 +198,10 @@ function moveCub(state: string) {
     const walk = st.querySelector('.walk')!;
     walk.setAttribute('d', state === 'school' ? w.school : `M${w.tx[0]} ${w.y} L${w.tx[Number(state) - 3]} ${w.y}`);
     walk.setAttribute('stroke', `var(--${c}-d)`);
-    $$<HTMLElement>('[data-set-age]', st).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.setAge === state)));
   });
+  $$<HTMLElement>('[data-set-age]', hero).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.setAge === state)));
+  const a6 = hero.querySelector<HTMLElement>('.a6-cub');
+  if (a6) a6.dataset.pose = ({ '3': '3', '4': '3', '5': '5', '6': '6', '7': '7', school: '7' } as Record<string, string>)[state] ?? '3';
 }
 function pickAge(state: string, label: string) {
   moveCub(state);

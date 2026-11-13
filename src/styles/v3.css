@@ -3,11 +3,27 @@
 html { overflow-x: clip }
 
 /* ---------- герой ---------- */
+/* мобильный выбор возраста (Кэп/Арт 13.11): барс по центру, вопрос, 6 кнопок 3×2; ростомер только на десктопе */
+.st-m { display: none }
+.h3-ask { display: none }
+.age6 { display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: 12px; position: relative; z-index: 2 }
+.a6-cub { position: relative; width: 100px; height: 124px }
+.a6-cub img { position: absolute; left: 50%; bottom: 0; height: 100%; width: auto; max-width: none; transform: translateX(-50%); opacity: 0; transition: opacity .2s }
+.a6-cub[data-pose="3"] .p3, .a6-cub[data-pose="5"] .p5, .a6-cub[data-pose="6"] .p6, .a6-cub[data-pose="7"] .p7 { opacity: 1 }
+.a6-ask { margin-top: 6px; font: 800 21px/26px var(--H) }
+.a6-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; max-width: 360px; margin-top: 14px }
+.a6-btn { min-height: 48px; padding: 0 6px; border: 2px solid var(--color-ink); border-radius: 999px; background: #fff; color: var(--color-ink); font: 700 15px/1.15 var(--B); cursor: pointer; box-shadow: 0 3px 0 var(--color-ink); transition: transform .1s, box-shadow .1s, background .15s }
+.a6-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--color-ink) }
+.a6-btn[aria-pressed="true"] { background: var(--c, var(--pink)) }
+.a6-btn[data-c="pink"] { --c: var(--pink) } .a6-btn[data-c="mint"] { --c: var(--mint) } .a6-btn[data-c="blue"] { --c: var(--blue) }
+.a6-btn:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 3px }
+.tabs3-l { margin-top: 16px; font: 700 14px/20px var(--B); color: var(--color-ink-muted) }
+.tabs3-l + .tabs3 { margin-top: 8px }
 .hero3 { position: relative; overflow: hidden; padding: 8px 0 20px }
 .h3-sun { position: absolute; right: 14px; top: 10px; pointer-events: none }
 .h3-grid { display: grid; grid-template-areas: "t" "p" "c" "a"; position: relative; z-index: 2 }
 .h3-text { grid-area: t }
-.h3-photo { grid-area: p; width: min(334px, 100%); aspect-ratio: 334 / 212; margin: 22px auto 0 10px; transform: rotate(-1.5deg) }
+.h3-photo { grid-area: p; width: min(334px, 100%); aspect-ratio: 334 / 212; margin: 22px auto 0; transform: rotate(-1.5deg) }
 .h3-cta { grid-area: c; margin-top: 18px }
 .btn-wa3 { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; width: 100%; border: 0; border-radius: 999px; background: #25D366; color: var(--color-ink); font: 700 17px/1.2 var(--B); text-decoration: none; padding: 0 22px; animation: wob 4s 2s infinite; cursor: pointer }
 .btn-wa3.sm { display: inline-flex; width: auto; min-height: 44px; font-size: 15px; padding: 0 18px; margin-top: 14px }
@@ -162,7 +178,8 @@ html { overflow-x: clip }
   .h3-cta .btn-wa3 { display: inline-flex; width: auto; min-height: 58px; padding: 0 30px; font-size: 18px }
   .h3-ask { font-size: 24px; line-height: 30px; margin-top: 34px }
   .stage { margin: -40px 0 0 }
-  .st-m { display: none }
+  .h3-ask { display: block }
+  .age6 { display: none }
   .st-d { display: block }
   .sec3 { padding: 64px 0 }
   .sec3 h2 { font-size: 40px; line-height: 46px }
@@ -174,6 +191,6 @@ html { overflow-x: clip }
   .revs3 { grid-template-columns: repeat(3, 1fr) }
 }
 @media (prefers-reduced-motion: reduce) {
-  .st-cubs, .st-dot, .walk, .st-cubs img { transition: none }
+  .st-cubs, .st-dot, .walk, .st-cubs img, .a6-cub img, .a6-btn { transition: none }
   .btn-wa3 { animation: none }
 }
