@@ -25,7 +25,7 @@ const varsOf = (el: Element) => { const j = el.getAttribute('data-i18n-vars'); r
 let selAge = '';
 function waHref(programId?: string, parent = '', child = '') {
   const prog = programId && data.programs[programId] ? tr(data.programs[programId]) : '';
-  if (selAge && !parent && !child) return `https://wa.me/${data.wa}?text=${encodeURIComponent(tr('wa.withAge', { age: selAge, name: data.name, v: prog || tr('wa.ageAsk') }))}`;
+  if (selAge && !parent && !child) return `https://wa.me/${data.wa}?text=${encodeURIComponent(tr('wa.withAge', { age: ageLabel(selAge), name: data.name, v: prog || tr('wa.ageAsk') }))}`;
   const text = [tr('wa.greeting', { name: data.name }), tr('wa.parent', { v: parent }), tr('wa.child', { v: child }), tr('wa.program', { v: prog || tr('wa.programAsk') })].join('\n');
   return `https://wa.me/${data.wa}?text=${encodeURIComponent(text)}`;
 }
@@ -66,13 +66,19 @@ document.addEventListener('click', (e) => {
   if (el && el.tagName === 'A') track(el.dataset.goal!, { place: el.dataset.place, programId: el.dataset.program, locale });
 });
 
-/* ---------- форма пробного: собираем строку и открываем WhatsApp ---------- */
+/* ---------- форма пробного (art/v3 §6.7): тот же префилл, что у карточки возраста ---------- */
 const form = document.querySelector<HTMLFormElement>('[data-trial-form]');
 form?.addEventListener('submit', (e) => {
   e.preventDefault();
   const fd = new FormData(form);
+  const parent = String(fd.get('parent') || '').trim();
+  const b = String(fd.get('age') || '');
+  const prog = String(fd.get('program') || '');
+  const progT = prog && data.programs[prog] ? tr(data.programs[prog]) : tr('wa.ageAsk');
+  let text = b ? tr('wa.withAge', { age: ageLabel(b), name: data.name, v: progT }) : [tr('wa.greeting', { name: data.name }), tr('wa.program', { v: progT })].join('\n');
+  if (parent) text += '\n' + tr('wa.parent', { v: parent });
   track('wa_click', { place: 'trial', locale });
-  window.open(waHref(undefined, String(fd.get('parent') || '').trim(), String(fd.get('child') || '').trim()), '_blank', 'noopener');
+  window.open(`https://wa.me/${data.wa}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
 });
 
 /* ---------- шапка: уплотнение при скролле ---------- */
@@ -105,11 +111,33 @@ function filter(chip: HTMLButtonElement) {
   if (grid) { grid.hidden = shown === 0; requestAnimationFrame(() => (grid.style.minHeight = '')); }
   chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
 }
+// возраст: '3'..'7', группа '3-5' | '5-7' | '7plus' или 'school' (ветка)
+function ageLabel(a: string) {
+  if (a === 'school' || a === '7plus') return '7+';
+  if (a === '3-5' || a === '5-7') return tr('age.y', { n: a.replace('-', '–') });
+  return tr(a === '3' || a === '4' ? 'age.y34' : 'age.y', { n: a });
+}
+const RANGE: Record<string, [number, number]> = { '3-5': [3, 4], '5-7': [5, 7], '7plus': [8, 10], school: [8, 10] };
 function showAge() {
-  const ageCard = document.querySelector<HTMLElement>('[data-age-card]');
-  if (!ageCard) return;
-  ageCard.hidden = !selAge;
-  ageCard.textContent = selAge ? tr('programs.forAge', { age: selAge }) : '';
+  const box = document.querySelector<HTMLElement>('[data-age-card]');
+  if (!box) return;
+  box.hidden = !selAge;
+  if (!selAge) return;
+  const [a, z] = RANGE[selAge] ?? [Number(selAge), Number(selAge)];
+  const school = selAge === 'school' || selAge === '7plus';
+  box.style.setProperty('--c', `var(--${school ? 'blue' : a < 5 && z < 5 ? 'pink' : 'mint'})`);
+  box.querySelector('[data-ac-title]')!.textContent = school ? tr('programs.forSchool') : tr('programs.forAge', { age: ageLabel(selAge) });
+  const ul = box.querySelector('[data-ac-list]')!;
+  ul.replaceChildren(...cards.filter((c) => Number(c.dataset.from) <= z && Number(c.dataset.to) >= a).map((c) => {
+    const li = document.createElement('li');
+    const img = document.createElement('img'); img.src = c.dataset.spot || ''; img.alt = ''; img.width = img.height = 34;
+    const n = document.createElement('span'); n.textContent = c.querySelector('h3')?.textContent || '';
+    const i = document.createElement('i'); i.textContent = c.querySelector('.age')?.textContent || '';
+    li.append(img, n, i); return li;
+  }));
+  const text = tr('wa.withAge', { age: ageLabel(selAge), name: data.name, v: tr('wa.ageAsk') });
+  box.querySelector<HTMLAnchorElement>('[data-ac-wa]')!.href = `https://wa.me/${data.wa}?text=${encodeURIComponent(text)}`;
+  box.querySelector('[data-ac-pre]')!.textContent = tr('programs.inMsg', { v: text });
 }
 function setAge(age: string) {
   selAge = age;
@@ -152,30 +180,41 @@ if (lb) {
   lb.addEventListener('close', () => { document.documentElement.classList.remove('no-scroll'); opener?.focus(); });
 }
 
-/* ---------- герой: ростомер → фильтр, барс растёт при прокрутке ---------- */
-$$<HTMLAnchorElement>('[data-bucket-link]').forEach((a) => a.addEventListener('click', () => {
-  const chip = document.querySelector<HTMLButtonElement>(`[data-bucket="${a.dataset.bucketLink}"]`);
-  if (chip) filter(chip);
-  setAge(a.dataset.age ?? '');
-}));
+/* ---------- герой v3: тап по цифре / полосе / «Школа 7+» — барс идёт туда, карточка и фильтр ---------- */
 const hero = document.querySelector<HTMLElement>('[data-hero]');
-if (hero) {
-  let ticking = false;
-  // мобильный: возраст 7 наступает, пока барс на отметке 7 ещё виден под шапкой
-  const ruler = hero.querySelector<HTMLElement>('.ruler');
-  const step = () => {
-    if (matchMedia('(min-width:1024px)').matches || !ruler) return 80;
-    const top7 = ruler.getBoundingClientRect().top + scrollY + 72 - 150; // верх барса на отметке 7
-    const end = top7 - (hdr?.offsetHeight ?? 64) - 8;
-    return Math.max(15, Math.min(60, end / 4));
-  };
-  const upd = () => { ticking = false; hero.dataset.age = String(3 + Math.max(0, Math.min(4, Math.floor(scrollY / step())))); };
-  const q = Number(new URLSearchParams(location.search).get('age'));
-  if (q >= 3 && q <= 7) hero.dataset.age = String(Math.round(q));
-  else {
-    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
-    upd();
-  }
+const BUCKET_OF: Record<string, string> = { '3': '3-5', '4': '3-5', '5': '5-7', '6': '5-7', '7': '5-7', school: '7plus' };
+const TICK_OF: Record<string, string> = { '3-5': '3', '5-7': '5', '7plus': 'school' };
+function moveCub(state: string) {
+  if (!hero) return;
+  hero.dataset.age = state;
+  $$<HTMLElement>('[data-stage]', hero).forEach((st) => {
+    const p = JSON.parse(st.dataset.pos!)[state]; const w = JSON.parse(st.dataset.walk!);
+    if (!p) return;
+    const [cx, cy, dx, pose, c] = p;
+    const cub = st.querySelector<HTMLElement>('.st-cubs')!;
+    cub.style.setProperty('--cx', cx); cub.style.setProperty('--cy', cy); cub.dataset.pose = String(pose);
+    const dot = st.querySelector<SVGElement>('.st-dot')!;
+    dot.style.setProperty('--dx', dx); dot.style.fill = `var(--${c})`; dot.style.opacity = state === 'school' ? '0' : '1';
+    const walk = st.querySelector('.walk')!;
+    walk.setAttribute('d', state === 'school' ? w.school : `M${w.tx[0]} ${w.y} L${w.tx[Number(state) - 3]} ${w.y}`);
+    walk.setAttribute('stroke', `var(--${c}-d)`);
+    $$<HTMLElement>('[data-set-age]', st).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.setAge === state)));
+  });
+}
+function pickAge(state: string, label: string) {
+  moveCub(state);
+  const chip = document.querySelector<HTMLButtonElement>(`[data-bucket="${BUCKET_OF[state]}"]`);
+  if (chip) filter(chip);
+  setAge(label);
+  document.querySelector('[data-age-card]')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
+  track('age_pick', { place: label, locale });
+}
+$$<HTMLButtonElement>('[data-set-age]').forEach((b) => b.addEventListener('click', () => pickAge(b.dataset.setAge!, b.dataset.setAge!)));
+$$<HTMLButtonElement>('[data-set-band]').forEach((b) => b.addEventListener('click', () => pickAge(TICK_OF[b.dataset.setBand!], b.dataset.setBand!)));
+{
+  const q = new URLSearchParams(location.search).get('age');
+  if (q && (q === 'school' || (Number(q) >= 3 && Number(q) <= 7))) moveCub(q);
+  else moveCub('3');
 }
 document.addEventListener('click', (e) => {
   const s = (e.target as Element).closest<HTMLElement>('[data-hop]');
@@ -186,7 +225,11 @@ document.addEventListener('click', (e) => {
 const sticky = document.querySelector<HTMLElement>('[data-sticky]');
 const trial = document.querySelector('[data-trial]');
 if ('IntersectionObserver' in window) {
-  if (sticky && trial) new IntersectionObserver(([e]) => sticky.classList.toggle('is-hidden', e.isIntersecting), { threshold: 0.2 }).observe(trial);
+  // липкая панель — только когда кнопка героя (#cta) ушла с экрана и не виден блок «Пробное» (art/v3 §2)
+  const vis = new Map<Element, boolean>();
+  const cta = document.getElementById('cta');
+  const sio = new IntersectionObserver((es) => { es.forEach((e) => vis.set(e.target, e.isIntersecting)); sticky?.classList.toggle('is-hidden', [...vis.values()].some(Boolean)); }, { threshold: 0.2 });
+  if (sticky) { if (cta) { vis.set(cta, true); sticky.classList.add('is-hidden'); sio.observe(cta); } if (trial) sio.observe(trial); }
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: 0.25 });
   $$('.drawing').forEach((d) => io.observe(d));
 } else $$('.drawing').forEach((d) => d.classList.add('is-in'));

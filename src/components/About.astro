@@ -1,13 +1,18 @@
 ---
 import { site } from '../config/site.config';
 import T from './T.astro';
+const r = site.rating;
+const value = r ? r.value.toFixed(1).replace('.', ',') : '';
 ---
-<section class="sec" id="o-centre" aria-labelledby="about-h">
-  <div class="wrap about">
-    <div>
-      <T as="h2" id="about-h" k="about.title" />
-      <T as="p" k="about.text" class="lead" />
+<section class="v3 sec3" id="o-centre" aria-labelledby="about-h">
+  <svg class="doodle" style="right:10px;top:14px" aria-hidden="true" width="34" height="34" viewBox="-16 -20 34 34" filter="url(#pencil)"><path class="doo" stroke="var(--mint-d)" d="M0 0c-8-4-4-14 3-10s2 12-6 9-6-16 4-17 14 10 7 18"/></svg>
+  <div class="wrap">
+    <T as="h2" id="about-h" k="about.title" />
+    <T as="p" k="about.text" class="about-t" />
+    <div class="facts">
+      <span class="chip"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2"/></svg><span><b><T k="facts.hours" /></b><T k="facts.hoursOff" /></span></span>
+      <span class="chip"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 22c-5-6-7-9.5-7-13a7 7 0 0 1 14 0c0 3.5-2 7-7 13z"/><circle cx="12" cy="9" r="2.5" /></svg><span><b><T k="facts.addr" /></b><T k="facts.city" /></span></span>
+      {r && <a class="chip" href={r.url} target="_blank" rel="noopener"><span style="color:var(--color-rating)" aria-hidden="true">★</span><span><b>{value}</b><T k="facts.count" vars={{ count: r.count }} /></span></a>}
     </div>
-    {site.about.image && <img class="photo" src={site.about.image} alt="" loading="lazy" width="560" height="420" />}
   </div>
 </section>

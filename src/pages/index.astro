@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import TrustBar from '../components/TrustBar.astro';
+import AgeCard from '../components/AgeCard.astro';
 import About from '../components/About.astro';
 import AgePrograms from '../components/AgePrograms.astro';
 import Teachers from '../components/Teachers.astro';
@@ -12,6 +12,9 @@ import TrialCta from '../components/TrialCta.astro';
 import Day from '../components/Day.astro';
 import ContactsMap from '../components/ContactsMap.astro';
 ---
+<!-- порядок секций — art/v3/SPEC.md §6; фото-блок после «Программ» -->
 <BaseLayout schema>
-  <Hero /><TrustBar /><Gallery /><About /><AgePrograms /><Day /><Teachers /><Prices /><Reviews /><TrialCta /><ContactsMap />
+  <Hero /><AgeCard /><About /><AgePrograms /><Gallery />
+  <div class="duo3"><Day /><Teachers /></div>
+  <Prices /><Reviews /><TrialCta /><ContactsMap />
 </BaseLayout>

@@ -1,5 +1,6 @@
 ---
-// Герой v2 (art/v2/SPEC.md): ростомер 3–7 — навигация по возрасту, барс растёт при прокрутке.
+// Герой v3 (art/v3/SPEC.md §2–4): горизонтальный ростомер 3–7 + ветка «Школа 7+».
+// Координаты — из прототипов Арта (page-mobile.html 390, page-desktop.html 1440); сцена масштабируется по ширине (cqw).
 import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { site } from '../config/site.config';
@@ -12,79 +13,90 @@ import c6 from '../assets/cub/bars-6.webp';
 import c7 from '../assets/cub/bars-7.webp';
 const files = import.meta.glob<{ default: ImageMetadata }>('../assets/images/**/*.{jpg,jpeg,png,webp}', { eager: true });
 const photoSrc = site.hero.photo ? Object.entries(files).find(([k]) => k.endsWith('/images/' + site.hero.photo))?.[1].default : undefined;
-const photo = photoSrc ? await getImage({ src: photoSrc, width: 860, height: 640, fit: 'cover', format: 'webp', quality: 74 }) : undefined;
+const photo = photoSrc ? await getImage({ src: photoSrc, width: 840, height: 560, fit: 'cover', format: 'webp', quality: 74 }) : undefined;
 const r = site.rating;
 const value = r ? r.value.toFixed(1).replace('.', ',') : '';
-// засечка → группа фильтра, поза, цвет (DECISIONS.md)
-const ticks = [
-  { age: 3, bucket: '3-5', c: 'pink' }, { age: 4, bucket: '3-5', c: 'yellow' }, { age: 5, bucket: '5-7', c: 'mint' },
-  { age: 6, bucket: '5-7', c: 'blue' }, { age: 7, bucket: '5-7', c: 'pink' },
-];
 const cubs = [{ p: 3, src: c3 }, { p: 5, src: c5 }, { p: 6, src: c6 }, { p: 7, src: c7 }];
----
-<section class="hero2" aria-labelledby="h1" data-hero data-age="3">
-  <svg class="doodles" aria-hidden="true" viewBox="0 0 390 300" preserveAspectRatio="xMaxYMin meet" filter="url(#pencil)">
-    <g transform="translate(350 40)"><circle r="11" fill="var(--yellow)" class="doo" stroke="var(--yellow-d)"/><path class="doo" stroke="var(--yellow-d)" d="M0-18v-6M0 18v6M-18 0h-6M18 0h6M-13-13l-4-4M13 13l4 4M13-13l4-4M-13 13l-4 4"/></g>
-  </svg>
-  <div class="wrap hero2-in">
-    <div class="hero2-text">
-      <T as="h1" id="h1" k="hero.h1" class="kicker" />
-      <p class="display"><T k="hero.sloganA" /> <em class="hl"><T k="hero.sloganHl" /></em><br class="br-d" /> <T k="hero.sloganB" /></p>
-      {r && (
-        <a class="rating2" href="#otzyvy" aria-label={t('rating.aria', { value, count: r.count })} data-i18n-attr="aria-label=rating.aria" data-i18n-vars={JSON.stringify({ value, count: r.count })}>
-          <span class="star" data-hop aria-hidden="true">★</span><b>{value}</b> <T k="rating.label" vars={{ count: r.count }} class="m" />
-        </a>
-      )}
-      <p class="pick m-only"><T k="hero.pick" /> ↓</p>
-      <div class="hero2-cta d-only">
-        <WhatsAppButton place="hero" ariaKey="cta.trialAria" class="btn-big" />
-        <a class="link" href="#programmy"><T k="hero.pickLink" /> ↓</a>
-      </div>
-    </div>
-    {photo && (
-      <figure class="frame hframe d-only">
-        <span class="tape" style="background:var(--yellow)"></span>
-        <img src={photo.src} alt={t(site.hero.photoCapKey as any)} data-i18n-attr={`alt=${site.hero.photoCapKey}`} width="430" height="320" decoding="async" />
-        <T as="figcaption" k={site.hero.photoCapKey as any} class="cap" />
-      </figure>
-    )}
+const colors = ['pink', 'yellow', 'mint', 'blue', 'pink'];
 
-    <div class="ruler" data-ruler>
-      <svg class="ruler-v" aria-hidden="true" width="100" height="400" viewBox="0 0 100 400" filter="url(#pencil)">
-        <path class="pen" d="M52 388 C51 340 54 300 52 260 S50 180 53 130 S51 100 52 82 C53 70 50 60 54 50"/>
-        <path class="doo" stroke="var(--pink-d)" stroke-width="4" d="M46 360H74"/><path class="doo" stroke="var(--yellow-d)" stroke-width="4" d="M46 288H74"/>
-        <path class="doo" stroke="var(--mint-d)" stroke-width="4" d="M46 216H74"/><path class="doo" stroke="var(--blue-d)" stroke-width="4" d="M46 144H74"/>
-        <path class="doo" stroke="var(--pink-d)" stroke-width="4" d="M46 72H74"/>
-        <path class="pen" style="opacity:.4" d="M47 324h10M47 252h10M47 180h10M47 108h10"/>
-        <path fill="var(--mint)" stroke="var(--mint-d)" stroke-width="1.6" d="M53 60 C40 44 26 42 14 46 C22 60 38 66 53 60Z"/>
-        <path fill="var(--mint)" stroke="var(--mint-d)" stroke-width="1.6" d="M54 52 C62 30 78 20 94 18 C90 36 74 50 54 52Z"/>
-      </svg>
-      <svg class="ruler-h" aria-hidden="true" viewBox="0 0 1000 80" preserveAspectRatio="none" filter="url(#pencil)">
-        <path class="pen" vector-effect="non-scaling-stroke" d="M20 60 C200 58 300 62 450 60 S700 57 820 61 S900 59 940 58"/>
-        <path class="doo" vector-effect="non-scaling-stroke" stroke="var(--pink-d)" stroke-width="4" d="M50 46V74"/><path class="doo" vector-effect="non-scaling-stroke" stroke="var(--yellow-d)" stroke-width="4" d="M250 46V74"/>
-        <path class="doo" vector-effect="non-scaling-stroke" stroke="var(--mint-d)" stroke-width="4" d="M450 46V74"/><path class="doo" vector-effect="non-scaling-stroke" stroke="var(--blue-d)" stroke-width="4" d="M650 46V74"/>
-        <path class="doo" vector-effect="non-scaling-stroke" stroke="var(--pink-d)" stroke-width="4" d="M850 46V74"/>
-        <path class="pen" vector-effect="non-scaling-stroke" style="opacity:.4" d="M150 54v12M350 54v12M550 54v12M750 54v12"/>
-      </svg>
-      <svg class="sprout-h" aria-hidden="true" width="100" height="80" viewBox="0 0 100 80" filter="url(#pencil)"><path class="pen" d="M40 78 C44 60 42 44 46 28"/><path fill="var(--mint)" stroke="var(--mint-d)" stroke-width="1.8" d="M45 46 C32 30 18 28 6 32 C14 46 30 52 45 46Z"/><path fill="var(--mint)" stroke="var(--mint-d)" stroke-width="1.8" d="M46 34 C54 12 70 2 90 0 C86 18 68 32 46 34Z"/></svg>
-      <svg class="numdot" aria-hidden="true" width="40" height="40" filter="url(#crayon)"><circle cx="20" cy="20" r="16"/></svg>
-      {ticks.map((k, i) => (
-        <a class="num" href="#programmy" style={`--i:${i}`} data-bucket-link={k.bucket} data-age={k.age} data-goal="age_pick" data-place={`tick-${k.age}`}
-          aria-label={t('hero.tickAria', { age: k.age })} data-i18n-attr="aria-label=hero.tickAria" data-i18n-vars={JSON.stringify({ age: k.age })}>{k.age}</a>
-      ))}
-      <a class="acard acard-35" href="#programmy" data-bucket-link="3-5" data-goal="age_pick" data-place="card-3-5">
-        <svg aria-hidden="true" viewBox="0 0 188 134" preserveAspectRatio="none" filter="url(#crayon)"><path fill="var(--pink)" d="M8 10 Q94 0 180 8 Q188 66 182 126 Q94 134 6 128 Q0 68 8 10Z"/></svg>
-        <T k="hero.c35" class="l" /><span class="p"><T k="hero.c35p" /> <b aria-hidden="true">→</b></span>
-      </a>
-      <a class="acard acard-57" href="#programmy" data-bucket-link="5-7" data-goal="age_pick" data-place="card-5-7">
-        <svg aria-hidden="true" viewBox="0 0 188 212" preserveAspectRatio="none" filter="url(#crayon)"><path fill="var(--mint)" d="M6 8 Q94 2 182 10 Q188 106 182 204 Q94 210 8 204 Q2 106 6 8Z"/></svg>
-        <T k="hero.c57" class="l" /><span class="p"><T k="hero.c57p" /> <b aria-hidden="true">→</b></span>
-      </a>
-      <span class="floor" aria-hidden="true"></span>
-      <div class="cubs" aria-hidden="true">
-        {cubs.map((c) => <img class={`p${c.p}`} src={c.src.src} width={c.src.width} height={c.src.height} alt="" loading="eager" decoding="async" />)}
+type V = { id: 'm' | 'd'; W: number; X0: number; Y0: number; H: number; tx: number[]; line: number; num: number; numF: number; dot: number;
+  cubW: number; cubH: number; school: [number, number]; bands: [string, number, number][]; bandY: number; bandH: number; bandF: number;
+  chip: [number, number]; chipF: number; house: [number, number, number]; paths: { line: string; shelf: string; leaves: string[] }; walkY: number; walkSchool: string };
+const variants: V[] = [
+  { id: 'm', W: 390, X0: 0, Y0: 528, H: 292, tx: [44, 98, 152, 206, 260], line: 730, num: 764, numF: 20, dot: 19, cubW: 84, cubH: 110, school: [342, 646],
+    bands: [['3-5', 26, 120], ['5-7', 132, 278], ['7plus', 280, 388]], bandY: 780, bandH: 32, bandF: 12.5, chip: [218, 640], chipF: 12, house: [250, 598, 1],
+    paths: { line: 'M18 730 C90 728 170 732 240 730 S282 729 288 726 C297 722 300 712 300 700 C301 660 299 610 300 575 C300 568 300 564 301 560',
+      shelf: 'M300 650 C326 646 352 648 382 644',
+      leaves: ['M382 644 C374 632 362 630 352 635 C358 646 370 650 382 644Z', 'M300 572 C288 558 274 556 264 561 C272 574 288 578 300 572Z', 'M301 562 C309 542 324 533 340 531 C335 548 320 560 301 562Z'] },
+    walkY: 722, walkSchool: 'M44 722 L288 722 C296 720 296 706 296 690 L296 662 C300 655 320 655 342 655' },
+  { id: 'd', W: 1200, X0: 120, Y0: 410, H: 366, tx: [200, 400, 600, 800, 1000], line: 670, num: 703, numF: 26, dot: 23, cubW: 160, cubH: 200, school: [1200, 596],
+    bands: [['3-5', 160, 440], ['5-7', 560, 1040], ['7plus', 1080, 1300]], bandY: 732, bandH: 40, bandF: 15, chip: [1000, 552], chipF: 14, house: [1030, 500, 1.3],
+    paths: { line: 'M150 670 C300 668 420 673 560 670 S800 667 940 671 S1060 669 1086 668 C1100 667 1104 656 1104 640 C1105 590 1103 520 1104 470 C1105 456 1103 446 1106 436',
+      shelf: 'M1104 600 C1150 594 1220 598 1300 590',
+      leaves: ['M1300 590 C1290 574 1274 572 1262 578 C1270 592 1286 596 1300 590Z', 'M1104 452 C1088 434 1070 432 1056 438 C1066 454 1086 460 1104 452Z', 'M1106 440 C1116 414 1136 402 1156 400 C1150 422 1130 438 1106 440Z'] },
+    walkY: 656, walkSchool: 'M200 656 L1086 656 C1098 654 1098 630 1098 610' },
+];
+// позиции барса по состояниям: [x центра, верх]
+// состояние → [сдвиг барса x, y, x кружка под цифрой, поза, цвет] в единицах макета от начала сцены
+const pose = [3, 3, 5, 6, 7];
+const pos = (v: V) => Object.fromEntries([
+  ...v.tx.map((x, i) => [String(3 + i), [x - v.X0 - v.cubW / 2, v.line - v.cubH - v.Y0, x - v.X0 - v.dot - 4, pose[i], colors[i]]]),
+  ['school', [v.school[0] - v.X0 - v.cubW / 2, v.school[1] - v.cubH - v.Y0, -999, 7, 'blue']],
+]);
+const u = (n: number) => `calc(var(--u) * ${n})`;
+const bandLabel: Record<string, string> = { '3-5': 'ages.3_5', '5-7': 'ages.5_7', '7plus': 'ages.7plus' };
+const bandColor: Record<string, string> = { '3-5': 'pink', '5-7': 'mint', '7plus': 'blue' };
+---
+<section class="hero3" aria-labelledby="h1" data-hero data-age="3">
+  <svg class="h3-sun" aria-hidden="true" width="56" height="56" viewBox="-28 -28 56 56" filter="url(#pencil)"><circle r="11" fill="var(--yellow)" class="doo" stroke="var(--yellow-d)"/><path class="doo" stroke="var(--yellow-d)" d="M0-18v-6M0 18v6M-18 0h-6M18 0h6M-13-13l-4-4M13 13l4 4M13-13l4-4M-13 13l-4 4"/></svg>
+  <div class="wrap">
+    <div class="h3-grid">
+      <div class="h3-text">
+        <T as="h1" id="h1" k="hero.h1" class="kicker" />
+        <p class="display"><T k="hero.sloganA" /> <em class="hl"><T k="hero.sloganHl" /></em><br /> <T k="hero.sloganB" /></p>
+        {r && (
+          <a class="rating2" href="#otzyvy" aria-label={t('rating.aria', { value, count: r.count })} data-i18n-attr="aria-label=rating.aria" data-i18n-vars={JSON.stringify({ value, count: r.count })}>
+            <span class="star" data-hop aria-hidden="true">★</span><b>{value}</b> <T k="rating.label" vars={{ count: r.count }} class="m" />
+          </a>
+        )}
       </div>
-      <svg class="hand" aria-hidden="true" width="40" height="44" viewBox="-20 -30 40 50" filter="url(#pencil)"><path class="doo" stroke="var(--pink-d)" fill="var(--pink)" d="M-12 14c-6-6-6-16 0-22l2-18c0-4 6-4 6 0l1 12 1-18c0-4 6-4 6 0l0 18 2-15c0-4 6-4 6 0l-1 17 4-10c2-4 7-2 6 2l-5 18c-2 8-8 14-16 14-5 0-9-2-12-4z"/></svg>
+      {photo && (
+        <figure class="frame h3-photo">
+          <span class="tape" style="background:var(--pink)"></span>
+          <img src={photo.src} alt={t(site.hero.photoCapKey as any)} data-i18n-attr={`alt=${site.hero.photoCapKey}`} width="420" height="280" fetchpriority="high" decoding="async" />
+          <T as="figcaption" k={site.hero.photoCapKey as any} class="cap" />
+        </figure>
+      )}
+      <div class="h3-cta" id="cta"><WhatsAppButton place="hero" ariaKey="cta.trialAria" class="btn-big btn-wa3" /></div>
+      <T as="p" k="hero.ask" class="h3-ask" />
     </div>
+    {variants.map((v) => (
+      <div class:list={['stage', v.id === 'm' ? 'st-m' : 'st-d']} style={`--W:${v.W};aspect-ratio:${v.W}/${v.H}`} data-stage data-pos={JSON.stringify(pos(v))}
+        data-walk={JSON.stringify({ y: v.walkY, tx: v.tx, school: v.walkSchool })}>
+        <svg class="st-svg" viewBox={`${v.X0} ${v.Y0} ${v.W} ${v.H}`} aria-hidden="true" filter="url(#pencil)">
+          <path class="doo walk" stroke="var(--pink-d)" stroke-dasharray="2 8" stroke-width="3" d={`M${v.tx[0]} ${v.walkY} L${v.tx[0]} ${v.walkY}`} />
+          <path class="pen" d={v.paths.line} />
+          <path class="pen" d={v.paths.shelf} />
+          {v.paths.leaves.map((d) => <path fill="var(--mint)" stroke="var(--mint-d)" stroke-width="1.8" d={d} />)}
+          {v.tx.map((x, i) => <path class="doo" stroke={`var(--${colors[i]}-d)`} stroke-width="4" d={`M${x} ${v.line - 14}v28`} />)}
+          <g transform={`translate(${v.house[0]} ${v.house[1]}) scale(${v.house[2]})`}><path d="M0 14 L16 2 L32 14Z" fill="var(--blue)" stroke="var(--blue-d)" stroke-width="1.6" /><path class="doo" stroke="var(--blue-d)" d="M4 13v17h24V13M13 30v-8h6v8M16 2v-8l6 2-6 2"/></g>
+        </svg>
+        <svg class="st-dot" aria-hidden="true" viewBox="0 0 46 46" filter="url(#crayon)" style={`width:${u(v.dot * 2 + 8)};height:${u(v.dot * 2 + 8)};top:${u(v.num - v.Y0 - v.dot - 4)};--dx:${v.tx[0] - v.X0 - v.dot - 4}`}><circle cx="23" cy="23" r="19" /></svg>
+        {v.tx.map((x, i) => (
+          <button type="button" class="st-num" data-set-age={3 + i} style={`left:${u(x - v.X0 - 22)};top:${u(v.num - v.Y0 - 22)};font-size:${u(v.numF)}`}
+            aria-label={t('hero.tickAria', { age: 3 + i })} data-i18n-attr="aria-label=hero.tickAria" data-i18n-vars={JSON.stringify({ age: 3 + i })}>{3 + i}</button>
+        ))}
+        <button type="button" class="st-chip" data-set-age="school" style={`left:${u(v.chip[0] - v.X0)};top:${u(v.chip[1] - v.Y0)};font-size:${u(v.chipF)}`}><T k="hero.school" /></button>
+        {v.bands.map(([b, x1, x2]) => (
+          <button type="button" class="st-band" data-set-band={b} style={`left:${u(x1 - v.X0)};top:${u(v.bandY - v.Y0)};width:${u(x2 - x1)};height:${u(v.bandH)};font-size:${u(v.bandF)}`}>
+            <svg aria-hidden="true" viewBox={`0 0 ${x2 - x1} ${v.bandH}`} preserveAspectRatio="none" filter="url(#crayon)"><rect x="3" y="3" width={x2 - x1 - 6} height={v.bandH - 6} rx={(v.bandH - 6) / 2} fill={`var(--${bandColor[b]})`} /></svg>
+            <T k={bandLabel[b] as any} />
+          </button>
+        ))}
+        <div class="st-cubs" aria-hidden="true" style={`width:${u(v.cubW)};height:${u(v.cubH)};--cx:${v.tx[0] - v.X0 - v.cubW / 2};--cy:${v.line - v.cubH - v.Y0}`}>
+          {cubs.map((c) => <img class={`p${c.p}`} src={c.src.src} width={c.src.width} height={c.src.height} alt="" loading="eager" decoding="async" />)}
+        </div>
+      </div>
+    ))}
   </div>
 </section>

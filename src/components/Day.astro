@@ -1,13 +1,21 @@
 ---
 import { site } from '../config/site.config';
 import T from './T.astro';
+const dots = ['pink', 'yellow', 'mint', 'blue', 'pink', 'yellow'];
+const blob = (c: string) => `<svg viewBox="0 0 42 42" aria-hidden="true" filter="url(#crayon)"><circle cx="21" cy="21" r="19" fill="var(--${c})"/></svg>`;
 ---
 {site.daySteps.length > 0 && (
-  <section class="sec" id="den" aria-labelledby="day-h">
+  <section class="v3 sec3" id="den" aria-labelledby="day-h">
+    <svg class="doodle" style="right:12px;top:22px" aria-hidden="true" width="56" height="56" viewBox="-28 -28 56 56" filter="url(#pencil)"><circle r="11" fill="var(--yellow)" class="doo" stroke="var(--yellow-d)"/><path class="doo" stroke="var(--yellow-d)" d="M0-18v-6M0 18v6M-18 0h-6M18 0h6M-13-13l-4-4M13 13l4 4M13-13l4-4M-13 13l-4 4"/></svg>
     <div class="wrap">
       <T as="h2" id="day-h" k="day.title" />
-      <T as="p" k="day.sub" class="lead" />
-      <ol class="day">{site.daySteps.map((k) => <li><T k={k as any} /></li>)}</ol>
+      <ol class="day3">
+        <svg class="line" aria-hidden="true" viewBox="0 0 20 400" preserveAspectRatio="none" filter="url(#pencil)"><path d="M10 0 C6 80 14 160 9 240 S12 360 10 400" fill="none" stroke="currentColor" stroke-width="2.2" stroke-dasharray="1 7" stroke-linecap="round" /></svg>
+        <li class="step time"><span class="dot" set:html={blob('yellow')} /><span class="t">09:00</span></li>
+        {site.daySteps.map((k, i) => <li class="step"><span class="dot" set:html={blob(dots[i % 6])} /><T k={k as any} class="t" /></li>)}
+        <li class="step time"><span class="dot" set:html={blob('blue')} /><span class="t">18:30</span></li>
+      </ol>
+      <T as="p" k="day.sub" class="cap-note" />
     </div>
   </section>
 )}

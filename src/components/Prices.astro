@@ -2,24 +2,37 @@
 import { site } from '../config/site.config';
 import T from './T.astro';
 import WhatsAppButton from './WhatsAppButton.astro';
-const groups = site.priceGroups;
+const ICO: Record<string, string> = {
+  food: '<path d="M8 22h24a12 12 0 0 1-24 0z"/><path d="M14 16c0-3 3-3 3-6M20 16c0-3 3-3 3-6M26 16c0-3 3-3 3-6"/>',
+  pickup: '<path d="M8 30V16l12-8 12 8v14zM17 30v-7h6v7"/><path d="M20 13v-3l4 1"/>',
+  homework: '<path d="M10 30l2-7 14-14 5 5-14 14z M24 11l5 5"/>',
+  bus: '<rect x="7" y="10" width="26" height="16" rx="3"/><path d="M7 19h26M13 26v3M27 26v3M12 14h6M22 14h6"/>',
+  qr: '<rect x="9" y="9" width="8" height="8"/><rect x="23" y="9" width="8" height="8"/><rect x="9" y="23" width="8" height="8"/><path d="M23 23h3v3h-3zM28 28h3v3h-3zM23 30h2M30 23v2"/>',
+  ramp: '<path d="M6 30h28M6 30l20-12h8v12"/><circle cx="14" cy="14" r="3"/>',
+};
+const ICOC: Record<string, string> = { food: 'pink', pickup: 'mint', homework: 'yellow', bus: 'blue', qr: 'mint', ramp: 'yellow' };
+const ico = (k: string) => `<svg viewBox="0 0 40 40" aria-hidden="true" filter="url(#pencil)"><circle cx="20" cy="20" r="18" fill="var(--${ICOC[k]})"/><g fill="none" stroke="#2B2620" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICO[k]}</g></svg>`;
+const blob = (c: string) => `<svg viewBox="0 0 42 42" aria-hidden="true" filter="url(#crayon)"><circle cx="21" cy="21" r="19" fill="var(--${c})"/></svg>`;
+const steps = [['prices.step1', 'mint'], ['prices.step2', 'yellow'], ['prices.step3', 'pink']];
 ---
-<section class="sec" id="ceny" aria-labelledby="price-h">
+<section class="v3 sec3" id="ceny" aria-labelledby="price-h">
+  <svg class="doodle" style="right:6px;top:18px" aria-hidden="true" width="66" height="40" viewBox="-8 -12 66 40" filter="url(#pencil)"><path class="doo" stroke="var(--blue-d)" fill="#E6F1FB" d="M0 20c-10 0-14-12-4-16 0-12 16-14 20-5 6-8 20-4 19 6 10 1 10 15 0 15z"/></svg>
   <div class="wrap">
     <T as="h2" id="price-h" k="prices.title" />
-    <T as="p" k="prices.text" class="lead" />
-    {groups.length > 0 && (
-      <div class="grid3">{groups.map((g) => (
-        <div class="card"><T as="h3" k={g.titleKey as any} /><T as="p" k={g.priceKey as any} class="prog-price" />{g.noteKey && <T as="p" k={g.noteKey as any} class="muted" />}</div>
-      ))}</div>
-    )}
-    <div class="card price-ask">
-      {site.includesKeys.length > 0 && (<>
-        <T as="h3" k="prices.incTitle" />
-        <ul class="inc">{site.includesKeys.map((k) => <li><T k={k as any} /></li>)}</ul>
-      </>)}
-      <T as="p" k="prices.trial" />
-      <WhatsAppButton place="prices" labelKey="cta.whatsapp" variant="secondary" />
+    <T as="p" k="prices.text" class="sub" />
+    <div class="pricegrid">
+      {site.includes.length > 0 && (
+        <div>
+          <T as="h3" k="prices.incTitle" class="h3s" />
+          <ul class="inc3">{site.includes.map((x) => <li><span class="ic" set:html={ico(x.icon)} /><T k={x.key as any} /></li>)}</ul>
+        </div>
+      )}
+      <div>
+        <T as="h3" k="prices.howTitle" class="h3s" />
+        <ol class="steps3">{steps.map(([k, c], i) => <li><span class="n"><span set:html={blob(c)} />{i + 1}</span><T k={k as any} /></li>)}</ol>
+        <T as="p" k="prices.note" class="cap-note" />
+        <WhatsAppButton place="prices" labelKey="cta.whatsapp" class="btn-wa3 sm" />
+      </div>
     </div>
   </div>
 </section>

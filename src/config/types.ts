@@ -7,8 +7,8 @@ export type Program = {
   /** свой текст возраста вместо «от–до» (например, TODO) */ ageKey?: string; /** файл в public/spots/ */ spot?: string;
   priceLabelKey?: string; durationKey?: string; scheduleKey?: string; image?: string;
 };
-export type Teacher = { id: string; name: string; roleKey?: string; bioKey: string; photo?: string; programIds?: string[] };
-export type Review = { id: string; quoteKey: string; author: string; childAge?: string; source: '2gis' | 'instagram' | 'other' };
+export type Teacher = { id: string; name: string; ini?: string; by?: string; lang?: 'kk'; roleKey?: string; bioKey: string; photo?: string; programIds?: string[] };
+export type Review = { id: string; quoteKey: string; author: string; childAge?: string; date?: string; lang?: 'kk'; source: '2gis' | 'instagram' | 'other' };
 export type GalleryPhoto = { /** путь от src/assets/images/ */ src: string; capKey: string };
 export type GalleryVideo = { /** путь от public/ */ src: string; poster: string; labelKey: string };
 /** Направление в блоке «Что мы делаем»: без фото не показывается; кнопка «ещё N» — при >3 фото. */
@@ -31,10 +31,11 @@ export type SiteConfig = {
   nav: NavItem[]; trustBar: TrustItem[];
   hero: { /** фото в рамке на десктопе, путь от src/assets/images/ */ photo?: string; photoCapKey?: string };
   about: { image?: string };
+  /** «Как нас найти»: фото входа, путь от src/assets/images/ */ find?: { photo: string; capKey: string };
   ageBuckets: AgeBucket[]; defaultAgeBucket?: string;
   programs: Program[]; teachers: Teacher[]; reviews: Review[]; gallery: GalleryCategory[];
   priceGroups: PriceGroup[];
-  /** «Что входит» вместо прайса */ includesKeys: string[];
+  /** «Что входит» вместо прайса */ includes: { key: string; icon: 'food' | 'pickup' | 'homework' | 'bus' | 'qr' | 'ramp' }[];
   /** «Обычный день» */ daySteps: string[];
   trial: { enabled: boolean };
   seo: { titleKey: string; descriptionKey: string; ogImage?: string; noindex: boolean };

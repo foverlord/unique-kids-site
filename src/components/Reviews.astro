@@ -1,35 +1,28 @@
 ---
 import { site } from '../config/site.config';
 import T from './T.astro';
-import ReviewCard from './ReviewCard.astro';
-import Icon from './Icon.astro';
-import { t } from '../i18n';
 const r = site.rating;
 const list = site.reviews;
 const value = r ? r.value.toFixed(1).replace('.', ',') : '';
 ---
-{(r || list.length > 0) && (
-  <section class="sec sec-alt" id="otzyvy" aria-labelledby="rev-h">
-    <div class="wrap reviews">
-      <div class="rev-score">
-        <T as="h2" id="rev-h" k="reviews.title" />
-        {r && (<>
-          <p class="big-score"><span class="rating-stars" aria-hidden="true">★</span>{value}</p>
-          <a class="link" href={r.url} target="_blank" rel="noopener"><T k="rating.label" vars={{ count: r.count }} /></a>
-        </>)}
+{list.length > 0 && (
+  <section class="v3 sec3" id="otzyvy" aria-labelledby="rev-h">
+    <svg class="doodle" style="right:16px;top:22px" aria-hidden="true" width="30" height="30" viewBox="-14 -2 28 28" filter="url(#pencil)"><path class="doo" stroke="var(--pink-d)" fill="var(--pink)" d="M0 0l3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1z"/></svg>
+    <div class="wrap">
+      <T as="h2" id="rev-h" k="reviews.title" />
+      {r && <p class="sub"><span style="color:var(--color-rating)" aria-hidden="true">★</span> <b>{value}</b><T k="facts.count" vars={{ count: r.count }} /></p>}
+      <div class="revs3 rot">
+        {list.map((rv, i) => (
+          <figure class="rev3 patch patch--long" lang={rv.lang}>
+            <svg class="pbg" aria-hidden="true" filter="url(#crayon)"><rect x="6" y="6" rx="10" style="width:calc(100% - 12px);height:calc(100% - 12px)" /></svg>
+            <i class:list={['tape', { r: i % 2 }]}></i>
+            <span class="q" aria-hidden="true">“</span>
+            <blockquote><T as="p" k={rv.quoteKey as any} /></blockquote>
+            <figcaption class="by">{rv.author} <span>{rv.date && <>· {rv.date} </>}· <span class="stars" aria-label="5 из 5">★★★★★</span></span></figcaption>
+          </figure>
+        ))}
       </div>
-      {list.length > 0 && (
-        <div class="rev-slider">
-          <div class="rev-track" data-rev-track tabindex="0">{list.map((rv) => <ReviewCard r={rv} />)}</div>
-          {list.length > 1 && (
-            <div class="rev-ctrl">
-              <button type="button" class="icon-btn" data-rev="-1" aria-label={t('reviews.prev')} data-i18n-attr="aria-label=reviews.prev"><Icon name="arrow-l" /></button>
-              <div class="dots" data-rev-dots aria-hidden="true">{list.map((_, i) => <span class:list={{ on: i === 0 }} />)}</div>
-              <button type="button" class="icon-btn" data-rev="1" aria-label={t('reviews.next')} data-i18n-attr="aria-label=reviews.next"><Icon name="arrow-r" /></button>
-            </div>
-          )}
-        </div>
-      )}
+      {r && <a class="btn-line" href={r.url + '/tab/reviews'} target="_blank" rel="noopener"><T k="reviews.all" /></a>}
     </div>
   </section>
 )}

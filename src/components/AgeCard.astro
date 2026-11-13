@@ -1,0 +1,17 @@
+---
+// Карточка «Вашему ребёнку N лет» (art/v3 §3): заполняется скриптом по тапу на ростомер.
+import T from './T.astro';
+import Icon from './Icon.astro';
+---
+<section class="v3 agewrap" data-age-card hidden aria-live="polite">
+  <div class="wrap">
+    <div class="agecard patch">
+      <svg class="pbg" aria-hidden="true" filter="url(#crayon)"><rect x="6" y="6" rx="10" style="width:calc(100% - 12px);height:calc(100% - 12px)" /></svg>
+      <i class="tape" style="--t:var(--yellow)"></i>
+      <h3 data-ac-title></h3>
+      <ul data-ac-list></ul>
+      <a class="btn-wa3 btn" data-ac-wa href="#" target="_blank" rel="noopener" data-goal="wa_click" data-place="age-card"><Icon name="wa" size={20} /><T k="cta.trial" /></a>
+      <p class="pre" data-ac-pre></p>
+    </div>
+  </div>
+</section>

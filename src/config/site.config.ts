@@ -26,29 +26,31 @@ export const site: SiteConfig = {
   fonts: { heading: 'Nunito', body: 'Golos Text' },
   nav: [
     { href: '#programmy', labelKey: 'nav.programs' },
-    { href: '#foto', labelKey: 'nav.photos' },
+    { href: '#den', labelKey: 'nav.day' },
     { href: '#otzyvy', labelKey: 'nav.reviews' },
-    { href: '#kontakty', labelKey: 'nav.contacts' },
+    { href: '#kontakty', labelKey: 'nav.find' },
   ],
   trustBar: [
     { icon: 'star', labelKey: 'trust.rating' },
     { icon: 'clock', labelKey: 'trust.hours' },
     { icon: 'pin', labelKey: 'trust.address' },
   ],
-  hero: { photo: 'classes/class-wooden-blocks.webp', photoCapKey: 'gal.blocks' },
+  hero: { photo: 'classes/class-drawing-sun-pictures.webp', photoCapKey: 'gal.sun' },
   about: {},
+  find: { photo: 'place/entrance-door-canopy.webp', capKey: 'find.cap' },
   // Возраст v3 (DECISIONS.md 13.11 13:25): центр 3–10. Подтверждено отзывами: школа 5–7, продлёнка и лагерь 7+.
   // TODO: возраст логопеда, клубов, скорочтения, арифметики и робототехники — наш вариант, уточнить у директора.
   ageBuckets: [
     { id: 'all', labelKey: 'ages.all', ageFrom: 0, ageTo: 18, programIds: [] },
-    { id: '3-5', labelKey: 'ages.3_5', ageFrom: 3, ageTo: 5, programIds: ['logoped', 'sport'] },
-    { id: '5-7', labelKey: 'ages.5_7', ageFrom: 5, ageTo: 7, programIds: ['school', 'logoped', 'sport', 'mental', 'speedread'] },
-    { id: '7plus', labelKey: 'ages.7plus', ageFrom: 7, ageTo: 10, programIds: ['afterschool', 'camp', 'robotics', 'mental', 'speedread', 'sport'] },
+    // art/v3: программа в группе, если её возраст пересекает диапазон группы (programIds считаются в AgePrograms)
+    { id: '3-5', labelKey: 'ages.3_5', ageFrom: 3, ageTo: 4, programIds: [] },
+    { id: '5-7', labelKey: 'ages.5_7', ageFrom: 5, ageTo: 7, programIds: [] },
+    { id: '7plus', labelKey: 'ages.7plus', ageFrom: 8, ageTo: 10, programIds: [] },
   ],
   programs: [
-    { id: 'school', slug: 'podgotovka-k-shkole', titleKey: 'programs.school.title', summaryKey: 'programs.school.summary', ageFrom: 5, ageTo: 7, spot: 'book.svg' },
+    { id: 'school', slug: 'podgotovka-k-shkole', titleKey: 'programs.school.title', summaryKey: 'programs.school.summary', ageFrom: 5, ageTo: 7, spot: 'backpack.svg' },
     { id: 'afterschool', slug: 'prodlyonka', titleKey: 'programs.afterschool.title', summaryKey: 'programs.afterschool.summary', ageFrom: 7, ageTo: 10, ageKey: 'programs.age7plus', spot: 'house.svg' },
-    { id: 'camp', slug: 'letniy-lager', titleKey: 'programs.camp.title', summaryKey: 'programs.camp.summary', ageFrom: 7, ageTo: 10, ageKey: 'programs.age7plus', spot: 'club.svg' },
+    { id: 'camp', slug: 'letniy-lager', titleKey: 'programs.camp.title', summaryKey: 'programs.camp.summary', ageFrom: 7, ageTo: 10, ageKey: 'programs.age7plus', spot: 'sun.svg' },
     { id: 'logoped', slug: 'logoped', titleKey: 'programs.logoped.title', summaryKey: 'programs.logoped.summary', ageFrom: 3, ageTo: 7, spot: 'speech.svg' },
     { id: 'speedread', slug: 'skorochtenie', titleKey: 'programs.speedread.title', summaryKey: 'programs.speedread.summary', ageFrom: 5, ageTo: 10, spot: 'book.svg' },
     { id: 'mental', slug: 'mentalnaya-arifmetika', titleKey: 'programs.mental.title', summaryKey: 'programs.mental.summary', ageFrom: 5, ageTo: 10, spot: 'abacus.svg' },
@@ -57,19 +59,20 @@ export const site: SiteConfig = {
   ],
   // «Наши апай»: имена только из отзывов 2ГИС. TODO: подтвердить у центра, фото нет — инициалы.
   teachers: [
-    { id: 'aruna', name: 'Аруна Болатхановна', roleKey: 'teachers.aruna.role', bioKey: 'teachers.aruna.bio' },
-    { id: 'kamshat', name: 'Камшат апай', roleKey: 'teachers.kamshat.role', bioKey: 'teachers.kamshat.bio' },
-    { id: 'damira', name: 'Дамира апай', bioKey: 'teachers.damira.bio' },
-    { id: 'nazira', name: 'Назира', bioKey: 'teachers.nazira.bio' },
+    { id: 'aruna', name: 'Аруна Болатхановна', ini: 'АБ', roleKey: 'teachers.aruna.role', bioKey: 'teachers.aruna.bio', by: 'Санжар Бериков' },
+    { id: 'kamshat', name: 'Камшат апай', ini: 'К', roleKey: 'teachers.kamshat.role', bioKey: 'teachers.kamshat.bio', by: 'Almira Uisen', lang: 'kk' },
+    { id: 'damira', name: 'Дамира апай', ini: 'Д', bioKey: 'teachers.damira.bio', by: 'Ляйля Акимжанова' },
+    { id: 'nazira', name: 'Назира', ini: 'Н', bioKey: 'teachers.nazira.bio', by: 'Aigerim I' },
   ],
   // Дословно с 2ГИС, 13.11.2026 (content/reviews.md)
+  // у Aigerim I и Ляйли — первый абзац (art/v3 §6.6)
   reviews: [
-    { id: 'r3', quoteKey: 'reviews.r3', author: 'Aigerim I', source: '2gis' },
-    { id: 'r5', quoteKey: 'reviews.r5', author: 'Санжар Бериков', source: '2gis' },
-    { id: 'r6', quoteKey: 'reviews.r6', author: 'А. Бахыт', source: '2gis' },
-    { id: 'r4', quoteKey: 'reviews.r4', author: 'Almira Uisen', source: '2gis' },
-    { id: 'r1', quoteKey: 'reviews.r1', author: 'Ляйля Акимжанова', source: '2gis' },
-    { id: 'r2', quoteKey: 'reviews.r2', author: 'Акмарал Базарбеккызы', source: '2gis' },
+    { id: 'r3', quoteKey: 'reviews.r3s', author: 'Aigerim I', date: '21 августа 2026', source: '2gis' },
+    { id: 'r5', quoteKey: 'reviews.r5', author: 'Санжар Бериков', date: '6 июня 2026', source: '2gis' },
+    { id: 'r6', quoteKey: 'reviews.r6', author: 'А. Бахыт', date: '5 ноября 2025', source: '2gis' },
+    { id: 'r4', quoteKey: 'reviews.r4', author: 'Almira Uisen', date: '9 июня 2026', source: '2gis', lang: 'kk' },
+    { id: 'r1', quoteKey: 'reviews.r1s', author: 'Ляйля Акимжанова', date: '8 октября 2026', source: '2gis' },
+    { id: 'r2', quoteKey: 'reviews.r2', author: 'Акмарал Базарбеккызы', date: '21 августа 2026', source: '2gis' },
   ],
   // TODO (блокер запуска): фото детей с 2ГИС — только для демо, с разрешения Амира. До запуска заменить на снимки с письменным согласием родителей.
   // Раскладка по направлениям условная (TODO). Пустые направления скрыты.
@@ -92,7 +95,10 @@ export const site: SiteConfig = {
     { id: 'robototehnika', titleKey: 'programs.robotics.title', photos: [], videos: [] },
   ],
   priceGroups: [],
-  includesKeys: ['prices.inc.food', 'prices.inc.pickup', 'prices.inc.homework', 'prices.inc.camp', 'prices.inc.pay', 'prices.inc.ramp'],
+  includes: [
+    { key: 'prices.inc.food', icon: 'food' }, { key: 'prices.inc.pickup', icon: 'pickup' }, { key: 'prices.inc.homework', icon: 'homework' },
+    { key: 'prices.inc.camp', icon: 'bus' }, { key: 'prices.inc.pay', icon: 'qr' }, { key: 'prices.inc.ramp', icon: 'ramp' },
+  ],
   daySteps: ['day.breakfast', 'day.classes', 'day.lunch', 'day.after', 'day.snack', 'day.home'],
   trial: { enabled: true },
   seo: { titleKey: 'seo.title', descriptionKey: 'seo.description', ogImage: '/og.png', noindex: true },

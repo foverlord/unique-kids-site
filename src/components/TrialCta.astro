@@ -3,20 +3,26 @@ import { site } from '../config/site.config';
 import T from './T.astro';
 import Icon from './Icon.astro';
 import { waUrl } from '../scripts/wa';
+import { t } from '../i18n';
+const UL = '<svg class="ul" aria-hidden="true" viewBox="0 0 300 8" preserveAspectRatio="none" filter="url(#pencil)"><path d="M2 5 C60 2 120 7 180 4 S270 3 298 5" fill="none" stroke="#2B2620" stroke-width="2" stroke-linecap="round" /></svg>';
+const ages = [['3-5', 'ages.3_5'], ['5-7', 'ages.5_7'], ['7plus', 'ages.7plus']];
 ---
 {site.trial.enabled && (
-  <section class="sec" id="probnoe" aria-labelledby="trial-h" data-trial>
+  <section class="v3 sec3" id="probnoe" aria-labelledby="trial-h" data-trial>
     <div class="wrap">
-      <form class="card trial" data-trial-form action={waUrl('ru')} method="get" target="_blank">
-        <div>
-          <T as="h2" id="trial-h" k="trial.title" />
-          <T as="p" k="trial.text" class="lead" />
-        </div>
-        <div class="trial-fields">
-          <label><span><T k="trial.name" />{' '}<small class="muted">(<T k="trial.optional" />)</small></span><input name="parent" autocomplete="name" /></label>
-          <label><span><T k="trial.child" />{' '}<small class="muted">(<T k="trial.optional" />)</small></span><input name="child" /></label>
-          <button type="submit" class="btn btn-primary" data-goal="wa_click" data-place="trial"><Icon name="wa" size={20} /><T k="trial.submit" /></button>
-        </div>
+      <form class="form3 patch" data-trial-form action={waUrl('ru')} method="get" target="_blank">
+        <svg class="pbg" aria-hidden="true" filter="url(#crayon)"><rect x="6" y="6" rx="10" style="width:calc(100% - 12px);height:calc(100% - 12px)" /></svg>
+        <i class="tape"></i>
+        <T as="h2" id="trial-h" k="trial.title" />
+        <T as="p" k="trial.text" class="sub" />
+        <label class="field"><span><T k="trial.name" />{' '}(<T k="trial.optional" />)</span><input name="parent" autocomplete="name" placeholder="Например, Айгуль" data-i18n-attr="placeholder=trial.placeholder" /><Fragment set:html={UL} /></label>
+        <fieldset class="field"><legend><T k="trial.age" /></legend>
+          <div class="agechips">{ages.map(([v, k]) => <label class="tab3"><input type="radio" name="age" value={v} /><T k={k as any} /></label>)}</div>
+        </fieldset>
+        <label class="field"><span><T k="trial.program" /></span>
+          <select name="program"><option value="" data-i18n="trial.programAny">Подскажите, что подойдёт</option>{site.programs.map((p) => <option value={p.id} data-i18n={p.titleKey}>{t(p.titleKey as any)}</option>)}</select><Fragment set:html={UL} />
+        </label>
+        <button type="submit" class="btn btn-wa3" data-goal="wa_click" data-place="trial"><Icon name="wa" size={20} /><T k="trial.submit" /></button>
       </form>
     </div>
   </section>

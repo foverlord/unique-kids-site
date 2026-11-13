@@ -1,0 +1,179 @@
+/* art/v3/SPEC.md — герой с горизонтальным ростомером, мелковые плашки, новые секции. Токены не меняются. */
+:root { --H: var(--font-heading), "Noto Sans", system-ui, sans-serif; --B: var(--font-body), "Noto Sans", system-ui, sans-serif }
+html { overflow-x: clip }
+
+/* ---------- герой ---------- */
+.hero3 { position: relative; overflow: hidden; padding: 8px 0 20px }
+.h3-sun { position: absolute; right: 14px; top: 10px; pointer-events: none }
+.h3-grid { display: grid; grid-template-areas: "t" "p" "c" "a"; position: relative; z-index: 2 }
+.h3-text { grid-area: t }
+.h3-photo { grid-area: p; width: min(334px, 100%); aspect-ratio: 334 / 212; margin: 22px auto 0 10px; transform: rotate(-1.5deg) }
+.h3-cta { grid-area: c; margin-top: 18px }
+.btn-wa3 { display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; width: 100%; border: 0; border-radius: 999px; background: #25D366; color: var(--color-ink); font: 700 17px/1.2 var(--B); text-decoration: none; padding: 0 22px; animation: wob 4s 2s infinite; cursor: pointer }
+.btn-wa3.sm { display: inline-flex; width: auto; min-height: 44px; font-size: 15px; padding: 0 18px; margin-top: 14px }
+.btn-wa3:hover { background: #20bd5a }
+.btn-wa3:focus-visible, .btn-line:focus-visible, .tab3:focus-visible, .st-num:focus-visible, .st-band:focus-visible, .st-chip:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 2px }
+.h3-ask { grid-area: a; margin-top: 22px; font: 800 21px/26px var(--H) }
+
+.stage { position: relative; container-type: inline-size; margin: -6px -18px 0 }
+.stage > * { --u: calc(100cqw / var(--W)) }
+.st-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible }
+.st-d { display: none }
+.st-num { position: absolute; z-index: 2; width: calc(var(--u) * 44); height: calc(var(--u) * 44); display: grid; place-items: center; padding: 0; border: 0; background: none; color: var(--color-ink); font-family: var(--H); font-weight: 800; line-height: 1; border-radius: 99px; cursor: pointer }
+.st-num[aria-pressed="true"] { font-weight: 900 }
+.st-dot { position: absolute; z-index: 1; left: 0; fill: var(--pink); transform: translateX(calc(var(--u) * var(--dx))); transition: transform .25s cubic-bezier(.3,1.3,.5,1), opacity .2s; pointer-events: none }
+.st-chip { position: absolute; z-index: 2; padding: .35em .8em; border-radius: 999px; background: var(--blue); border: 1.5px solid var(--blue-d); color: var(--color-ink); font-family: var(--B); font-weight: 700; line-height: 1.2; white-space: nowrap; cursor: pointer }
+.st-band { position: absolute; z-index: 2; display: flex; align-items: center; justify-content: center; padding: 0; border: 0; background: none; color: var(--color-ink); font-family: var(--B); font-weight: 700; line-height: 1; white-space: nowrap; cursor: pointer; isolation: isolate }
+.st-band svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1 }
+.st-cubs { position: absolute; z-index: 3; left: 0; top: 0; transform: translate(calc(var(--u) * var(--cx)), calc(var(--u) * var(--cy))); transition: transform .25s cubic-bezier(.3,1.3,.5,1); pointer-events: none; will-change: transform }
+.st-cubs img { position: absolute; left: 50%; bottom: 0; height: 100%; width: auto; max-width: none; transform: translateX(-50%); opacity: 0; transition: opacity .2s }
+.st-cubs[data-pose="3"] .p3, .st-cubs[data-pose="5"] .p5, .st-cubs[data-pose="6"] .p6, .st-cubs[data-pose="7"] .p7, .st-cubs:not([data-pose]) .p3 { opacity: 1 }
+.walk { transition: d .25s }
+
+/* ---------- мелковые плашки ---------- */
+.patch { position: relative; isolation: isolate }
+.patch > .pbg { position: absolute; inset: -4px; width: calc(100% + 8px); height: calc(100% + 8px); z-index: -2; overflow: visible; pointer-events: none }
+.patch > .pbg rect { fill: var(--c, var(--yellow)) }
+/* длинный текст: зерно только по краю (~12px), под текстом ровная заливка */
+.patch--long::before { content: ""; position: absolute; inset: 12px; border-radius: 6px; background: var(--c, var(--yellow)); z-index: -1; pointer-events: none }
+.v3 .tape, .agecard .tape { position: absolute; top: -9px; left: 50%; width: 58px; height: 18px; margin-left: -29px; background: var(--t, var(--mint)); opacity: .85; transform: rotate(-4deg); z-index: 2 }
+.v3 .tape.r { transform: rotate(5deg) }
+.rot > :nth-child(4n+1) { --c: var(--pink); --t: var(--mint); --cd: var(--pink-d) }
+.rot > :nth-child(4n+2) { --c: var(--yellow); --t: var(--blue); --cd: var(--yellow-d) }
+.rot > :nth-child(4n+3) { --c: var(--mint); --t: var(--pink); --cd: var(--mint-d) }
+.rot > :nth-child(4n+4) { --c: var(--blue); --t: var(--yellow); --cd: var(--blue-d) }
+.rot > :nth-child(odd) { transform: rotate(-.6deg) }
+.rot > :nth-child(even) { transform: rotate(.6deg) }
+
+/* ---------- секции ---------- */
+.sec3 { position: relative; padding: 44px 0 }
+.sec3 h2 { font: 800 26px/32px var(--H); letter-spacing: -.01em; padding-right: 56px }
+.v3 .sub { font: 400 15px/22px var(--B); color: var(--color-ink-muted); margin: 6px 0 0 }
+.cap-note { font: 400 13px/18px var(--B); color: var(--color-ink-muted); margin-top: 14px }
+.v3 .doodle { position: absolute; z-index: 0; pointer-events: none }
+.v3 .h3s { font: 800 19px/24px var(--H); margin-top: 24px }
+.btn-line { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font: 700 15px/1 var(--B); padding: 0 18px; border: 2px solid var(--color-ink); border-radius: 999px; background: var(--color-bg); color: var(--color-ink); text-decoration: none; margin-top: 22px }
+.btn-line:hover { background: var(--color-bg-alt) }
+
+.agewrap { padding: 18px 0 8px; scroll-margin-top: 80px }
+.agecard { padding: 22px 18px 18px; max-width: 640px }
+.agecard h3 { font: 800 20px/26px var(--H) }
+.agecard ul { list-style: none; padding: 0; margin: 12px 0 14px; display: grid; gap: 8px }
+.agecard li { display: grid; grid-template-columns: 34px 1fr auto; gap: 10px; align-items: center; font: 600 15px/20px var(--B) }
+.agecard li img { width: 34px; height: 34px }
+.agecard li i { font: 600 12px var(--B); font-style: normal; color: var(--color-ink-muted); white-space: nowrap }
+.agecard .pre { font: 400 12.5px/17px var(--B); color: var(--color-ink-muted); margin-top: 10px }
+
+.about-t { margin-top: 10px; font: 400 16px/25px var(--B); max-width: 720px }
+.facts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px }
+.v3 .chip { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; white-space: normal; padding: 8px 12px; border-radius: 999px; background: #fff8; border: 1.5px solid var(--color-line); color: var(--color-ink); font: 500 13px/18px var(--B); text-decoration: none; min-height: 0 }
+.v3 .chip svg { flex: none }
+
+.tabs3 { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px }
+.tab3 { display: inline-flex; align-items: center; min-height: 44px; font: 600 14px/1 var(--B); color: var(--color-ink); padding: 0 14px; border-radius: 999px; border: 1.5px solid var(--color-line); background: var(--color-bg); cursor: pointer }
+.tab3[aria-pressed="true"], .tab3:has(input:checked) { background: var(--yellow); border-color: var(--yellow-d) }
+.progs { display: grid; gap: 22px; margin-top: 24px }
+.prog3 { padding: 20px 18px 18px; display: grid; grid-template-columns: 56px 1fr; gap: 4px 14px; align-items: start; align-content: start }
+.prog3[hidden] { display: none }
+.prog3 img { width: 56px; height: 56px; grid-row: 1 / 3 }
+.prog3 h3 { font: 800 18px/23px var(--H) }
+.prog3 .age { justify-self: start; font: 700 12px/1 var(--B); padding: 5px 9px; border-radius: 999px; background: var(--color-bg); border: 1.5px solid var(--cd) }
+.prog3 p { grid-column: 1 / -1; font: 400 14.5px/21px var(--B); margin-top: 8px }
+.prog-empty { margin-top: 20px }
+
+.day3 { position: relative; list-style: none; margin: 22px 0 0; padding: 0 0 0 44px; color: var(--color-ink) }
+.day3 .line { position: absolute; left: 14px; top: 6px; bottom: 6px; width: 20px; height: calc(100% - 12px) }
+.day3 .step { position: relative; padding: 8px 0 16px }
+.day3 .dot { position: absolute; left: -41px; top: 6px; width: 26px; height: 26px }
+.day3 .dot svg { width: 100%; height: 100% }
+.day3 .t { font: 700 17px/24px var(--B) }
+.day3 .time .t { font: 800 15px/22px var(--H); color: var(--color-ink-muted) }
+
+.apai3 { display: grid; gap: 22px; margin-top: 22px }
+.teacher3 { padding: 18px; display: grid; grid-template-columns: 64px 1fr; gap: 4px 14px; align-items: center }
+.teacher3 .ph { width: 64px; height: 64px; grid-row: 1 / 3 }
+.teacher3 h3 { font: 800 18px/22px var(--H) }
+.teacher3 .role { font: 600 13px/18px var(--B); color: var(--color-ink-muted) }
+.teacher3 blockquote { grid-column: 1 / -1; font: 400 14.5px/21px var(--B); margin: 8px 0 0 }
+.teacher3 .by { grid-column: 1 / -1; font: 400 12.5px/16px var(--B); color: var(--color-ink-muted) }
+
+.inc3 { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px }
+.inc3 li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; align-items: center; font: 500 15px/21px var(--B) }
+.inc3 .ic, .inc3 svg { width: 40px; height: 40px; display: block }
+.steps3 { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 14px }
+.steps3 li { display: grid; grid-template-columns: 42px 1fr; gap: 12px; align-items: center; font: 600 15px/21px var(--B) }
+.steps3 .n { position: relative; width: 42px; height: 42px; font: 800 20px/42px var(--H); text-align: center; isolation: isolate }
+.steps3 .n svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1 }
+
+.revs3 { display: grid; gap: 26px; margin-top: 22px }
+.rev3 { margin: 0; padding: 22px 18px 16px }
+.rev3 .q { font: 800 40px/20px var(--H); color: var(--cd); height: 16px; display: block }
+.rev3 blockquote { margin: 0 }
+.rev3 p { font: 400 14.5px/21px var(--B); display: -webkit-box; -webkit-line-clamp: 7; line-clamp: 7; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-line }
+.rev3 .by { font: 700 13px/18px var(--B); margin-top: 10px }
+.rev3 .by > span { font-weight: 400; color: var(--color-ink-muted) }
+.rev3 .stars { color: var(--color-rating); letter-spacing: 2px; font-size: 13px }
+
+.form3 { --c: var(--mint); padding: 28px 22px 24px; max-width: 640px }
+.form3 .field { display: block; margin: 18px 0 0; padding: 0; border: 0; min-width: 0 }
+.form3 .field > span, .form3 legend { display: block; padding: 0; font: 600 13px/18px var(--B); color: var(--color-ink) }
+.form3 input:not([type=radio]), .form3 select { display: block; width: 100%; border: 0; background: transparent; font: 400 17px/28px var(--B); color: var(--color-ink); padding: 4px 0 6px; outline: none; border-radius: 0; appearance: none; -webkit-appearance: none }
+.form3 select { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='8'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%232B2620' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 4px center; padding-right: 24px }
+.form3 input:focus-visible, .form3 select:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px }
+.form3 .ul { display: block; height: 8px; width: 100% }
+.agechips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px }
+.agechips .tab3 { background: #fff8; position: relative }
+.agechips input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer }
+.agechips .tab3:has(input:focus-visible) { outline: 3px solid var(--color-ink); outline-offset: 2px }
+.form3 .btn-wa3 { margin-top: 22px }
+
+.findgrid { display: grid; gap: 24px; margin-top: 20px }
+.find-photo { aspect-ratio: 1; transform: rotate(-1.5deg); max-width: 360px; width: 100% }
+.map { width: 100%; height: auto; display: block; max-width: 460px }
+.addr { font: 700 17px/24px var(--B); margin-top: 4px }
+.find-btns { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px }
+.find-btns > * { margin-top: 0 }
+
+.ftr3 { position: relative; background: #EAF4EE; color: var(--color-ink); padding: 56px 0 96px; margin-top: 40px }
+.ftr3 .wave { position: absolute; left: 0; right: 0; top: -22px; width: 100%; height: 40px }
+.ftr-logo { height: 46px; width: auto; margin-left: -6px }
+.ftr3 .cols { display: grid; gap: 18px; margin-top: 18px; font: 400 15px/22px var(--B) }
+.ftr3 a { color: inherit }
+.ftr3 .tel { font-weight: 700; text-decoration: none }
+.ftr3 .walink { font: 700 16px var(--B); text-decoration: underline; text-decoration-color: #25D366; text-decoration-thickness: 3px; text-underline-offset: 4px }
+.ftr3 .small { font: 400 13px/18px var(--B); color: var(--color-ink-muted); margin-top: 22px }
+
+@media (min-width: 768px) {
+  .progs { grid-template-columns: repeat(2, 1fr) }
+  .apai3, .revs3 { grid-template-columns: 1fr 1fr }
+  .pricegrid, .findgrid { grid-template-columns: 1fr 1fr; gap: 40px }
+  .ftr3 { padding-bottom: 36px }
+  .ftr3 .cols { grid-template-columns: repeat(3, auto); justify-content: start; gap: 18px 56px }
+}
+@media (min-width: 1024px) {
+  .hero3 { padding: 40px 0 28px }
+  .h3-sun { right: 48px; top: 30px }
+  .h3-grid { grid-template-columns: 1fr 440px; grid-template-areas: "t p" "c p" "a p"; column-gap: 40px; align-items: start }
+  .h3-text .kicker { font-size: 17px; line-height: 26px }
+  .h3-text .display { font-size: 64px; line-height: 70px; letter-spacing: -.02em; margin-top: 8px }
+  .h3-text .rating2 { font-size: 17px; margin-top: 18px }
+  .h3-photo { width: 420px; margin: 0; transform: rotate(2.5deg); align-self: start; grid-row: 1 / 4 }
+  .h3-cta { margin-top: 26px }
+  .h3-cta .btn-wa3 { display: inline-flex; width: auto; min-height: 58px; padding: 0 30px; font-size: 18px }
+  .h3-ask { font-size: 24px; line-height: 30px; margin-top: 34px }
+  .stage { margin: -40px 0 0 }
+  .st-m { display: none }
+  .st-d { display: block }
+  .sec3 { padding: 64px 0 }
+  .sec3 h2 { font-size: 40px; line-height: 46px }
+  .v3 .sub { font-size: 17px }
+  .progs { grid-template-columns: repeat(4, 1fr); gap: 28px 24px; margin-top: 30px }
+  .duo3 { display: grid; grid-template-columns: 380px 1fr; gap: 40px; max-width: 1200px; margin: 0 auto; padding: 0 32px; box-sizing: border-box }
+  .duo3 .sec3 { padding: 56px 0 }
+  .duo3 .wrap { padding: 0 }
+  .revs3 { grid-template-columns: repeat(3, 1fr) }
+}
+@media (prefers-reduced-motion: reduce) {
+  .st-cubs, .st-dot, .walk, .st-cubs img { transition: none }
+  .btn-wa3 { animation: none }
+}

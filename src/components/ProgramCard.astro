@@ -1,17 +1,14 @@
 ---
 import type { Program } from '../config/types';
 import T from './T.astro';
-import WhatsAppButton from './WhatsAppButton.astro';
-import { t } from '../i18n';
-interface Props { p: Program }
-const { p } = Astro.props;
+interface Props { p: Program; i: number }
+const { p, i } = Astro.props;
 ---
-<article class="card prog" data-prog={p.id} data-from={p.ageFrom} data-to={p.ageTo}>
-  {p.spot && <img class="spot" src={`/spots/${p.spot}`} width="56" height="56" alt="" loading="lazy" />}
+<article class="prog3 patch patch--long" data-prog={p.id} data-from={p.ageFrom} data-to={p.ageTo} data-spot={p.spot ? `/spots/${p.spot}` : ''}>
+  <svg class="pbg" aria-hidden="true" filter="url(#crayon)"><rect x="6" y="6" rx="10" style="width:calc(100% - 12px);height:calc(100% - 12px)" /></svg>
+  <i class:list={['tape', { r: i % 2 }]}></i>
+  {p.spot && <img src={`/spots/${p.spot}`} width="56" height="56" alt="" loading="lazy" />}
   <T as="h3" k={p.titleKey as any} />
-  {p.ageKey ? <T as="p" k={p.ageKey as any} class="prog-age" /> : <T as="p" k="programs.age" vars={{ from: p.ageFrom, to: p.ageTo }} class="prog-age" />}
+  {p.ageKey ? <T k={p.ageKey as any} class="age" /> : <T k="programs.age" vars={{ from: p.ageFrom, to: p.ageTo }} class="age" />}
   <T as="p" k={p.summaryKey as any} />
-  <T as="p" k={(p.priceLabelKey ?? 'programs.priceAsk') as any} class="prog-price" />
-  {p.durationKey && <T as="p" k={p.durationKey as any} class="muted" />}
-  <WhatsAppButton place="program" programId={p.id} labelKey="programs.trial" variant="secondary" ariaKey="programs.trialAria" ariaVars={{ title: t(p.titleKey) }} />
 </article>
