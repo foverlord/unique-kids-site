@@ -113,19 +113,48 @@ if (track_) {
   track_.addEventListener('scroll', () => { const i = Math.round(track_.scrollLeft / step()); dots.forEach((d, j) => d.classList.toggle('on', i === j)); }, { passive: true });
 }
 
-/* ---------- лайтбокс ---------- */
+/* ---------- фото по направлениям: вкладки + лайтбокс категории ---------- */
+const tabs = $$<HTMLButtonElement>('[data-tab]');
+tabs.forEach((b, i) => {
+  b.addEventListener('click', () => {
+    tabs.forEach((x) => { const on = x === b; x.setAttribute('aria-selected', String(on)); x.tabIndex = on ? 0 : -1; document.getElementById('cat-' + x.dataset.tab)!.hidden = !on; });
+    track('gallery_tab', { programId: b.dataset.tab });
+  });
+  b.addEventListener('keydown', (e) => { const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (d) { const n = tabs[(i + d + tabs.length) % tabs.length]; n.focus(); n.click(); } });
+});
 const lb = document.querySelector<HTMLDialogElement>('[data-lightbox]');
 if (lb) {
-  const items = $$<HTMLButtonElement>('[data-gal]');
   const img = lb.querySelector<HTMLImageElement>('[data-lb-img]')!;
-  let cur = 0, opener: HTMLElement | null = null;
-  const show = (i: number) => { cur = (i + items.length) % items.length; const src = items[cur].querySelector('img')!; img.src = items[cur].dataset.full!; img.alt = src.alt; };
-  items.forEach((b, i) => b.addEventListener('click', () => { opener = b; show(i); lb.showModal(); document.documentElement.classList.add('no-scroll'); }));
+  let list: { full: string; key: string }[] = [], cur = 0, opener: HTMLElement | null = null;
+  const show = (i: number) => { cur = (i + list.length) % list.length; img.src = list[cur].full; img.alt = tr(list[cur].key); };
+  $$<HTMLButtonElement>('[data-gal]').forEach((b) => b.addEventListener('click', () => {
+    list = JSON.parse(b.closest<HTMLElement>('[data-photos]')!.dataset.photos!); opener = b;
+    show(Number(b.dataset.gal)); lb.showModal(); document.documentElement.classList.add('no-scroll');
+  }));
   $$<HTMLButtonElement>('[data-lb]', lb).forEach((b) => b.addEventListener('click', () => show(cur + Number(b.dataset.lb))));
   lb.querySelector('[data-lb-close]')!.addEventListener('click', () => lb.close());
+  lb.addEventListener('click', (e) => { if (e.target === lb) lb.close(); });
   lb.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') show(cur + 1); if (e.key === 'ArrowLeft') show(cur - 1); });
   lb.addEventListener('close', () => { document.documentElement.classList.remove('no-scroll'); opener?.focus(); });
 }
+
+/* ---------- герой: ростомер → фильтр, барс растёт при прокрутке ---------- */
+$$<HTMLAnchorElement>('[data-bucket-link]').forEach((a) => a.addEventListener('click', () => {
+  const chip = document.querySelector<HTMLButtonElement>(`[data-bucket="${a.dataset.bucketLink}"]`);
+  if (chip) filter(chip);
+}));
+const hero = document.querySelector<HTMLElement>('[data-hero]');
+if (hero) {
+  let ticking = false;
+  const step = () => (matchMedia('(min-width:1024px)').matches ? 80 : 60);
+  const upd = () => { ticking = false; hero.dataset.age = String(3 + Math.max(0, Math.min(4, Math.floor(scrollY / step())))); };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
+  upd();
+}
+document.addEventListener('click', (e) => {
+  const s = (e.target as Element).closest<HTMLElement>('[data-hop]');
+  if (s) { s.classList.remove('hop'); void s.offsetWidth; s.classList.add('hop'); }
+});
 
 /* ---------- липкий CTA прячется у блока «Пробное»; дорисовка рисунков при входе в экран ---------- */
 const sticky = document.querySelector<HTMLElement>('[data-sticky]');

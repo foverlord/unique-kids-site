@@ -1,33 +1,68 @@
 ---
+// «Что мы делаем в центре»: вкладки по направлениям, 3 кадра + «ещё N фото», слот видео (art/v2/SPEC.md §8).
 import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { site } from '../config/site.config';
 import T from './T.astro';
 import Icon from './Icon.astro';
 import { t } from '../i18n';
-const files = import.meta.glob<{ default: ImageMetadata }>('../assets/images/gallery/*.{jpg,jpeg,png,webp}', { eager: true });
-const byName = (n: string) => Object.entries(files).find(([k]) => k.endsWith('/' + n))?.[1].default;
-const items = await Promise.all(site.gallery.map(async (g) => {
-  const src = byName(g.src);
-  if (!src) throw new Error(`gallery: нет файла ${g.src}`);
-  const [thumb, full] = await Promise.all([
-    getImage({ src, width: 600, height: 450, fit: 'cover', format: 'webp', quality: 72 }),
-    getImage({ src, width: 1600, format: 'webp', quality: 78 }),
-  ]);
-  return { ...g, thumb: thumb.src, full: full.src };
-}));
+const files = import.meta.glob<{ default: ImageMetadata }>('../assets/images/**/*.{jpg,jpeg,png,webp}', { eager: true });
+const find = (p: string) => {
+  const m = Object.entries(files).find(([k]) => k.endsWith('/images/' + p))?.[1].default;
+  if (!m) throw new Error(`gallery: нет файла src/assets/images/${p}`);
+  return m;
+};
+const cats = await Promise.all(site.gallery.filter((c) => c.photos.length > 0).map(async (c) => ({
+  ...c,
+  photos: await Promise.all(c.photos.map(async (p, i) => {
+    const src = find(p.src);
+    const w = i === 0 ? [480, 800, 1200] : [400, 600];
+    const imgs = await Promise.all(w.map((width) => getImage({ src, width, format: 'webp', quality: 74 })));
+    const full = await getImage({ src, width: 1600, format: 'webp', quality: 78 });
+    return { ...p, src: imgs[0].src, srcset: imgs.map((m, j) => `${m.src} ${w[j]}w`).join(', '), full: full.src };
+  })),
+})));
+const tapes = ['var(--pink)', 'var(--mint)', 'var(--blue)'];
 ---
-{items.length > 0 && (
-  <section class="sec" id="galereya" aria-labelledby="gal-h">
+{cats.length > 0 && (
+  <section class="sec photos" id="foto" aria-labelledby="gal-h">
+    <svg class="photos-bg" aria-hidden="true" viewBox="0 0 430 760" preserveAspectRatio="none" filter="url(#crayon)"><path fill="var(--chalk)" d="M30 30 Q215 0 400 40 Q430 380 400 720 Q215 760 20 730 Q0 380 30 30Z"/></svg>
     <div class="wrap">
       <T as="h2" id="gal-h" k="gallery.title" />
-      <ul class="gallery">
-        {items.map((g, i) => (
-          <li><button type="button" class="gal-item" data-gal={i} data-full={g.full}>
-            <img src={g.thumb} alt={t(g.altKey)} data-i18n-attr={`alt=${g.altKey}`} loading="lazy" decoding="async" width="600" height="450" />
-          </button></li>
-        ))}
-      </ul>
+      <T as="p" k="gallery.sub" class="lead" />
+      {cats.length > 1 && (
+        <div class="tabs" role="tablist" aria-label={t('gallery.tabs')} data-i18n-attr="aria-label=gallery.tabs">
+          {cats.map((c, i) => (
+            <button type="button" class="tab" role="tab" id={`tab-${c.id}`} aria-controls={`cat-${c.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1} data-tab={c.id}>
+              <T k={c.titleKey as any} /><span class="c">{c.photos.length}</span>
+            </button>
+          ))}
+        </div>
+      )}
+      {cats.map((c, ci) => (
+        <div class="cat" id={`cat-${c.id}`} role={cats.length > 1 ? 'tabpanel' : undefined} aria-labelledby={cats.length > 1 ? `tab-${c.id}` : undefined} hidden={ci > 0}
+          data-cat={c.id} data-photos={JSON.stringify(c.photos.map((p) => ({ full: p.full, key: p.capKey })))}>
+          <div class="shots">
+            {c.photos.slice(0, 3).map((p, i) => (
+              <button type="button" class:list={['frame', { big: i === 0 }]} data-gal={i}>
+                <span class="tape" style={`background:${tapes[i]}`}></span>
+                <img src={p.src} srcset={p.srcset} sizes={i === 0 ? '(min-width:1024px) 640px, 92vw' : '(min-width:1024px) 400px, 45vw'} alt={t(p.capKey as any)} data-i18n-attr={`alt=${p.capKey}`} loading="lazy" decoding="async" />
+                <T k={p.capKey as any} class="cap" />
+              </button>
+            ))}
+          </div>
+          {c.photos.length > 3 && (
+            <button type="button" class="more" data-gal="3">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg>
+              <T k="gallery.more" vars={{ n: c.photos.length - 3 }} />
+            </button>
+          )}
+          {c.videos.length > 0 && c.videos.map((v) => (
+            <figure class="video"><video src={v.src} poster={v.poster} muted playsinline preload="none" controls aria-label={t(v.labelKey as any)}></video></figure>
+          ))}
+        </div>
+      ))}
+      <T as="p" k="gallery.todo" class="todo-note" />
     </div>
     <dialog class="lightbox" data-lightbox>
       <img data-lb-img alt="" />

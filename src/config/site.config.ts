@@ -15,16 +15,18 @@ export const site: SiteConfig = {
   mapUrl: 'https://2gis.kz/astana/firm/70000001063764314',
   coordinates: { lat: 51.096367, lng: 71.407931 },
   rating: { value: 5.0, count: 104, source: '2gis', url: 'https://2gis.kz/astana/firm/70000001063764314', asOf: '2026-11-13' },
+  logo: '/logo.svg',
   defaultLocale: 'ru',
   colors: {
-    bg: '#F6F1E8', bgAlt: '#EFE7D8', surface: '#FFFCF7', ink: '#2B2620', inkMuted: '#6B6358',
-    line: '#C8BBA8', accent: '#B5501E', accentInk: '#FFFFFF', rating: '#B8860B',
+    bg: '#FBF6EC', bgAlt: '#F3EADA', surface: '#FFFDF8', ink: '#2B2620', inkMuted: '#6B6358',
+    line: '#D9CCB8', accent: '#25D366', accentInk: '#2B2620', rating: '#B8860B',
+    pink: '#F4B6C2', pinkD: '#E07A93', yellow: '#F6D365', yellowD: '#E0A91C',
+    mint: '#A8DCC5', mintD: '#4FAE8A', blue: '#A9CFEF', blueD: '#5B9BD5', chalk: '#FCEFC7',
   },
   fonts: { heading: 'Nunito', body: 'Golos Text' },
   nav: [
     { href: '#programmy', labelKey: 'nav.programs' },
-    { href: '#pedagogi', labelKey: 'nav.teachers' },
-    { href: '#ceny', labelKey: 'nav.prices' },
+    { href: '#foto', labelKey: 'nav.photos' },
     { href: '#otzyvy', labelKey: 'nav.reviews' },
     { href: '#kontakty', labelKey: 'nav.contacts' },
   ],
@@ -33,23 +35,24 @@ export const site: SiteConfig = {
     { icon: 'clock', labelKey: 'trust.hours' },
     { icon: 'pin', labelKey: 'trust.address' },
   ],
-  hero: { agesKey: 'hero.ages' }, // illustration: Арт
+  hero: { photo: 'classes/class-wooden-blocks.webp', photoCapKey: 'gal.blocks' },
   about: {},
-  // TODO: возраст и корзины — догадка для демо (в 2ГИС только стенд 2022: «от 3 до 10 лет»). Уточнить у центра.
+  // Возраст центра 3–7 (Instagram, со слов Амира; DECISIONS.md 13.11). Возраст каждой программы — TODO, уточнить у центра.
   ageBuckets: [
     { id: 'all', labelKey: 'ages.all', ageFrom: 0, ageTo: 18, programIds: [] },
     { id: '3-5', labelKey: 'ages.3_5', ageFrom: 3, ageTo: 5, programIds: ['logoped', 'sport'] },
-    { id: '5-7', labelKey: 'ages.5_7', ageFrom: 5, ageTo: 7, programIds: ['logoped', 'speedread', 'mental', 'sport'] },
-    { id: '7-10', labelKey: 'ages.7_10', ageFrom: 7, ageTo: 10, programIds: ['afterschool', 'speedread', 'mental', 'robotics', 'sport'] },
+    { id: '5-7', labelKey: 'ages.5_7', ageFrom: 5, ageTo: 7, programIds: ['logoped', 'sport', 'school', 'mental', 'speedread', 'robotics'] },
   ],
-  // Направления — из карточки 2ГИС. Цены нет → «узнать в WhatsApp».
+  // Направления — из карточки 2ГИС (+ подготовка к школе из отзывов). Цены нет → «узнать в WhatsApp».
   programs: [
-    { id: 'afterschool', slug: 'prodlyonka', titleKey: 'programs.afterschool.title', summaryKey: 'programs.afterschool.summary', ageFrom: 7, ageTo: 10 },
-    { id: 'speedread', slug: 'skorochtenie', titleKey: 'programs.speedread.title', summaryKey: 'programs.todo', ageFrom: 5, ageTo: 10 },
-    { id: 'mental', slug: 'mentalnaya-arifmetika', titleKey: 'programs.mental.title', summaryKey: 'programs.todo', ageFrom: 5, ageTo: 10 },
-    { id: 'logoped', slug: 'logoped', titleKey: 'programs.logoped.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7 },
-    { id: 'robotics', slug: 'robototehnika', titleKey: 'programs.robotics.title', summaryKey: 'programs.todo', ageFrom: 7, ageTo: 10 },
-    { id: 'sport', slug: 'sport-intellekt', titleKey: 'programs.sport.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 10 },
+    { id: 'logoped', slug: 'logoped', titleKey: 'programs.logoped.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7, spot: 'speech.svg' },
+    { id: 'sport', slug: 'kluby', titleKey: 'programs.sport.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7, spot: 'club.svg' },
+    { id: 'school', slug: 'podgotovka-k-shkole', titleKey: 'programs.school.title', summaryKey: 'programs.todo', ageFrom: 5, ageTo: 7, spot: 'book.svg' },
+    { id: 'mental', slug: 'mentalnaya-arifmetika', titleKey: 'programs.mental.title', summaryKey: 'programs.todo', ageFrom: 5, ageTo: 7, spot: 'abacus.svg' },
+    { id: 'speedread', slug: 'skorochtenie', titleKey: 'programs.speedread.title', summaryKey: 'programs.todo', ageFrom: 5, ageTo: 7, spot: 'book.svg' },
+    { id: 'robotics', slug: 'robototehnika', titleKey: 'programs.robotics.title', summaryKey: 'programs.todo', ageFrom: 5, ageTo: 7, spot: 'robot.svg' },
+    // только во «Все»: в отзыве — третьеклассник; нужна ли продлёнка, Амир уточнит у директора
+    { id: 'afterschool', slug: 'prodlyonka', titleKey: 'programs.afterschool.title', summaryKey: 'programs.afterschool.summary', ageFrom: 7, ageTo: 10, ageKey: 'programs.ageSchool', spot: 'house.svg' },
   ],
   teachers: [],
   // Дословно с 2ГИС, 13.11.2026 (content/reviews.md)
@@ -61,17 +64,28 @@ export const site: SiteConfig = {
     { id: 'r2', quoteKey: 'reviews.r2', author: 'Акмарал Базарбеккызы', source: '2gis' },
     { id: 'r3', quoteKey: 'reviews.r3', author: 'Aigerim I', source: '2gis' },
   ],
-  // Фото с 2ГИС без лиц детей (content/photos/index.md). Перед запуском заменить на снимки центра.
+  // TODO (блокер запуска): фото детей с 2ГИС — только для демо, с разрешения Амира. До запуска заменить на снимки с письменным согласием родителей.
+  // Раскладка по направлениям условная (TODO). Пустые направления скрыты.
   gallery: [
-    { src: 'facade-sign-day.jpg', altKey: 'gal.facadeDay', type: 'space' },
-    { src: 'crafts-paper-rainbows.jpg', altKey: 'gal.rainbows', type: 'art' },
-    { src: 'entrance-door-canopy.jpg', altKey: 'gal.door', type: 'space' },
-    { src: 'crafts-painted-tote-bags.jpg', altKey: 'gal.totes', type: 'art' },
-    { src: 'facade-sign-letters.jpg', altKey: 'gal.letters', type: 'space' },
-    { src: 'entrance-night.jpg', altKey: 'gal.night', type: 'space' },
+    { id: 'kluby', titleKey: 'gal.cat.kluby', videos: [], photos: [
+      { src: 'classes/class-drawing-sun-pictures.webp', capKey: 'gal.sun' },
+      { src: 'classes/class-painting-tote-bags.webp', capKey: 'gal.totesKids' },
+      { src: 'classes/class-painting-strawberry-tote.webp', capKey: 'gal.strawberry' },
+      { src: 'classes/class-paper-crafts-tables.webp', capKey: 'gal.paper' },
+      { src: 'gallery/crafts-paper-rainbows.jpg', capKey: 'gal.rainbows' },
+      { src: 'gallery/crafts-painted-tote-bags.jpg', capKey: 'gal.totes' },
+    ] },
+    { id: 'shkola', titleKey: 'gal.cat.shkola', videos: [], photos: [
+      { src: 'classes/class-reading-book.webp', capKey: 'gal.reading' },
+      { src: 'classes/class-wooden-blocks.webp', capKey: 'gal.blocks' },
+    ] },
+    { id: 'prodlenka', titleKey: 'programs.afterschool.title', photos: [], videos: [] },
+    { id: 'skorochtenie', titleKey: 'programs.speedread.title', photos: [], videos: [] },
+    { id: 'arifmetika', titleKey: 'programs.mental.title', photos: [], videos: [] },
+    { id: 'robototehnika', titleKey: 'programs.robotics.title', photos: [], videos: [] },
   ],
   priceGroups: [],
   trial: { enabled: true },
-  seo: { titleKey: 'seo.title', descriptionKey: 'seo.description', ogImage: '/og-default.jpg', noindex: true },
+  seo: { titleKey: 'seo.title', descriptionKey: 'seo.description', ogImage: '/og.png', noindex: true },
   demoNote: true,
 };

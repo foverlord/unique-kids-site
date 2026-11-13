@@ -3,6 +3,7 @@ import '@fontsource/nunito/700.css';
 import '@fontsource/nunito/800.css';
 import '@fontsource/golos-text/400.css';
 import '@fontsource/golos-text/600.css';
+import '@fontsource/golos-text/700.css';
 import '../styles/global.css';
 import { site } from '../config/site.config';
 import { t, dicts } from '../i18n';
@@ -14,7 +15,7 @@ const { title = t(site.seo.titleKey), description = t(site.seo.descriptionKey), 
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const og = site.seo.ogImage ? new URL(site.seo.ogImage, Astro.site).href : undefined;
 const c = site.colors;
-const vars = `:root{--color-bg:${c.bg};--color-bg-alt:${c.bgAlt};--color-surface:${c.surface};--color-ink:${c.ink};--color-ink-muted:${c.inkMuted};--color-line:${c.line};--color-accent:${c.accent};--color-accent-ink:${c.accentInk};--color-rating:${c.rating};--font-heading:'${site.fonts.heading}';--font-body:'${site.fonts.body}'}`;
+const vars = `:root{--color-bg:${c.bg};--color-bg-alt:${c.bgAlt};--color-surface:${c.surface};--color-ink:${c.ink};--color-ink-muted:${c.inkMuted};--color-line:${c.line};--color-accent:${c.accent};--color-accent-ink:${c.accentInk};--color-rating:${c.rating};--pink:${c.pink};--pink-d:${c.pinkD};--yellow:${c.yellow};--yellow-d:${c.yellowD};--mint:${c.mint};--mint-d:${c.mintD};--blue:${c.blue};--blue-d:${c.blueD};--chalk:${c.chalk};--font-heading:'${site.fonts.heading}';--font-body:'${site.fonts.body}'}`;
 const ld = schema ? {
   '@context': 'https://schema.org', '@type': 'ChildCare', name: site.name, url: Astro.site?.href,
   telephone: site.phoneE164, image: og,
@@ -49,6 +50,10 @@ const i18nData = { dicts, wa: site.whatsappNumber, name: site.name, programs: Ob
   {ld && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}
 </head>
 <body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <filter id="pencil"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="1.6"/></filter>
+    <filter id="crayon" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="3" seed="7" result="w"/><feDisplacementMap in="SourceGraphic" in2="w" scale="9" result="d"/><feTurbulence type="fractalNoise" baseFrequency="1.1 .35" numOctaves="2" seed="2" result="g"/><feColorMatrix in="g" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 1.75" result="m"/><feComposite in="d" in2="m" operator="in"/></filter>
+  </defs></svg>
   <a class="skip" href="#main"><span data-i18n="skip">{t('skip')}</span></a>
   <Header />
   <main id="main"><slot /></main>

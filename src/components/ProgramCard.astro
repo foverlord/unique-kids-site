@@ -7,8 +7,9 @@ interface Props { p: Program }
 const { p } = Astro.props;
 ---
 <article class="card prog" data-prog={p.id} data-from={p.ageFrom} data-to={p.ageTo}>
+  {p.spot && <img class="spot" src={`/spots/${p.spot}`} width="56" height="56" alt="" loading="lazy" />}
   <T as="h3" k={p.titleKey as any} />
-  <T as="p" k="programs.age" vars={{ from: p.ageFrom, to: p.ageTo }} class="prog-age" />
+  {p.ageKey ? <T as="p" k={p.ageKey as any} class="prog-age" /> : <T as="p" k="programs.age" vars={{ from: p.ageFrom, to: p.ageTo }} class="prog-age" />}
   <T as="p" k={p.summaryKey as any} />
   <T as="p" k={(p.priceLabelKey ?? 'programs.priceAsk') as any} class="prog-price" />
   {p.durationKey && <T as="p" k={p.durationKey as any} class="muted" />}
