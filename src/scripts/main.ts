@@ -146,7 +146,14 @@ $$<HTMLAnchorElement>('[data-bucket-link]').forEach((a) => a.addEventListener('c
 const hero = document.querySelector<HTMLElement>('[data-hero]');
 if (hero) {
   let ticking = false;
-  const step = () => (matchMedia('(min-width:1024px)').matches ? 80 : 60);
+  // мобильный: возраст 7 наступает, пока барс на отметке 7 ещё виден под шапкой
+  const ruler = hero.querySelector<HTMLElement>('.ruler');
+  const step = () => {
+    if (matchMedia('(min-width:1024px)').matches || !ruler) return 80;
+    const top7 = ruler.getBoundingClientRect().top + scrollY + 72 - 150; // верх барса на отметке 7
+    const end = top7 - (hdr?.offsetHeight ?? 64) - 8;
+    return Math.max(15, Math.min(60, end / 4));
+  };
   const upd = () => { ticking = false; hero.dataset.age = String(3 + Math.max(0, Math.min(4, Math.floor(scrollY / step())))); };
   const q = Number(new URLSearchParams(location.search).get('age'));
   if (q >= 3 && q <= 7) hero.dataset.age = String(Math.round(q));
