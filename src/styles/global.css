@@ -42,6 +42,7 @@
 .hdr-in { height: var(--hdr); display: flex; align-items: center; gap: 16px; transition: height .2s }
 .hdr.is-scrolled .hdr-in { height: 56px }
 .logo { font-weight: 800; font-size: 22px; text-decoration: none; white-space: nowrap }
+.logo img { height: 36px; width: auto }
 .hdr-nav { display: none; gap: 22px; margin: 0 auto; font-weight: 500 }
 .hdr-nav a { text-decoration: none; padding: 8px 0 }
 .hdr-nav a:hover { text-decoration: underline; text-underline-offset: 6px; text-decoration-color: var(--color-line) }

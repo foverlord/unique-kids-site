@@ -148,8 +148,12 @@ if (hero) {
   let ticking = false;
   const step = () => (matchMedia('(min-width:1024px)').matches ? 80 : 60);
   const upd = () => { ticking = false; hero.dataset.age = String(3 + Math.max(0, Math.min(4, Math.floor(scrollY / step())))); };
-  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
-  upd();
+  const q = Number(new URLSearchParams(location.search).get('age'));
+  if (q >= 3 && q <= 7) hero.dataset.age = String(Math.round(q));
+  else {
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(upd); } }, { passive: true });
+    upd();
+  }
 }
 document.addEventListener('click', (e) => {
   const s = (e.target as Element).closest<HTMLElement>('[data-hop]');

@@ -26,6 +26,8 @@ export const kk: Partial<Record<DictKey, string>> = {
   'hero.pickLink': 'Жасын таңдау',
   'hero.c35': '3–5 жас',
   'hero.c57': '5–7 жас',
+  'hero.c35p': 'Логопед, шығармашылық, үйірмелер',
+  'hero.c57p': 'Мектепке дайындық, арифметика, жылдам оқу',
   'hero.tickAria': '{age} жасқа арналған бағдарламалар',
   'rating.label': '2ГИС-те {count} баға',
   'rating.aria': '2ГИС-те рейтинг 5-тен {value}, {count} баға',
@@ -37,7 +39,7 @@ export const kk: Partial<Record<DictKey, string>> = {
   'programs.lead': 'Баланың жасын таңдаңыз, біз лайық сабақтарды көрсетеміз.',
   'programs.agesLabel': 'Баланың жасы',
   'programs.empty': 'Бұл жас үшін бізге жазыңыз, лайық топты ұсынамыз.',
-  'programs.age': 'TODO: {from}–{to} жас',
+  'programs.age': '{from}–{to} жас', // TODO: возраст уточнить
   'programs.priceAsk': 'Бағасын WhatsApp-та айтамыз',
   'programs.trial': 'Сынақ сабақ',
   'programs.trialAria': 'Сынақ сабаққа жазылу: {title}',
