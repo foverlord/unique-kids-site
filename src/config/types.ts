@@ -7,7 +7,7 @@ export type Program = {
   /** свой текст возраста вместо «от–до» (например, TODO) */ ageKey?: string; /** файл в public/spots/ */ spot?: string;
   priceLabelKey?: string; durationKey?: string; scheduleKey?: string; image?: string;
 };
-export type Teacher = { id: string; name: string; roleKey: string; bioKey: string; photo?: string; programIds?: string[] };
+export type Teacher = { id: string; name: string; roleKey?: string; bioKey: string; photo?: string; programIds?: string[] };
 export type Review = { id: string; quoteKey: string; author: string; childAge?: string; source: '2gis' | 'instagram' | 'other' };
 export type GalleryPhoto = { /** путь от src/assets/images/ */ src: string; capKey: string };
 export type GalleryVideo = { /** путь от public/ */ src: string; poster: string; labelKey: string };
@@ -34,6 +34,8 @@ export type SiteConfig = {
   ageBuckets: AgeBucket[]; defaultAgeBucket?: string;
   programs: Program[]; teachers: Teacher[]; reviews: Review[]; gallery: GalleryCategory[];
   priceGroups: PriceGroup[];
+  /** «Что входит» вместо прайса */ includesKeys: string[];
+  /** «Обычный день» */ daySteps: string[];
   trial: { enabled: boolean };
   seo: { titleKey: string; descriptionKey: string; ogImage?: string; noindex: boolean };
   demoNote: boolean;

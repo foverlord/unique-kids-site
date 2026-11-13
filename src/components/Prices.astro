@@ -7,12 +7,19 @@ const groups = site.priceGroups;
 <section class="sec" id="ceny" aria-labelledby="price-h">
   <div class="wrap">
     <T as="h2" id="price-h" k="prices.title" />
-    {groups.length > 0 ? (
+    <T as="p" k="prices.text" class="lead" />
+    {groups.length > 0 && (
       <div class="grid3">{groups.map((g) => (
         <div class="card"><T as="h3" k={g.titleKey as any} /><T as="p" k={g.priceKey as any} class="prog-price" />{g.noteKey && <T as="p" k={g.noteKey as any} class="muted" />}</div>
       ))}</div>
-    ) : (
-      <div class="card price-ask"><T as="p" k="prices.text" class="lead" /><WhatsAppButton place="prices" labelKey="cta.whatsapp" variant="secondary" /></div>
     )}
+    <div class="card price-ask">
+      {site.includesKeys.length > 0 && (<>
+        <T as="h3" k="prices.incTitle" />
+        <ul class="inc">{site.includesKeys.map((k) => <li><T k={k as any} /></li>)}</ul>
+      </>)}
+      <T as="p" k="prices.trial" />
+      <WhatsAppButton place="prices" labelKey="cta.whatsapp" variant="secondary" />
+    </div>
   </div>
 </section>

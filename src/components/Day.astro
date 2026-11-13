@@ -1,0 +1,13 @@
+---
+import { site } from '../config/site.config';
+import T from './T.astro';
+---
+{site.daySteps.length > 0 && (
+  <section class="sec" id="den" aria-labelledby="day-h">
+    <div class="wrap">
+      <T as="h2" id="day-h" k="day.title" />
+      <T as="p" k="day.sub" class="lead" />
+      <ol class="day">{site.daySteps.map((k) => <li><T k={k as any} /></li>)}</ol>
+    </div>
+  </section>
+)}

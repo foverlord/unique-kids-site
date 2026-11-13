@@ -13,8 +13,8 @@ import { waUrl } from '../scripts/wa';
           <T as="p" k="trial.text" class="lead" />
         </div>
         <div class="trial-fields">
-          <label><span><T k="trial.name" /> <small class="muted">(<T k="trial.optional" />)</small></span><input name="parent" autocomplete="name" /></label>
-          <label><span><T k="trial.child" /> <small class="muted">(<T k="trial.optional" />)</small></span><input name="child" /></label>
+          <label><span><T k="trial.name" />{' '}<small class="muted">(<T k="trial.optional" />)</small></span><input name="parent" autocomplete="name" /></label>
+          <label><span><T k="trial.child" />{' '}<small class="muted">(<T k="trial.optional" />)</small></span><input name="child" /></label>
           <button type="submit" class="btn btn-primary" data-goal="wa_click" data-place="trial"><Icon name="wa" size={20} /><T k="trial.submit" /></button>
         </div>
       </form>

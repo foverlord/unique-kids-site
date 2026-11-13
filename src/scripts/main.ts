@@ -22,8 +22,10 @@ function tr(key: string, v?: Record<string, string>) {
 }
 const varsOf = (el: Element) => { const j = el.getAttribute('data-i18n-vars'); return j ? JSON.parse(j) : undefined; };
 
+let selAge = '';
 function waHref(programId?: string, parent = '', child = '') {
   const prog = programId && data.programs[programId] ? tr(data.programs[programId]) : '';
+  if (selAge && !parent && !child) return `https://wa.me/${data.wa}?text=${encodeURIComponent(tr('wa.withAge', { age: selAge, name: data.name, v: prog || tr('wa.ageAsk') }))}`;
   const text = [tr('wa.greeting', { name: data.name }), tr('wa.parent', { v: parent }), tr('wa.child', { v: child }), tr('wa.program', { v: prog || tr('wa.programAsk') })].join('\n');
   return `https://wa.me/${data.wa}?text=${encodeURIComponent(text)}`;
 }
@@ -43,6 +45,7 @@ function applyLocale() {
     });
   });
   $$<HTMLAnchorElement>('a[data-wa]').forEach((a) => (a.href = waHref(a.dataset.program)));
+  showAge();
   $$<HTMLButtonElement>('[data-locale]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.locale === locale)));
 }
 $$<HTMLButtonElement>('[data-locale]').forEach((b) =>
@@ -102,7 +105,18 @@ function filter(chip: HTMLButtonElement) {
   if (grid) { grid.hidden = shown === 0; requestAnimationFrame(() => (grid.style.minHeight = '')); }
   chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
 }
-chips.forEach((c) => c.addEventListener('click', () => filter(c)));
+function showAge() {
+  const ageCard = document.querySelector<HTMLElement>('[data-age-card]');
+  if (!ageCard) return;
+  ageCard.hidden = !selAge;
+  ageCard.textContent = selAge ? tr('programs.forAge', { age: selAge }) : '';
+}
+function setAge(age: string) {
+  selAge = age;
+  $$<HTMLAnchorElement>('a[data-wa]').forEach((a) => (a.href = waHref(a.dataset.program)));
+  showAge();
+}
+chips.forEach((c) => c.addEventListener('click', () => { filter(c); setAge(''); }));
 
 /* ---------- отзывы: scroll-snap + кнопки и точки ---------- */
 const track_ = document.querySelector<HTMLElement>('[data-rev-track]');
@@ -126,7 +140,7 @@ const lb = document.querySelector<HTMLDialogElement>('[data-lightbox]');
 if (lb) {
   const img = lb.querySelector<HTMLImageElement>('[data-lb-img]')!;
   let list: { full: string; key: string }[] = [], cur = 0, opener: HTMLElement | null = null;
-  const show = (i: number) => { cur = (i + list.length) % list.length; img.src = list[cur].full; img.alt = tr(list[cur].key); };
+  const show = (i: number) => { cur = (i + list.length) % list.length; img.hidden = false; img.src = list[cur].full; img.alt = tr(list[cur].key); };
   $$<HTMLButtonElement>('[data-gal]').forEach((b) => b.addEventListener('click', () => {
     list = JSON.parse(b.closest<HTMLElement>('[data-photos]')!.dataset.photos!); opener = b;
     show(Number(b.dataset.gal)); lb.showModal(); document.documentElement.classList.add('no-scroll');
@@ -142,6 +156,7 @@ if (lb) {
 $$<HTMLAnchorElement>('[data-bucket-link]').forEach((a) => a.addEventListener('click', () => {
   const chip = document.querySelector<HTMLButtonElement>(`[data-bucket="${a.dataset.bucketLink}"]`);
   if (chip) filter(chip);
+  setAge(a.dataset.age ?? '');
 }));
 const hero = document.querySelector<HTMLElement>('[data-hero]');
 if (hero) {

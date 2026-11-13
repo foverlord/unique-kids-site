@@ -37,32 +37,39 @@ export const site: SiteConfig = {
   ],
   hero: { photo: 'classes/class-wooden-blocks.webp', photoCapKey: 'gal.blocks' },
   about: {},
-  // Возраст центра 3–7 (Instagram, со слов Амира; DECISIONS.md 13.11). Возраст каждой программы — TODO, уточнить у центра.
+  // Возраст v3 (DECISIONS.md 13.11 13:25): центр 3–10. Подтверждено отзывами: школа 5–7, продлёнка и лагерь 7+.
+  // TODO: возраст логопеда, клубов, скорочтения, арифметики и робототехники — наш вариант, уточнить у директора.
   ageBuckets: [
     { id: 'all', labelKey: 'ages.all', ageFrom: 0, ageTo: 18, programIds: [] },
     { id: '3-5', labelKey: 'ages.3_5', ageFrom: 3, ageTo: 5, programIds: ['logoped', 'sport'] },
-    { id: '5-7', labelKey: 'ages.5_7', ageFrom: 3, ageTo: 7, programIds: ['logoped', 'sport', 'school', 'mental', 'speedread', 'robotics'] },
+    { id: '5-7', labelKey: 'ages.5_7', ageFrom: 5, ageTo: 7, programIds: ['school', 'logoped', 'sport', 'mental', 'speedread'] },
+    { id: '7plus', labelKey: 'ages.7plus', ageFrom: 7, ageTo: 10, programIds: ['afterschool', 'camp', 'robotics', 'mental', 'speedread', 'sport'] },
   ],
-  // Направления — из карточки 2ГИС (+ подготовка к школе из отзывов). Цены нет → «узнать в WhatsApp».
   programs: [
-    { id: 'logoped', slug: 'logoped', titleKey: 'programs.logoped.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7, spot: 'speech.svg' },
-    { id: 'sport', slug: 'kluby', titleKey: 'programs.sport.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7, spot: 'club.svg' },
-    { id: 'school', slug: 'podgotovka-k-shkole', titleKey: 'programs.school.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7, spot: 'book.svg' },
-    { id: 'mental', slug: 'mentalnaya-arifmetika', titleKey: 'programs.mental.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7, spot: 'abacus.svg' },
-    { id: 'speedread', slug: 'skorochtenie', titleKey: 'programs.speedread.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7, spot: 'book.svg' },
-    { id: 'robotics', slug: 'robototehnika', titleKey: 'programs.robotics.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7, spot: 'robot.svg' },
-    // только во «Все»: в отзыве — третьеклассник; нужна ли продлёнка, Амир уточнит у директора
-    { id: 'afterschool', slug: 'prodlyonka', titleKey: 'programs.afterschool.title', summaryKey: 'programs.afterschool.summary', ageFrom: 7, ageTo: 10, ageKey: 'programs.ageSchool', spot: 'house.svg' },
+    { id: 'school', slug: 'podgotovka-k-shkole', titleKey: 'programs.school.title', summaryKey: 'programs.school.summary', ageFrom: 5, ageTo: 7, spot: 'book.svg' },
+    { id: 'afterschool', slug: 'prodlyonka', titleKey: 'programs.afterschool.title', summaryKey: 'programs.afterschool.summary', ageFrom: 7, ageTo: 10, ageKey: 'programs.age7plus', spot: 'house.svg' },
+    { id: 'camp', slug: 'letniy-lager', titleKey: 'programs.camp.title', summaryKey: 'programs.camp.summary', ageFrom: 7, ageTo: 10, ageKey: 'programs.age7plus', spot: 'club.svg' },
+    { id: 'logoped', slug: 'logoped', titleKey: 'programs.logoped.title', summaryKey: 'programs.logoped.summary', ageFrom: 3, ageTo: 7, spot: 'speech.svg' },
+    { id: 'speedread', slug: 'skorochtenie', titleKey: 'programs.speedread.title', summaryKey: 'programs.speedread.summary', ageFrom: 5, ageTo: 10, spot: 'book.svg' },
+    { id: 'mental', slug: 'mentalnaya-arifmetika', titleKey: 'programs.mental.title', summaryKey: 'programs.mental.summary', ageFrom: 5, ageTo: 10, spot: 'abacus.svg' },
+    { id: 'robotics', slug: 'robototehnika', titleKey: 'programs.robotics.title', summaryKey: 'programs.robotics.summary', ageFrom: 7, ageTo: 10, spot: 'robot.svg' },
+    { id: 'sport', slug: 'kluby', titleKey: 'programs.sport.title', summaryKey: 'programs.sport.summary', ageFrom: 3, ageTo: 10, spot: 'club.svg' },
   ],
-  teachers: [],
+  // «Наши апай»: имена только из отзывов 2ГИС. TODO: подтвердить у центра, фото нет — инициалы.
+  teachers: [
+    { id: 'aruna', name: 'Аруна Болатхановна', roleKey: 'teachers.aruna.role', bioKey: 'teachers.aruna.bio' },
+    { id: 'kamshat', name: 'Камшат апай', roleKey: 'teachers.kamshat.role', bioKey: 'teachers.kamshat.bio' },
+    { id: 'damira', name: 'Дамира апай', bioKey: 'teachers.damira.bio' },
+    { id: 'nazira', name: 'Назира', bioKey: 'teachers.nazira.bio' },
+  ],
   // Дословно с 2ГИС, 13.11.2026 (content/reviews.md)
   reviews: [
-    { id: 'r1', quoteKey: 'reviews.r1', author: 'Ляйля Акимжанова', source: '2gis' },
-    { id: 'r5', quoteKey: 'reviews.r5', author: 'Санжар Бериков', source: '2gis' },
-    { id: 'r4', quoteKey: 'reviews.r4', author: 'Almira Uisen', source: '2gis' },
-    { id: 'r6', quoteKey: 'reviews.r6', author: 'А. Бахыт', source: '2gis' },
-    { id: 'r2', quoteKey: 'reviews.r2', author: 'Акмарал Базарбеккызы', source: '2gis' },
     { id: 'r3', quoteKey: 'reviews.r3', author: 'Aigerim I', source: '2gis' },
+    { id: 'r5', quoteKey: 'reviews.r5', author: 'Санжар Бериков', source: '2gis' },
+    { id: 'r6', quoteKey: 'reviews.r6', author: 'А. Бахыт', source: '2gis' },
+    { id: 'r4', quoteKey: 'reviews.r4', author: 'Almira Uisen', source: '2gis' },
+    { id: 'r1', quoteKey: 'reviews.r1', author: 'Ляйля Акимжанова', source: '2gis' },
+    { id: 'r2', quoteKey: 'reviews.r2', author: 'Акмарал Базарбеккызы', source: '2gis' },
   ],
   // TODO (блокер запуска): фото детей с 2ГИС — только для демо, с разрешения Амира. До запуска заменить на снимки с письменным согласием родителей.
   // Раскладка по направлениям условная (TODO). Пустые направления скрыты.
@@ -85,6 +92,8 @@ export const site: SiteConfig = {
     { id: 'robototehnika', titleKey: 'programs.robotics.title', photos: [], videos: [] },
   ],
   priceGroups: [],
+  includesKeys: ['prices.inc.food', 'prices.inc.pickup', 'prices.inc.homework', 'prices.inc.camp', 'prices.inc.pay', 'prices.inc.ramp'],
+  daySteps: ['day.breakfast', 'day.classes', 'day.lunch', 'day.after', 'day.snack', 'day.home'],
   trial: { enabled: true },
   seo: { titleKey: 'seo.title', descriptionKey: 'seo.description', ogImage: '/og.png', noindex: true },
   demoNote: true,

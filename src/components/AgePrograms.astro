@@ -21,6 +21,7 @@ const def = site.defaultAgeBucket ?? 'all';
           ))}
         </div>
       )}
+      <p class="age-pick" data-age-card hidden aria-live="polite"></p>
       <div class="prog-grid" data-prog-grid>
         {site.programs.map((p) => <ProgramCard p={p} />)}
       </div>

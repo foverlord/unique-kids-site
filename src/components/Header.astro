@@ -9,7 +9,7 @@ const base = Astro.url.pathname === '/' ? '' : '/';
 ---
 <header class="hdr" data-hdr>
   <div class="wrap hdr-in">
-    <a class="logo" href="/" aria-label={site.name}>{site.logo ? <img src={site.logo} alt="" height="36" /> : site.name}</a>
+    <a class="logo" href="/">{site.logo ? <img src={site.logo} alt={site.name} height="36" /> : site.name}</a>
     <nav class="hdr-nav" aria-label={t('nav.menu')} data-i18n-attr="aria-label=nav.menu">
       {site.nav.map((n) => <a href={base + n.href} data-nav={n.href}><T k={n.labelKey as any} /></a>)}
     </nav>

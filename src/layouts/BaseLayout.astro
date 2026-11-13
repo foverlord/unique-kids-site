@@ -19,6 +19,7 @@ const vars = `:root{--color-bg:${c.bg};--color-bg-alt:${c.bgAlt};--color-surface
 const ld = schema ? {
   '@context': 'https://schema.org', '@type': 'ChildCare', name: site.name, url: Astro.site?.href,
   telephone: site.phoneE164, image: og,
+  openingHours: 'Mo-Fr 09:00-18:30',
   address: { '@type': 'PostalAddress', streetAddress: site.address, addressLocality: site.city, addressCountry: 'KZ' },
   ...(site.coordinates ? { geo: { '@type': 'GeoCoordinates', latitude: site.coordinates.lat, longitude: site.coordinates.lng } } : {}),
   ...(site.rating ? { aggregateRating: { '@type': 'AggregateRating', ratingValue: site.rating.value, ratingCount: site.rating.count, bestRating: 5 } } : {}),

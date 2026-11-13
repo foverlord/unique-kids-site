@@ -8,6 +8,7 @@ const list = site.teachers;
   <section class="sec" id="pedagogi" aria-labelledby="tch-h">
     <div class="wrap">
       <T as="h2" id="tch-h" k="teachers.title" />
+      <T as="p" k="teachers.sub" class="lead" />
       <div class:list={['grid3', { 'grid-one': list.length === 1 }]}>{list.map((tch) => <TeacherCard tch={tch} />)}</div>
     </div>
   </section>
