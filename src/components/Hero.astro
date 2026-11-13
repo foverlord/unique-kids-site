@@ -1,0 +1,25 @@
+---
+import { site } from '../config/site.config';
+import T from './T.astro';
+import RatingBadge from './RatingBadge.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+import HeroDrawing from './HeroDrawing.astro';
+---
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <T as="h1" id="h1" k="hero.h1" class="kicker" />
+      <p class="display">{site.name}</p>
+      <T as="p" k="hero.tagline" class="tagline" />
+      <T as="p" k={site.hero.agesKey as any} class="ages" />
+      <RatingBadge />
+      <div class="hero-cta">
+        <WhatsAppButton place="hero" ariaKey="cta.trialAria" />
+        <a class="btn btn-secondary" href="#programmy"><T k="cta.programs" /></a>
+      </div>
+    </div>
+    <div class="hero-art">
+      {site.hero.image ? <img src={site.hero.image} alt="" width="640" height="560" fetchpriority="high" /> : <HeroDrawing />}
+    </div>
+  </div>
+</section>

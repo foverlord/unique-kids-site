@@ -1,0 +1,17 @@
+---
+import { site } from '../config/site.config';
+import T from './T.astro';
+import { t } from '../i18n';
+interface Props { size?: 'sm' | 'lg' }
+const { size = 'sm' } = Astro.props;
+const r = site.rating;
+const value = r ? r.value.toFixed(1).replace('.', ',') : '';
+---
+{r && (
+  <a class:list={['rating', `rating-${size}`]} href={r.url} target="_blank" rel="noopener"
+    aria-label={t('rating.aria', { value, count: r.count })} data-i18n-attr="aria-label=rating.aria" data-i18n-vars={JSON.stringify({ value, count: r.count })}>
+    <span class="rating-stars" aria-hidden="true">{'★★★★★'}</span>
+    <span class="rating-value">{value}</span>
+    <T k="rating.label" vars={{ count: r.count }} class="rating-label" />
+  </a>
+)}

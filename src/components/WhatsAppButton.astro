@@ -1,0 +1,17 @@
+---
+// Кнопка пробного занятия. href собирается из конфига; скрипт пересобирает текст при смене языка.
+import { site } from '../config/site.config';
+import { waUrl } from '../scripts/wa';
+import { t, type DictKey } from '../i18n';
+import Icon from './Icon.astro';
+interface Props { place: 'hero' | 'sticky' | 'trial' | 'program' | 'footer' | 'contacts' | 'prices' | 'empty' | 'header' | '404'; programId?: string; labelKey?: DictKey; variant?: 'primary' | 'secondary' | 'small'; ariaKey?: DictKey; ariaVars?: Record<string, string>; icon?: boolean; class?: string }
+const { place, programId, labelKey = 'cta.trial', variant = 'primary', ariaKey, ariaVars, icon = true, class: cls } = Astro.props;
+const program = programId ? site.programs.find((p) => p.id === programId) : undefined;
+const href = waUrl('ru', program ? t(program.titleKey) : undefined);
+const aria = ariaKey ? t(ariaKey, ariaVars) : undefined;
+---
+<a class:list={['btn', `btn-${variant}`, cls]} href={href} target="_blank" rel="noopener"
+  data-wa data-goal="wa_click" data-place={place} data-program={programId}
+  aria-label={aria} data-i18n-attr={ariaKey ? `aria-label=${ariaKey}` : undefined} data-i18n-vars={ariaVars ? JSON.stringify(ariaVars) : undefined}>
+  {icon && <Icon name="wa" size={20} />}<span data-i18n={labelKey}>{t(labelKey)}</span>
+</a>

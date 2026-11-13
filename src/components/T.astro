@@ -1,0 +1,8 @@
+---
+// Текст из словаря: рендерим ru, клиентский скрипт подменяет при смене языка.
+import { t, type DictKey } from '../i18n';
+interface Props { k: DictKey; vars?: Record<string, string | number>; as?: string; class?: string; id?: string }
+const { k, vars, as: Tag = 'span', class: cls, id } = Astro.props;
+const Comp = Tag as any;
+---
+<Comp class={cls} id={id} data-i18n={k} data-i18n-vars={vars ? JSON.stringify(vars) : undefined}>{t(k, vars)}</Comp>

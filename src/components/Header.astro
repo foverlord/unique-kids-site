@@ -1,0 +1,32 @@
+---
+import { site } from '../config/site.config';
+import T from './T.astro';
+import Icon from './Icon.astro';
+import LocaleToggle from './LocaleToggle.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+import { t } from '../i18n';
+const base = Astro.url.pathname === '/' ? '' : '/';
+---
+<header class="hdr" data-hdr>
+  <div class="wrap hdr-in">
+    <a class="logo" href="/" aria-label={site.name}>{site.logo ? <img src={site.logo} alt="" height="36" /> : site.name}</a>
+    <nav class="hdr-nav" aria-label={t('nav.menu')} data-i18n-attr="aria-label=nav.menu">
+      {site.nav.map((n) => <a href={base + n.href} data-nav={n.href}><T k={n.labelKey as any} /></a>)}
+    </nav>
+    <div class="hdr-act">
+      <LocaleToggle />
+      <WhatsAppButton place="header" labelKey="cta.trialShort" variant="small" icon={false} class="hdr-cta" />
+      <button type="button" class="burger" data-burger aria-label={t('nav.open')} data-i18n-attr="aria-label=nav.open" aria-haspopup="dialog"><Icon name="menu" /></button>
+    </div>
+  </div>
+</header>
+<dialog class="drawer" data-drawer aria-label={t('nav.menu')} data-i18n-attr="aria-label=nav.menu">
+  <div class="drawer-top">
+    <span class="logo">{site.name}</span>
+    <button type="button" class="burger" data-drawer-close aria-label={t('nav.close')} data-i18n-attr="aria-label=nav.close"><Icon name="close" /></button>
+  </div>
+  <nav class="drawer-nav">
+    {site.nav.map((n) => <a href={base + n.href} data-drawer-link data-nav={n.href}><T k={n.labelKey as any} /></a>)}
+  </nav>
+  <LocaleToggle />
+</dialog>

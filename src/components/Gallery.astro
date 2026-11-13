@@ -1,0 +1,27 @@
+---
+import { site } from '../config/site.config';
+import T from './T.astro';
+import Icon from './Icon.astro';
+import { t } from '../i18n';
+const list = site.gallery;
+---
+{list.length > 0 && (
+  <section class="sec" id="galereya" aria-labelledby="gal-h">
+    <div class="wrap">
+      <T as="h2" id="gal-h" k="gallery.title" />
+      <ul class="gallery">
+        {list.map((g, i) => (
+          <li><button type="button" class="gal-item" data-gal={i} data-full={g.src}>
+            <img src={g.src} alt={t(g.altKey)} data-i18n-attr={`alt=${g.altKey}`} loading="lazy" width="400" height="300" />
+          </button></li>
+        ))}
+      </ul>
+    </div>
+    <dialog class="lightbox" data-lightbox>
+      <img data-lb-img alt="" />
+      <button type="button" class="icon-btn lb-close" data-lb-close aria-label={t('gallery.close')} data-i18n-attr="aria-label=gallery.close"><Icon name="close" /></button>
+      <button type="button" class="icon-btn lb-prev" data-lb="-1" aria-label={t('gallery.prev')} data-i18n-attr="aria-label=gallery.prev"><Icon name="arrow-l" /></button>
+      <button type="button" class="icon-btn lb-next" data-lb="1" aria-label={t('gallery.next')} data-i18n-attr="aria-label=gallery.next"><Icon name="arrow-r" /></button>
+    </dialog>
+  </section>
+)}

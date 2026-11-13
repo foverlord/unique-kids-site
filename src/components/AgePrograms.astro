@@ -1,0 +1,33 @@
+---
+import { site } from '../config/site.config';
+import T from './T.astro';
+import ProgramCard from './ProgramCard.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+import { t } from '../i18n';
+const buckets = site.ageBuckets;
+const def = site.defaultAgeBucket ?? 'all';
+---
+{site.programs.length > 0 && (
+  <section class="sec" id="programmy" aria-labelledby="prog-h">
+    <div class="wrap">
+      <T as="h2" id="prog-h" k="programs.title" />
+      <T as="p" k="programs.lead" class="lead" />
+      {buckets.length > 1 && (
+        <div class="chips" role="group" aria-label={t('programs.agesLabel')} data-i18n-attr="aria-label=programs.agesLabel">
+          {buckets.map((b) => (
+            <button type="button" class="chip" data-bucket={b.id} data-ids={b.id === 'all' ? '*' : b.programIds.join(',')} aria-pressed={b.id === def ? 'true' : 'false'}>
+              <T k={b.labelKey as any} />
+            </button>
+          ))}
+        </div>
+      )}
+      <div class="prog-grid" data-prog-grid>
+        {site.programs.map((p) => <ProgramCard p={p} />)}
+      </div>
+      <div class="card prog-empty" data-prog-empty hidden>
+        <T as="p" k="programs.empty" />
+        <WhatsAppButton place="empty" />
+      </div>
+    </div>
+  </section>
+)}

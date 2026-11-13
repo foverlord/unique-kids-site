@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../config/site.config';
+import { t } from '../i18n';
+---
+<BaseLayout title={`${t('policy.title')} — ${site.name}`}>
+  <section class="sec"><div class="wrap prose">
+    <h1 data-i18n="policy.title">{t('policy.title')}</h1>
+    <p>Сайт {site.name} не собирает и не хранит персональные данные. Поля «Имя родителя» и «Имя и возраст ребёнка» на странице не отправляются на сервер: они только подставляются в текст сообщения, которое вы сами отправляете нам в WhatsApp.</p>
+    <p>Данные из переписки в WhatsApp мы используем только чтобы ответить вам и записать ребёнка на занятие. Мы не передаём их третьим лицам.</p>
+    <p>Чтобы удалить переписку или задать вопрос, напишите или позвоните: <a href={`tel:${site.phoneE164}`}>{site.phoneDisplay}</a>.</p>
+    <p class="muted">TODO: юридическое название и БИН центра после согласования.</p>
+  </div></section>
+</BaseLayout>

@@ -1,0 +1,13 @@
+---
+import { site } from '../config/site.config';
+import T from './T.astro';
+---
+<section class="sec" id="o-centre" aria-labelledby="about-h">
+  <div class="wrap about">
+    <div>
+      <T as="h2" id="about-h" k="about.title" />
+      <T as="p" k="about.text" class="lead" />
+    </div>
+    {site.about.image && <img class="photo" src={site.about.image} alt="" loading="lazy" width="560" height="420" />}
+  </div>
+</section>

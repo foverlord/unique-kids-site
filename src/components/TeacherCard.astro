@@ -1,0 +1,13 @@
+---
+import type { Teacher } from '../config/types';
+import T from './T.astro';
+interface Props { tch: Teacher }
+const { tch } = Astro.props;
+const initials = tch.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join('');
+---
+<article class="card teacher">
+  {tch.photo ? <img class="teacher-photo" src={tch.photo} alt={tch.name} loading="lazy" width="320" height="320" /> : <div class="teacher-photo teacher-ini" aria-hidden="true">{initials}</div>}
+  <h3>{tch.name}</h3>
+  <T as="p" k={tch.roleKey as any} class="muted" />
+  <T as="p" k={tch.bioKey as any} />
+</article>

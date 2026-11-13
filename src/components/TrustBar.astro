@@ -1,0 +1,12 @@
+---
+import { site } from '../config/site.config';
+import T from './T.astro';
+import Icon from './Icon.astro';
+---
+{site.trustBar.length > 0 && (
+  <section class="trust" aria-label="Факты">
+    <ul class="wrap trust-list">
+      {site.trustBar.map((i) => <li><Icon name={i.icon} /><T k={i.labelKey as any} /></li>)}
+    </ul>
+  </section>
+)}

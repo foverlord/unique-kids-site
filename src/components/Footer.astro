@@ -1,0 +1,20 @@
+---
+import { site } from '../config/site.config';
+import T from './T.astro';
+---
+<footer class="ftr">
+  <div class="wrap ftr-in">
+    <div>
+      <p class="logo">{site.name}</p>
+      <p>{site.address}, {site.city}</p>
+      <p><a href={`tel:${site.phoneE164}`} data-goal="tel_click">{site.phoneDisplay}</a></p>
+    </div>
+    <ul class="ftr-links">
+      <li><a href={site.mapUrl} target="_blank" rel="noopener">2ГИС</a></li>
+      {site.instagram && <li><a href={site.instagram} target="_blank" rel="noopener">Instagram</a></li>}
+      <li><a href={`https://wa.me/${site.whatsappNumber}`} target="_blank" rel="noopener" data-goal="wa_click" data-place="footer">WhatsApp</a></li>
+      <li><a href="/politika"><T k="footer.policy" /></a></li>
+    </ul>
+    <p class="muted small">© {new Date().getFullYear()} {site.name}{site.demoNote && <> · <T k="footer.demo" /></>}</p>
+  </div>
+</footer>

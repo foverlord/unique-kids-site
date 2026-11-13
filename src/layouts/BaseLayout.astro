@@ -1,0 +1,60 @@
+---
+import '@fontsource/nunito/700.css';
+import '@fontsource/nunito/800.css';
+import '@fontsource/golos-text/400.css';
+import '@fontsource/golos-text/600.css';
+import '../styles/global.css';
+import { site } from '../config/site.config';
+import { t, dicts } from '../i18n';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StickyCta from '../components/StickyCta.astro';
+interface Props { title?: string; description?: string; schema?: boolean }
+const { title = t(site.seo.titleKey), description = t(site.seo.descriptionKey), schema = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const og = site.seo.ogImage ? new URL(site.seo.ogImage, Astro.site).href : undefined;
+const c = site.colors;
+const vars = `:root{--color-bg:${c.bg};--color-bg-alt:${c.bgAlt};--color-surface:${c.surface};--color-ink:${c.ink};--color-ink-muted:${c.inkMuted};--color-line:${c.line};--color-accent:${c.accent};--color-accent-ink:${c.accentInk};--color-rating:${c.rating};--font-heading:'${site.fonts.heading}';--font-body:'${site.fonts.body}'}`;
+const ld = schema ? {
+  '@context': 'https://schema.org', '@type': 'ChildCare', name: site.name, url: Astro.site?.href,
+  telephone: site.phoneE164, image: og,
+  address: { '@type': 'PostalAddress', streetAddress: site.address, addressLocality: site.city, addressCountry: 'KZ' },
+  ...(site.coordinates ? { geo: { '@type': 'GeoCoordinates', latitude: site.coordinates.lat, longitude: site.coordinates.lng } } : {}),
+  ...(site.rating ? { aggregateRating: { '@type': 'AggregateRating', ratingValue: site.rating.value, ratingCount: site.rating.count, bestRating: 5 } } : {}),
+  sameAs: [site.mapUrl, site.instagram].filter(Boolean),
+} : null;
+const i18nData = { dicts, wa: site.whatsappNumber, name: site.name, programs: Object.fromEntries(site.programs.map((p) => [p.id, p.titleKey])), def: site.defaultLocale };
+---
+<!doctype html>
+<html lang={site.defaultLocale}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {site.seo.noindex && <meta name="robots" content="noindex, nofollow" />}
+  <link rel="canonical" href={canonical} />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  {og && <meta property="og:image" content={og} />}
+  <meta property="og:locale" content="ru_RU" />
+  <meta property="og:locale:alternate" content="kk_KZ" />
+  <meta name="theme-color" content={c.bg} />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <style is:inline set:html={vars}></style>
+  <script is:inline>try{var l=localStorage.getItem('uk-locale');if(l==='kk'||l==='ru')document.documentElement.lang=l}catch(e){}</script>
+  {ld && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}
+</head>
+<body>
+  <a class="skip" href="#main"><span data-i18n="skip">{t('skip')}</span></a>
+  <Header />
+  <main id="main"><slot /></main>
+  <Footer />
+  <StickyCta />
+  <script type="application/json" id="uk-i18n" set:html={JSON.stringify(i18nData)} />
+  <script src="../scripts/main.ts"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+---
+import { site } from '../config/site.config';
+import T from './T.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+const groups = site.priceGroups;
+---
+<section class="sec" id="ceny" aria-labelledby="price-h">
+  <div class="wrap">
+    <T as="h2" id="price-h" k="prices.title" />
+    {groups.length > 0 ? (
+      <div class="grid3">{groups.map((g) => (
+        <div class="card"><T as="h3" k={g.titleKey as any} /><T as="p" k={g.priceKey as any} class="prog-price" />{g.noteKey && <T as="p" k={g.noteKey as any} class="muted" />}</div>
+      ))}</div>
+    ) : (
+      <div class="card price-ask"><T as="p" k="prices.text" class="lead" /><WhatsAppButton place="prices" labelKey="cta.whatsapp" variant="secondary" /></div>
+    )}
+  </div>
+</section>

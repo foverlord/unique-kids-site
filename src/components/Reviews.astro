@@ -1,0 +1,35 @@
+---
+import { site } from '../config/site.config';
+import T from './T.astro';
+import ReviewCard from './ReviewCard.astro';
+import Icon from './Icon.astro';
+import { t } from '../i18n';
+const r = site.rating;
+const list = site.reviews;
+const value = r ? r.value.toFixed(1).replace('.', ',') : '';
+---
+{(r || list.length > 0) && (
+  <section class="sec sec-alt" id="otzyvy" aria-labelledby="rev-h">
+    <div class="wrap reviews">
+      <div class="rev-score">
+        <T as="h2" id="rev-h" k="reviews.title" />
+        {r && (<>
+          <p class="big-score"><span class="rating-stars" aria-hidden="true">★</span>{value}</p>
+          <a class="link" href={r.url} target="_blank" rel="noopener"><T k="rating.label" vars={{ count: r.count }} /></a>
+        </>)}
+      </div>
+      {list.length > 0 && (
+        <div class="rev-slider">
+          <div class="rev-track" data-rev-track tabindex="0">{list.map((rv) => <ReviewCard r={rv} />)}</div>
+          {list.length > 1 && (
+            <div class="rev-ctrl">
+              <button type="button" class="icon-btn" data-rev="-1" aria-label={t('reviews.prev')} data-i18n-attr="aria-label=reviews.prev"><Icon name="arrow-l" /></button>
+              <div class="dots" data-rev-dots aria-hidden="true">{list.map((_, i) => <span class:list={{ on: i === 0 }} />)}</div>
+              <button type="button" class="icon-btn" data-rev="1" aria-label={t('reviews.next')} data-i18n-attr="aria-label=reviews.next"><Icon name="arrow-r" /></button>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  </section>
+)}

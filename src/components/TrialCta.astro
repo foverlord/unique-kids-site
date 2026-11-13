@@ -1,0 +1,23 @@
+---
+import { site } from '../config/site.config';
+import T from './T.astro';
+import Icon from './Icon.astro';
+import { waUrl } from '../scripts/wa';
+---
+{site.trial.enabled && (
+  <section class="sec" id="probnoe" aria-labelledby="trial-h" data-trial>
+    <div class="wrap">
+      <form class="card trial" data-trial-form action={waUrl('ru')} method="get" target="_blank">
+        <div>
+          <T as="h2" id="trial-h" k="trial.title" />
+          <T as="p" k="trial.text" class="lead" />
+        </div>
+        <div class="trial-fields">
+          <label><span><T k="trial.name" /> <small class="muted">(<T k="trial.optional" />)</small></span><input name="parent" autocomplete="name" /></label>
+          <label><span><T k="trial.child" /> <small class="muted">(<T k="trial.optional" />)</small></span><input name="child" /></label>
+          <button type="submit" class="btn btn-primary" data-goal="wa_click" data-place="trial"><Icon name="wa" size={20} /><T k="trial.submit" /></button>
+        </div>
+      </form>
+    </div>
+  </section>
+)}

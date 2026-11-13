@@ -1,0 +1,16 @@
+---
+import type { Program } from '../config/types';
+import T from './T.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+import { t } from '../i18n';
+interface Props { p: Program }
+const { p } = Astro.props;
+---
+<article class="card prog" data-prog={p.id} data-from={p.ageFrom} data-to={p.ageTo}>
+  <T as="h3" k={p.titleKey as any} />
+  <T as="p" k="programs.age" vars={{ from: p.ageFrom, to: p.ageTo }} class="prog-age" />
+  <T as="p" k={p.summaryKey as any} />
+  <T as="p" k={(p.priceLabelKey ?? 'programs.priceAsk') as any} class="prog-price" />
+  {p.durationKey && <T as="p" k={p.durationKey as any} class="muted" />}
+  <WhatsAppButton place="program" programId={p.id} labelKey="programs.trial" variant="secondary" ariaKey="programs.trialAria" ariaVars={{ title: t(p.titleKey) }} />
+</article>

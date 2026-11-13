@@ -1,0 +1,10 @@
+---
+import type { Review } from '../config/types';
+import T from './T.astro';
+interface Props { r: Review }
+const { r } = Astro.props;
+---
+<figure class="card review">
+  <blockquote><T as="p" k={r.quoteKey as any} /></blockquote>
+  <figcaption><strong>{r.author}</strong>{r.childAge && <span>, {r.childAge}</span>}{r.source === '2gis' && <span class="muted"> · <T k="reviews.source2gis" /></span>}</figcaption>
+</figure>
