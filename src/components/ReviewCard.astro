@@ -3,8 +3,9 @@ import type { Review } from '../config/types';
 import T from './T.astro';
 interface Props { r: Review }
 const { r } = Astro.props;
+import { site } from '../config/site.config';
 ---
 <figure class="card review">
-  <blockquote><T as="p" k={r.quoteKey as any} /></blockquote>
-  <figcaption><strong>{r.author}</strong>{r.childAge && <span>, {r.childAge}</span>}{r.source === '2gis' && <span class="muted"> · <T k="reviews.source2gis" /></span>}</figcaption>
+  <blockquote><T as="p" k={r.quoteKey as any} class="review-q" /></blockquote>
+  <figcaption><strong>{r.author}</strong>{r.childAge && <span>, {r.childAge}</span>}{r.source === '2gis' && site.rating && <> · <a class="muted" href={site.rating.url + '/tab/reviews'} target="_blank" rel="noopener"><T k="reviews.source2gis" /></a></>}</figcaption>
 </figure>

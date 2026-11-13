@@ -8,7 +8,7 @@ export type Program = {
 };
 export type Teacher = { id: string; name: string; roleKey: string; bioKey: string; photo?: string; programIds?: string[] };
 export type Review = { id: string; quoteKey: string; author: string; childAge?: string; source: '2gis' | 'instagram' | 'other' };
-export type GalleryItem = { src: string; altKey: string; type: 'space' | 'activity' | 'art' };
+export type GalleryItem = { /** файл в src/assets/images/gallery/ */ src: string; altKey: string; type: 'space' | 'activity' | 'art' };
 export type TrustItem = { icon: 'star' | 'pin' | 'group' | 'heart' | 'clock'; labelKey: string };
 export type PriceGroup = { id: string; titleKey: string; priceKey: string; noteKey?: string };
 export type Colors = {

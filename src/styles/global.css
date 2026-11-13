@@ -114,9 +114,12 @@
 .reviews { display: grid; gap: 24px }
 .big-score { font-size: 64px; line-height: 1; font-weight: 800; margin: 16px 0 6px; display: flex; gap: 10px; align-items: center }
 .big-score .rating-stars { font-size: 40px }
+.rev-slider, .reviews > * { min-width: 0 }
 .rev-track { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 4px }
 .review { flex: 0 0 min(86%, 380px); scroll-snap-align: start; margin: 0; display: flex; flex-direction: column; gap: 14px }
 .review blockquote { margin: 0 }
+.review-q { white-space: pre-line; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 8; overflow: hidden }
+.review figcaption { margin-top: auto; font-size: 15px }
 .rev-ctrl { display: flex; align-items: center; gap: 12px; margin-top: 14px }
 .dots { display: flex; gap: 6px }
 .dots span { width: 8px; height: 8px; border-radius: 99px; background: var(--color-line) }
