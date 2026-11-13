@@ -41,16 +41,16 @@ export const site: SiteConfig = {
   ageBuckets: [
     { id: 'all', labelKey: 'ages.all', ageFrom: 0, ageTo: 18, programIds: [] },
     { id: '3-5', labelKey: 'ages.3_5', ageFrom: 3, ageTo: 5, programIds: ['logoped', 'sport'] },
-    { id: '5-7', labelKey: 'ages.5_7', ageFrom: 5, ageTo: 7, programIds: ['logoped', 'sport', 'school', 'mental', 'speedread', 'robotics'] },
+    { id: '5-7', labelKey: 'ages.5_7', ageFrom: 3, ageTo: 7, programIds: ['logoped', 'sport', 'school', 'mental', 'speedread', 'robotics'] },
   ],
   // Направления — из карточки 2ГИС (+ подготовка к школе из отзывов). Цены нет → «узнать в WhatsApp».
   programs: [
     { id: 'logoped', slug: 'logoped', titleKey: 'programs.logoped.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7, spot: 'speech.svg' },
     { id: 'sport', slug: 'kluby', titleKey: 'programs.sport.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7, spot: 'club.svg' },
-    { id: 'school', slug: 'podgotovka-k-shkole', titleKey: 'programs.school.title', summaryKey: 'programs.todo', ageFrom: 5, ageTo: 7, spot: 'book.svg' },
-    { id: 'mental', slug: 'mentalnaya-arifmetika', titleKey: 'programs.mental.title', summaryKey: 'programs.todo', ageFrom: 5, ageTo: 7, spot: 'abacus.svg' },
-    { id: 'speedread', slug: 'skorochtenie', titleKey: 'programs.speedread.title', summaryKey: 'programs.todo', ageFrom: 5, ageTo: 7, spot: 'book.svg' },
-    { id: 'robotics', slug: 'robototehnika', titleKey: 'programs.robotics.title', summaryKey: 'programs.todo', ageFrom: 5, ageTo: 7, spot: 'robot.svg' },
+    { id: 'school', slug: 'podgotovka-k-shkole', titleKey: 'programs.school.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7, spot: 'book.svg' },
+    { id: 'mental', slug: 'mentalnaya-arifmetika', titleKey: 'programs.mental.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7, spot: 'abacus.svg' },
+    { id: 'speedread', slug: 'skorochtenie', titleKey: 'programs.speedread.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7, spot: 'book.svg' },
+    { id: 'robotics', slug: 'robototehnika', titleKey: 'programs.robotics.title', summaryKey: 'programs.todo', ageFrom: 3, ageTo: 7, spot: 'robot.svg' },
     // только во «Все»: в отзыве — третьеклассник; нужна ли продлёнка, Амир уточнит у директора
     { id: 'afterschool', slug: 'prodlyonka', titleKey: 'programs.afterschool.title', summaryKey: 'programs.afterschool.summary', ageFrom: 7, ageTo: 10, ageKey: 'programs.ageSchool', spot: 'house.svg' },
   ],
