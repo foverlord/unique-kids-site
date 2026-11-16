@@ -208,6 +208,12 @@ export const ru = {
   'gal.autumn': "Осенние поделки из шишек и листьев",
   'gal.playroom': "Игровая у окна",
   'hero.askTap': "Нажмите на возраст ребёнка",
+  'hero.askSub': "Покажем программы, которые подходят именно ему",
+  'hero.picked': "Выбрано «{age}» · ниже {n} {w} для этого возраста",
+  'w.prog1': "программа",
+  'w.prog2': "программы",
+  'w.prog5': "программ",
+  'about.tag': "О центре",
 } as const;
 
 export type DictKey = keyof typeof ru;

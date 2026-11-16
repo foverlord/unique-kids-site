@@ -213,9 +213,31 @@ function moveCub(state: string, pressMobile = false) {
     walk.setAttribute('stroke', `var(--${c}-d)`);
   });
   $$<HTMLElement>('[data-set-age]', hero).forEach((b) => {
-    const on = b.dataset.setAge === state && (pressMobile || !b.classList.contains('a6-btn'));
+    const on = b.dataset.setAge === state && (pressMobile || !(b.classList.contains('a6-btn') || b.classList.contains('r5-btn')));
     b.setAttribute('aria-pressed', String(on));
   });
+  // v5: барс над выбранной кнопкой; для «7» и «Школа 7+» правый край барса — по центру кнопки
+  const r5 = hero.querySelector<HTMLElement>('.r5-rul');
+  if (r5) {
+    const btn = r5.querySelector<HTMLElement>(`.r5-btn[data-set-age="${state}"]`);
+    const cub = r5.querySelector<HTMLElement>('.r5-cub')!;
+    if (btn) {
+      const cx = btn.offsetLeft + btn.offsetWidth / 2;
+      const right = state === '7' || state === 'school';
+      cub.style.setProperty('--x', `${right ? cx - cub.offsetWidth : cx - cub.offsetWidth / 2}px`);
+    }
+    const pose = ({ '3': '3', '4': '3', '5': '5', '6': '6', '7': '7', school: '7' } as Record<string, string>)[state] ?? '3';
+    cub.querySelectorAll('img').forEach((img) => img.classList.toggle('on', img.classList.contains('p' + pose)));
+    const hint = r5.querySelector<HTMLElement>('[data-r5-hint]')!;
+    if (pressMobile && btn) {
+      // N — сколько карточек покажет фильтр ниже (группа возраста)
+      const ids = document.querySelector<HTMLElement>(`[data-bucket="${BUCKET_OF[state]}"]`)?.dataset.ids ?? '';
+      const n = ids === '*' ? cards.length : ids.split(',').filter(Boolean).length;
+      const m10 = n % 10, m100 = n % 100;
+      const w = tr(m10 === 1 && m100 !== 11 ? 'w.prog1' : m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14) ? 'w.prog2' : 'w.prog5');
+      hint.textContent = tr('hero.picked', { age: btn.textContent!.trim(), n: String(n), w });
+    }
+  }
   const a6 = hero.querySelector<HTMLElement>('.a6-cub');
   if (a6) {
     const pose = ({ '3': '3', '4': '3', '5': '5', '6': '6', '7': '7', school: '7' } as Record<string, string>)[state] ?? '3';
@@ -255,3 +277,20 @@ if ('IntersectionObserver' in window) {
   const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { threshold: 0.25 });
   $$('.drawing').forEach((d) => io.observe(d));
 } else $$('.drawing').forEach((d) => d.classList.add('is-in'));
+
+addEventListener('resize', () => { if (hero) moveCub(hero.dataset.age || '3', false); }, { passive: true });
+
+/* ---------- v5: «Коротко о центре» — фон из 4 фото, смена каждые 6 с ---------- */
+{
+  const box = document.querySelector<HTMLElement>('[data-about-bg]');
+  if (box && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const imgs = $$<HTMLImageElement>('img', box); const dots = $$('.about-dots i', box);
+    let i = 0, timer = 0;
+    const tick = () => { i = (i + 1) % imgs.length; imgs.forEach((im, j) => im.classList.toggle('on', j === i)); dots.forEach((d, j) => d.classList.toggle('on', j === i)); };
+    // крутим только пока блок на экране; остальные фото грузятся при подходе к блоку
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !timer) { imgs.forEach((im) => (im.loading = 'eager')); timer = window.setInterval(tick, 6000); }
+      else if (!e.isIntersecting && timer) { clearInterval(timer); timer = 0; }
+    }, { rootMargin: '200px' }).observe(box);
+  }
+}

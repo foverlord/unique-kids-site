@@ -266,3 +266,51 @@ html { overflow-x: clip }
   .about-card { margin: 0; max-width: 600px; padding: 32px 32px 30px }
 }
 .about-full > .doodle { display: none }
+/* ---- v5 (art/v5/frame.html): десктопная линейка ---- */
+.r5 { display: none }
+@media (min-width: 1024px) {
+  .hero3 .st-d, .hero3 .h3-ask { display: none !important }
+  .r5 { display: block; position: relative; z-index: 2; max-width: 1200px; margin: 34px auto 0; padding: 0 0 8px }
+  .r5-ask { font: 800 30px/36px var(--H); letter-spacing: -.01em }
+  .r5-sub { color: var(--color-ink-muted); margin-top: 6px; font: 400 16px/24px var(--B) }
+  .r5-rul { position: relative; height: 232px; margin-top: 8px }
+  .r5-line { position: absolute; left: 0; right: 150px; top: 150px; border-top: 2.5px solid var(--color-ink); border-radius: 2px }
+  .r5-sprout { position: absolute; right: 60px; top: 20px; width: 150px; height: 140px }
+  .r5-btns { position: absolute; left: 0; right: 150px; top: 126px; display: flex; justify-content: space-between }
+  .r5-btn { height: 48px; min-width: 112px; padding: 0 20px; border-radius: 999px; background: #fff; border: 2px solid var(--color-ink); box-shadow: 0 3px 0 var(--color-ink); color: var(--color-ink); font: 800 17px/1 var(--H); cursor: pointer; transition: transform .12s, box-shadow .12s, background .15s }
+  .r5-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 0 var(--color-ink) }
+  .r5-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--color-ink) }
+  .r5-btn[aria-pressed="true"] { background: var(--pink) }
+  .r5-btn[data-c="mint"][aria-pressed="true"] { background: var(--mint) }
+  .r5-btn[data-c="blue"][aria-pressed="true"] { background: var(--blue) }
+  .r5-btn:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 3px }
+  /* барс: высота 100 (≤130), стоит на верхнем крае кнопок, без наложения */
+  .r5-cub { position: absolute; left: 0; top: 12px; height: 100px; width: 75px; transform: translateX(var(--x, 18px)); transition: transform .3s cubic-bezier(.3,1.2,.5,1); pointer-events: none }
+  .r5-cub img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; object-position: bottom; opacity: 0 }
+  .r5-cub img.on { opacity: 1 }
+  .r5-hint { position: absolute; left: 0; top: 196px; font: 600 14px/20px var(--B); color: var(--color-ink-muted); min-height: 20px }
+}
+@media (prefers-reduced-motion: reduce) { .r5-btn, .r5-cub { transition: none } .r5-btn:hover { transform: none } }
+/* ---- v5: «Коротко о центре» ---- */
+.about-bg img { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease }
+.about-bg img.on { opacity: 1; position: relative }
+.about-bg { background: #d9cbb8 }
+.about-bg::after { z-index: 1 }
+.about-bg { height: 240px }
+.about-card { background: #FBF6EC; border-radius: 22px }
+.about-tag { display: inline-block; font: 700 12px/1 var(--B); letter-spacing: .08em; text-transform: uppercase; color: #fff; background: var(--color-ink); padding: 5px 10px; border-radius: 6px; margin-bottom: 12px }
+.about-dots { position: absolute; right: 16px; bottom: 40px; z-index: 2; display: flex; gap: 6px }
+.about-dots i { width: 22px; height: 4px; border-radius: 2px; background: rgba(255,255,255,.5) }
+.about-dots i.on { background: #fff }
+@media (prefers-reduced-motion: reduce) { .about-dots { display: none } .about-bg img { transition: none } }
+@media (min-width: 1024px) {
+  .about-full { height: 560px; min-height: 0; padding: 0 !important }
+  .about-bg { height: auto }
+  .about-bg img.on { position: absolute }
+  .about-bg::after { background: linear-gradient(90deg, rgba(43,38,32,.55), rgba(43,38,32,.15) 60%, rgba(43,38,32,0)) }
+  .about-card { padding: 36px 40px; max-width: 600px; box-shadow: 0 18px 40px rgba(0,0,0,.18) }
+  .about-dots { right: 40px; bottom: 28px }
+  .about-dots i { width: 28px }
+}
+/* ---- P3 Критика: вкладки галереи на 360 в две строки ---- */
+@media (max-width: 419px) { [role="tablist"].tabs { flex-wrap: wrap; overflow: visible } }

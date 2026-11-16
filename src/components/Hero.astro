@@ -89,6 +89,25 @@ const u = (n: number) => `calc(var(--u) * ${n})`;
         <button type="button" class="a6-btn" data-set-age="school" data-c="blue" aria-pressed="false"><T k="hero.school" /></button>
       </div>
     </div>
+    {/* v5 (art/v5/frame.html): десктопная линейка — ряд кнопок на линии, барс над выбранной */}
+    <div class="r5" role="group" aria-labelledby="r5-ask">
+      <T as="p" id="r5-ask" k={'hero.askTap' as any} class="r5-ask" />
+      <T as="p" k={'hero.askSub' as any} class="r5-sub" />
+      <div class="r5-rul">
+        <span class="r5-line" aria-hidden="true"></span>
+        <svg class="r5-sprout" aria-hidden="true" viewBox="0 0 150 140" filter="url(#pencil)"><path d="M0 130 C40 130 46 128 52 100 L52 10" fill="none" stroke="var(--color-ink)" stroke-width="2.5"/><path d="M52 60 C80 56 110 58 140 55" fill="none" stroke="var(--color-ink)" stroke-width="2"/><path d="M52 18 C66 0 86 2 86 2 C80 20 64 26 52 18Z" fill="var(--mint)" stroke="var(--mint-d)"/><path d="M52 26 C36 12 18 18 18 18 C28 32 44 32 52 26Z" fill="var(--mint)" stroke="var(--mint-d)"/></svg>
+        <div class="r5-cub" aria-hidden="true" data-pose="3">
+          {cubs.map((c) => <img class:list={[`p${c.p}`, { on: c.p === 3 }]} src={c.src.src} width={c.src.width} height={c.src.height} alt="" loading="eager" decoding="async" />)}
+        </div>
+        <div class="r5-btns">
+          {[3, 4, 5, 6, 7].map((n) => (
+            <button type="button" class="r5-btn" data-set-age={n} data-c={n < 5 ? 'pink' : 'mint'} aria-pressed="false"><T k={n < 5 ? 'age.y34' : 'age.y'} vars={{ n }} /></button>
+          ))}
+          <button type="button" class="r5-btn" data-set-age="school" data-c="blue" aria-pressed="false"><T k="hero.school" /></button>
+        </div>
+        <p class="r5-hint" data-r5-hint aria-live="polite"></p>
+      </div>
+    </div>
     {variants.map((v) => (
       <div class:list={['stage', v.id === 'm' ? 'st-m' : 'st-d']} style={`--W:${v.W};aspect-ratio:${v.W}/${v.H}`} data-stage data-pos={JSON.stringify(pos(v))}
         data-walk={JSON.stringify({ y: v.walkY, tx: v.tx, school: v.walkSchool })}>
