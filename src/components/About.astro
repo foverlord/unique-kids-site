@@ -19,9 +19,9 @@ const value = r ? r.value.toFixed(1).replace('.', ',') : '';
   <figure class="about-bg" aria-hidden="true" data-about-bg>
     <img class="on" src="/video/about-poster.jpg" alt="" loading="lazy" decoding="async" width="1280" height="720" />
     <video class="about-vid" autoplay muted loop playsinline preload="metadata" poster="/video/about-poster.jpg" disablepictureinpicture tabindex="-1">
-      <source src="/video/about-854.mp4" type="video/mp4" media="(max-width: 767px)" />
-      <source src="/video/about-1280.webm" type="video/webm" />
-      <source src="/video/about-1280.mp4" type="video/mp4" />
+      <source data-src="/video/about-854.mp4" type="video/mp4" media="(max-width: 767px)" />
+      <source data-src="/video/about-1280.webm" type="video/webm" />
+      <source data-src="/video/about-1280.mp4" type="video/mp4" />
     </video>
   </figure>
   <div class="wrap">

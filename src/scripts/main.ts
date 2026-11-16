@@ -285,7 +285,13 @@ addEventListener('resize', () => { if (hero) moveCub(hero.dataset.age || '3', fa
   const v = document.querySelector<HTMLVideoElement>('[data-about-bg] video');
   if (v) {
     const rm = matchMedia('(prefers-reduced-motion: reduce)');
-    const apply = () => { if (rm.matches) { v.pause(); v.removeAttribute('autoplay'); v.preload = 'none'; } else { v.muted = true; v.play().catch(() => {}); } };
+    // источники ставим только когда анимация разрешена: при reduce сеть не трогает about-*.mp4/webm
+    const apply = () => {
+      if (rm.matches) { v.pause(); return; }
+      const srcs = v.querySelectorAll<HTMLSourceElement>('source[data-src]');
+      if (srcs.length) { srcs.forEach((s) => { s.src = s.dataset.src!; s.removeAttribute('data-src'); }); v.load(); }
+      v.muted = true; v.play().catch(() => {});
+    };
     apply(); rm.addEventListener('change', apply);
   }
 }
