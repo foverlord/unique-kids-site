@@ -93,7 +93,9 @@ const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
 burger?.addEventListener('click', () => drawer?.showModal());
 document.querySelector('[data-drawer-close]')?.addEventListener('click', () => drawer?.close());
 $$('[data-drawer-link]').forEach((a) => a.addEventListener('click', () => drawer?.close()));
-drawer?.addEventListener('click', (e) => { if (e.target === drawer) drawer.close(); });
+drawer?.addEventListener('click', (e) => {
+  if (e.target === drawer || (e.target as Element).closest('a')) drawer.close();
+});
 drawer?.addEventListener('close', () => burger?.focus());
 
 /* ---------- фильтр программ по возрасту ---------- */
@@ -154,6 +156,10 @@ if (track_) {
   $$<HTMLButtonElement>('[data-rev]').forEach((b) => b.addEventListener('click', () => track_.scrollBy({ left: Number(b.dataset.rev) * step(), behavior: 'smooth' })));
   track_.addEventListener('scroll', () => { const i = Math.round(track_.scrollLeft / step()); dots.forEach((d, j) => d.classList.toggle('on', i === j)); }, { passive: true });
 }
+$$<HTMLButtonElement>('[data-rev-more]').forEach((b) => b.addEventListener('click', () => {
+  b.closest('.rev3')?.classList.add('is-open');
+  b.hidden = true;
+}));
 
 /* ---------- фото по направлениям: вкладки + лайтбокс категории ---------- */
 const tabs = $$<HTMLButtonElement>('[data-tab]');
@@ -167,8 +173,15 @@ tabs.forEach((b, i) => {
 const lb = document.querySelector<HTMLDialogElement>('[data-lightbox]');
 if (lb) {
   const img = document.createElement('img'); img.className = 'lb-img'; img.decoding = 'async'; let placed = false;
+  const counter = lb.querySelector<HTMLElement>('[data-lb-count]');
   let list: { full: string; key: string }[] = [], cur = 0, opener: HTMLElement | null = null;
-  const show = (i: number) => { cur = (i + list.length) % list.length; img.src = list[cur].full; if (!placed) { lb.prepend(img); placed = true; } img.alt = tr(list[cur].key); };
+  const show = (i: number) => {
+    cur = (i + list.length) % list.length;
+    img.src = list[cur].full;
+    if (!placed) { lb.prepend(img); placed = true; }
+    img.alt = tr(list[cur].key);
+    if (counter) counter.textContent = `${cur + 1} / ${list.length}`;
+  };
   $$<HTMLButtonElement>('[data-gal]').forEach((b) => b.addEventListener('click', () => {
     list = JSON.parse(b.closest<HTMLElement>('[data-photos]')!.dataset.photos!); opener = b;
     show(Number(b.dataset.gal)); lb.showModal(); document.documentElement.classList.add('no-scroll');
@@ -184,7 +197,7 @@ if (lb) {
 const hero = document.querySelector<HTMLElement>('[data-hero]');
 const BUCKET_OF: Record<string, string> = { '3': '3-5', '4': '3-5', '5': '5-7', '6': '5-7', '7': '5-7', school: '7plus' };
 const TICK_OF: Record<string, string> = { '3-5': '3', '5-7': '5', '7plus': 'school' };
-function moveCub(state: string) {
+function moveCub(state: string, pressMobile = false) {
   if (!hero) return;
   hero.dataset.age = state;
   $$<HTMLElement>('[data-stage]', hero).forEach((st) => {
@@ -199,12 +212,19 @@ function moveCub(state: string) {
     walk.setAttribute('d', state === 'school' ? w.school : `M${w.tx[0]} ${w.y} L${w.tx[Number(state) - 3]} ${w.y}`);
     walk.setAttribute('stroke', `var(--${c}-d)`);
   });
-  $$<HTMLElement>('[data-set-age]', hero).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.setAge === state)));
+  $$<HTMLElement>('[data-set-age]', hero).forEach((b) => {
+    const on = b.dataset.setAge === state && (pressMobile || !b.classList.contains('a6-btn'));
+    b.setAttribute('aria-pressed', String(on));
+  });
   const a6 = hero.querySelector<HTMLElement>('.a6-cub');
-  if (a6) a6.dataset.pose = ({ '3': '3', '4': '3', '5': '5', '6': '6', '7': '7', school: '7' } as Record<string, string>)[state] ?? '3';
+  if (a6) {
+    const pose = ({ '3': '3', '4': '3', '5': '5', '6': '6', '7': '7', school: '7' } as Record<string, string>)[state] ?? '3';
+    a6.dataset.pose = pose;
+    a6.querySelectorAll('img').forEach((img) => img.classList.toggle('on', img.classList.contains('p' + pose)));
+  }
 }
 function pickAge(state: string, label: string) {
-  moveCub(state);
+  moveCub(state, true);
   const chip = document.querySelector<HTMLButtonElement>(`[data-bucket="${BUCKET_OF[state]}"]`);
   if (chip) filter(chip);
   setAge(label);

@@ -22,11 +22,15 @@ const base = Astro.url.pathname === '/' ? '' : '/';
 </header>
 <dialog class="drawer" data-drawer aria-label={t('nav.menu')} data-i18n-attr="aria-label=nav.menu">
   <div class="drawer-top">
-    <span class="logo">{site.name}</span>
+    <a class="logo" href="/" data-drawer-link>{site.logo ? <img src={site.logo} alt={site.name} height="36" /> : site.name}</a>
     <button type="button" class="burger" data-drawer-close aria-label={t('nav.close')} data-i18n-attr="aria-label=nav.close"><Icon name="close" /></button>
   </div>
   <nav class="drawer-nav">
     {site.nav.map((n) => <a href={base + n.href} data-drawer-link data-nav={n.href}><T k={n.labelKey as any} /></a>)}
   </nav>
   <LocaleToggle />
+  <div class="drawer-cta">
+    <WhatsAppButton place="menu" labelKey="nav.signup" />
+    <a class="btn btn-secondary" href={`tel:${site.phoneE164}`} data-goal="tel_click" data-place="menu" data-drawer-link><Icon name="phone" size={20} /><T k="nav.call" /></a>
+  </div>
 </dialog>

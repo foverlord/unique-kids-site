@@ -57,6 +57,10 @@
 .drawer-top { display: flex; align-items: center; justify-content: space-between }
 .drawer-nav { display: flex; flex-direction: column }
 .drawer-nav a { font: 700 24px/1.2 var(--font-heading), sans-serif; text-decoration: none; padding: 14px 0; border-bottom: 1px dashed var(--color-line) }
+.drawer .locale { align-self: flex-start; width: max-content; max-width: 100% }
+.drawer .locale button { flex: none; min-width: 64px; padding: 0 16px }
+.drawer-cta { display: grid; gap: 12px }
+.drawer-cta .btn { width: 100% }
 
 /* герой v2 — ростомер (art/v2/SPEC.md) */
 .hero2 { position: relative; overflow: hidden; padding: 16px 0 24px;
@@ -101,8 +105,6 @@ svg .doo { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin
 .frame img { display: block; width: 100%; height: 100%; object-fit: cover }
 .frame .cap { position: absolute; left: 10px; right: 10px; bottom: 6px; font: 600 13px/18px var(--font-body), sans-serif; color: var(--color-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
 .tape { position: absolute; z-index: 1; width: 54px; height: 18px; top: -8px; left: 50%; margin-left: -27px; transform: rotate(-4deg); opacity: .85 }
-.btn-primary[data-wa] { animation: wob 4s 2s infinite }
-@keyframes wob { 0%, 86%, 100% { transform: none } 89% { transform: rotate(-3deg) } 92% { transform: rotate(2.5deg) } 95% { transform: rotate(-1.5deg) } }
 @media (hover: hover) and (pointer: fine) {
   body { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28'%3E%3Cpath d='M3 25 L6 17 L20 3 L25 8 L11 22Z' fill='%23F6D365' stroke='%232B2620' stroke-width='1.6' stroke-linejoin='round'/%3E%3Cpath d='M3 25 L6 17 L11 22Z' fill='%23F3E2C4' stroke='%232B2620' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") 3 25, auto }
   a, button { cursor: pointer }
@@ -178,6 +180,7 @@ svg .doo { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin
 .lightbox[open] { display: grid; place-items: center }
 .lightbox img { max-width: 92vw; max-height: 82dvh; border-radius: 12px }
 .lb-close { position: fixed; top: 14px; right: 14px } .lb-prev { position: fixed; left: 12px; top: 50% } .lb-next { position: fixed; right: 12px; top: 50% }
+.lb-count { position: fixed; z-index: 3; left: 0; right: 0; bottom: max(18px, env(safe-area-inset-bottom)); margin: 0; text-align: center; color: #fff; font: 600 15px/1 var(--font-body), sans-serif; pointer-events: none }
 
 .trial { display: grid; gap: 20px; padding: 24px; background: var(--color-surface) }
 .trial-fields { display: grid; gap: 12px }
@@ -207,6 +210,10 @@ svg .doo { fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin
 
 .prose { max-width: 720px; display: grid; gap: 16px }
 .prose h1 { font-size: 32px; line-height: 40px; font-weight: 800 }
+.nf-cta { display: flex; flex-wrap: wrap; gap: 12px; align-items: center }
+.nf-cta .btn-wa3 { width: auto }
+body:has(.page-404) { min-height: 100dvh; display: flex; flex-direction: column }
+body:has(.page-404) #main { flex: 1 0 auto }
 
 @media (min-width: 768px) {
   body { padding-bottom: 0 }

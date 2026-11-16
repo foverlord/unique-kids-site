@@ -59,10 +59,10 @@ export const site: SiteConfig = {
   ],
   // «Наши апай»: имена только из отзывов 2ГИС. TODO: подтвердить у центра, фото нет — инициалы.
   teachers: [
-    { id: 'aruna', name: 'Аруна Болатхановна', ini: 'АБ', roleKey: 'teachers.aruna.role', bioKey: 'teachers.aruna.bio', by: 'Санжар Бериков' },
+    { id: 'aruna', name: 'Аруна апай', ini: 'А', roleKey: 'teachers.aruna.role', bioKey: 'teachers.aruna.bio', by: 'Санжар Бериков' },
     { id: 'kamshat', name: 'Камшат апай', ini: 'К', roleKey: 'teachers.kamshat.role', bioKey: 'teachers.kamshat.bio', by: 'Almira Uisen', lang: 'kk' },
     { id: 'damira', name: 'Дамира апай', ini: 'Д', bioKey: 'teachers.damira.bio', by: 'Ляйля Акимжанова' },
-    { id: 'nazira', name: 'Назира', ini: 'Н', bioKey: 'teachers.nazira.bio', by: 'Aigerim I' },
+    { id: 'nazira', name: 'Назира апай', ini: 'Н', bioKey: 'teachers.nazira.bio', by: 'Aigerim I' },
   ],
   // Дословно с 2ГИС, 13.11.2026 (content/reviews.md)
   // у Aigerim I и Ляйли — первый абзац (art/v3 §6.6)

@@ -65,6 +65,7 @@ const tapes = ['var(--pink)', 'var(--mint)', 'var(--blue)'];
       {/* TODO (блокер запуска): фото детей только для демо — см. gallery.todo */}
     </div>
     <dialog class="lightbox" data-lightbox>
+      <p class="lb-count" data-lb-count aria-live="polite"></p>
       <button type="button" class="icon-btn lb-close" data-lb-close aria-label={t('gallery.close')} data-i18n-attr="aria-label=gallery.close"><Icon name="close" /></button>
       <button type="button" class="icon-btn lb-prev" data-lb="-1" aria-label={t('gallery.prev')} data-i18n-attr="aria-label=gallery.prev"><Icon name="arrow-l" /></button>
       <button type="button" class="icon-btn lb-next" data-lb="1" aria-label={t('gallery.next')} data-i18n-attr="aria-label=gallery.next"><Icon name="arrow-r" /></button>

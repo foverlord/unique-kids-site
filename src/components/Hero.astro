@@ -72,7 +72,7 @@ const bandColor: Record<string, string> = { '3-5': 'pink', '5-7': 'mint', '7plus
     </div>
     <div class="age6" role="group" aria-labelledby="a6-ask">
       <div class="a6-cub" aria-hidden="true" data-pose="3">
-        {cubs.map((c) => <img class={`p${c.p}`} src={c.src.src} width={c.src.width} height={c.src.height} alt="" loading="eager" decoding="async" />)}
+        {cubs.map((c) => <img class:list={[`p${c.p}`, { on: c.p === 3 }]} src={c.src.src} width={c.src.width} height={c.src.height} alt="" loading="eager" decoding="async" />)}
       </div>
       <T as="p" id="a6-ask" k="hero.ask" class="a6-ask" />
       <div class="a6-grid">

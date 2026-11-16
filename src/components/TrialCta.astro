@@ -10,9 +10,7 @@ const ages = [['3-5', 'ages.3_5'], ['5-7', 'ages.5_7'], ['7plus', 'ages.7plus']]
 {site.trial.enabled && (
   <section class="v3 sec3" id="probnoe" aria-labelledby="trial-h" data-trial>
     <div class="wrap">
-      <form class="form3 patch" data-trial-form action={waUrl('ru')} method="get" target="_blank">
-        <svg class="pbg" aria-hidden="true" filter="url(#crayon)"><rect x="6" y="6" rx="10" style="width:calc(100% - 12px);height:calc(100% - 12px)" /></svg>
-        <i class="tape"></i>
+      <form class="form3 sheet" data-trial-form action={waUrl('ru')} method="get" target="_blank">
         <T as="h2" id="trial-h" k="trial.title" />
         <T as="p" k="trial.text" class="sub" />
         <label class="field"><span><T k="trial.name" />{' '}(<T k="trial.optional" />)</span><input name="parent" autocomplete="name" placeholder="Например, Айгуль" data-i18n-attr="placeholder=trial.placeholder" /><Fragment set:html={UL} /></label>

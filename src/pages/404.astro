@@ -5,9 +5,9 @@ import T from '../components/T.astro';
 import { t } from '../i18n';
 ---
 <BaseLayout title={t('notfound.title')}>
-  <section class="sec"><div class="wrap prose">
+  <section class="sec page-404"><div class="wrap prose">
     <T as="h1" k="notfound.title" />
     <T as="p" k="notfound.text" class="lead" />
-    <div class="hero-cta"><a class="btn btn-secondary" href="/"><T k="notfound.home" /></a><WhatsAppButton place="404" /></div>
+    <div class="nf-cta"><a class="btn btn-secondary" href="/"><T k="notfound.home" /></a><WhatsAppButton place="404" /></div>
   </div></section>
 </BaseLayout>
