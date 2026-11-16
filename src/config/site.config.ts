@@ -82,16 +82,18 @@ export const site: SiteConfig = {
   // Раскладка по направлениям условная (TODO). Пустые направления скрыты.
   gallery: [
     { id: 'kluby', titleKey: 'gal.cat.kluby', videos: [], photos: [
-      { src: 'classes/class-drawing-sun-pictures.webp', capKey: 'gal.sun' },
       { src: 'classes/class-painting-tote-bags.webp', capKey: 'gal.totesKids' },
       { src: 'classes/class-painting-strawberry-tote.webp', capKey: 'gal.strawberry' },
       { src: 'classes/class-paper-crafts-tables.webp', capKey: 'gal.paper' },
       { src: 'gallery/crafts-paper-rainbows.jpg', capKey: 'gal.rainbows' },
       { src: 'gallery/crafts-painted-tote-bags.jpg', capKey: 'gal.totes' },
+      { src: 'classes/class-sensory-watercolor.webp', capKey: 'gal.sensory' },
+      { src: 'classes/autumn-nature-crafts.webp', capKey: 'gal.autumn' },
+      { src: 'classes/playroom-window-tables.webp', capKey: 'gal.playroom' },
+      { src: 'classes/class-wooden-blocks.webp', capKey: 'gal.blocks' },
     ] },
     { id: 'shkola', titleKey: 'gal.cat.shkola', videos: [], photos: [
       { src: 'classes/class-reading-book.webp', capKey: 'gal.reading' },
-      { src: 'classes/class-desks-lesson.webp', capKey: 'gal.desks' },
     ] },
     { id: 'prodlenka', titleKey: 'programs.afterschool.title', photos: [], videos: [] },
     { id: 'skorochtenie', titleKey: 'programs.speedread.title', photos: [], videos: [] },

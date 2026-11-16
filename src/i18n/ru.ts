@@ -204,6 +204,9 @@ export const ru = {
   'find.mapAlt': "Карта: Unique kids, Кабанбай батыра 58а к1, рядом EXPO Boulevard",
   'find.hours': "Пн–пт 09:00–18:30, сб–вс выходной",
   'gal.desks': "Дети за партами",
+  'gal.sensory': "Сенсорное занятие: пипетки и краски",
+  'gal.autumn': "Осенние поделки из шишек и листьев",
+  'gal.playroom': "Игровая у окна",
 } as const;
 
 export type DictKey = keyof typeof ru;
