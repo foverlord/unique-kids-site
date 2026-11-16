@@ -7,7 +7,7 @@ import { t } from '../i18n';
 // art/v3: программа в группе, если её возраст пересекает диапазон группы
 const inBucket = (p: { ageFrom: number; ageTo: number }, b: { ageFrom: number; ageTo: number }) => p.ageFrom <= b.ageTo && p.ageTo >= b.ageFrom;
 const buckets = site.ageBuckets.map((b) => ({ ...b, ids: b.id === 'all' ? '*' : site.programs.filter((p) => inBucket(p, b)).map((p) => p.id).join(',') }));
-const order = ['3-5', '5-7', '7plus', 'all'];
+const order = ['all', '3-5', '5-7', '7plus']; // Кэп 16.11: «Все» первой и выбрана по умолчанию
 buckets.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
 const def = site.defaultAgeBucket ?? 'all';
 ---
