@@ -43,13 +43,13 @@ const variants: V[] = [
 // позиции барса по состояниям: [x центра, верх]
 // состояние → [сдвиг барса x, y, x кружка под цифрой, поза, цвет] в единицах макета от начала сцены
 const pose = [3, 3, 5, 6, 7];
+// 16.11 (Кэп/Арт): цифры — белые кнопки прямо на линии, барс стоит над кнопкой
+const LIFT = 26;
 const pos = (v: V) => Object.fromEntries([
-  ...v.tx.map((x, i) => [String(3 + i), [x - v.X0 - v.cubW / 2, v.line - v.cubH - v.Y0, x - v.X0 - v.dot - 4, pose[i], colors[i]]]),
+  ...v.tx.map((x, i) => [String(3 + i), [x - v.X0 - v.cubW / 2, v.line - v.cubH - v.Y0 - LIFT, x - v.X0 - v.dot - 4, pose[i], colors[i]]]),
   ['school', [v.school[0] - v.X0 - v.cubW / 2, v.school[1] - v.cubH - v.Y0, -999, 7, 'blue']],
 ]);
 const u = (n: number) => `calc(var(--u) * ${n})`;
-const bandLabel: Record<string, string> = { '3-5': 'ages.3_5', '5-7': 'ages.5_7', '7plus': 'ages.7plus' };
-const bandColor: Record<string, string> = { '3-5': 'pink', '5-7': 'mint', '7plus': 'blue' };
 ---
 <section class="hero3" aria-labelledby="h1" data-hero data-age="3">
   <svg class="h3-sun" aria-hidden="true" width="56" height="56" viewBox="-28 -28 56 56" filter="url(#pencil)"><circle r="11" fill="var(--yellow)" class="doo" stroke="var(--yellow-d)"/><path class="doo" stroke="var(--yellow-d)" d="M0-18v-6M0 18v6M-18 0h-6M18 0h6M-13-13l-4-4M13 13l4 4M13-13l4-4M-13 13l-4 4"/></svg>
@@ -75,7 +75,7 @@ const bandColor: Record<string, string> = { '3-5': 'pink', '5-7': 'mint', '7plus
         </div>
       )}
       <div class="h3-cta" id="cta"><WhatsAppButton place="hero" ariaKey="cta.trialAria" class="btn-big btn-wa3" /></div>
-      <T as="p" k="hero.ask" class="h3-ask" />
+      <T as="p" k={'hero.askTap' as any} class="h3-ask" />
     </div>
     <div class="age6" role="group" aria-labelledby="a6-ask">
       <div class="a6-cub" aria-hidden="true" data-pose="3">
@@ -102,17 +102,11 @@ const bandColor: Record<string, string> = { '3-5': 'pink', '5-7': 'mint', '7plus
         </svg>
         <svg class="st-dot" aria-hidden="true" viewBox="0 0 46 46" filter="url(#crayon)" style={`width:${u(v.dot * 2 + 8)};height:${u(v.dot * 2 + 8)};top:${u(v.num - v.Y0 - v.dot - 4)};--dx:${v.tx[0] - v.X0 - v.dot - 4}`}><circle cx="23" cy="23" r="19" /></svg>
         {v.tx.map((x, i) => (
-          <button type="button" class="st-num" data-set-age={3 + i} style={`left:${u(x - v.X0 - 22)};top:${u(v.num - v.Y0 - 22)};font-size:${u(v.numF)}`}
+          <button type="button" class="st-num" data-set-age={3 + i} style={`left:${u(x - v.X0 - 30)};top:${u(v.line - v.Y0 - 24)};font-size:${u(v.numF)};--bc:var(--${colors[i]})`} aria-pressed="false"
             aria-label={t('hero.tickAria', { age: 3 + i })} data-i18n-attr="aria-label=hero.tickAria" data-i18n-vars={JSON.stringify({ age: 3 + i })}>{3 + i}</button>
         ))}
         <button type="button" class="st-chip" data-set-age="school" style={`left:${u(v.chip[0] - v.X0)};top:${u(v.chip[1] - v.Y0)};font-size:${u(v.chipF)}`}><T k="hero.school" /></button>
-        {v.bands.map(([b, x1, x2]) => (
-          <button type="button" class="st-band" data-set-band={b} style={`left:${u(x1 - v.X0)};top:${u(v.bandY - v.Y0)};width:${u(x2 - x1)};height:${u(v.bandH)};font-size:${u(v.bandF)}`}>
-            <svg aria-hidden="true" viewBox={`0 0 ${x2 - x1} ${v.bandH}`} preserveAspectRatio="none" filter="url(#crayon)"><rect x="3" y="3" width={x2 - x1 - 6} height={v.bandH - 6} rx={(v.bandH - 6) / 2} fill={`var(--${bandColor[b]})`} /></svg>
-            <T k={bandLabel[b] as any} />
-          </button>
-        ))}
-        <div class="st-cubs" aria-hidden="true" style={`width:${u(v.cubW)};height:${u(v.cubH)};--cx:${v.tx[0] - v.X0 - v.cubW / 2};--cy:${v.line - v.cubH - v.Y0}`}>
+        <div class="st-cubs" aria-hidden="true" style={`width:${u(v.cubW)};height:${u(v.cubH)};--cx:${v.tx[0] - v.X0 - v.cubW / 2};--cy:${v.line - v.cubH - v.Y0 - LIFT}`}>
           {cubs.map((c) => <img class={`p${c.p}`} src={c.src.src} width={c.src.width} height={c.src.height} alt="" loading="eager" decoding="async" />)}
         </div>
       </div>

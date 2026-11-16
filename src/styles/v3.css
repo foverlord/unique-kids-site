@@ -242,3 +242,27 @@ html { overflow-x: clip }
 @media (min-width: 1024px) {
   .h3-trio .f1, .h3-trio .f3, .h3-trio .f2 { aspect-ratio: auto }
 }
+/* ---- 16.11: ростомер — цифры как кнопки (Кэп/Арт) ---- */
+.st-d .st-num { width: calc(var(--u) * 60); height: max(48px, calc(var(--u) * 48)); background: #fff; border: 2px solid var(--color-ink); box-shadow: 0 3px 0 var(--color-ink); font-family: var(--B); font-weight: 700; transition: transform .12s, box-shadow .12s, background .15s }
+.st-d .st-num:hover { transform: translateY(-2px); box-shadow: 0 5px 0 var(--color-ink) }
+.st-d .st-num:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--color-ink) }
+.st-d .st-num[aria-pressed="true"] { background: var(--bc, var(--pink)); font-weight: 800 }
+.st-d .st-dot { display: none }
+.st-d .st-chip { min-height: 48px; padding: 0 1.1em; background: #fff; border: 2px solid var(--color-ink); box-shadow: 0 3px 0 var(--color-ink); transition: transform .12s, box-shadow .12s, background .15s }
+.st-d .st-chip:hover { transform: translateY(-2px); box-shadow: 0 5px 0 var(--color-ink) }
+.st-d .st-chip[aria-pressed="true"] { background: var(--blue) }
+@media (prefers-reduced-motion: reduce) { .st-d .st-num, .st-d .st-chip { transition: none } .st-d .st-num:hover, .st-d .st-chip:hover { transform: none } }
+/* ---- 16.11: «Коротко о центре» на всю ширину с фото ---- */
+.about-full { padding: 0 !important; position: relative; background: var(--color-bg) }
+.about-bg { position: relative; height: 230px; margin: 0; overflow: hidden }
+.about-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 45%; display: block }
+.about-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(60,40,20,.05), rgba(60,40,20,.28)) }
+.about-card { position: relative; z-index: 2; background: var(--color-bg); border-radius: 18px; padding: 22px 18px 24px; margin: -28px 12px 0; box-shadow: 0 8px 24px rgba(43,38,32,.10) }
+@media (min-width: 1024px) {
+  .about-full { min-height: 480px; display: flex; align-items: center; padding: 56px 0 !important }
+  .about-bg { position: absolute; inset: 0; height: auto }
+  .about-bg::after { background: linear-gradient(90deg, rgba(60,40,20,.35), rgba(60,40,20,.12) 60%, rgba(60,40,20,.05)) }
+  .about-full .wrap { position: relative; z-index: 2; width: 100% }
+  .about-card { margin: 0; max-width: 600px; padding: 32px 32px 30px }
+}
+.about-full > .doodle { display: none }

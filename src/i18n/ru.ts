@@ -207,6 +207,7 @@ export const ru = {
   'gal.sensory': "Сенсорное занятие: пипетки и краски",
   'gal.autumn': "Осенние поделки из шишек и листьев",
   'gal.playroom': "Игровая у окна",
+  'hero.askTap': "Нажмите на возраст ребёнка",
 } as const;
 
 export type DictKey = keyof typeof ru;
