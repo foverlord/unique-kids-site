@@ -1,22 +1,17 @@
 ---
 import type { Program } from '../config/types';
-import { site } from '../config/site.config';
 import { waUrl } from '../scripts/wa';
 import { t } from '../i18n';
 import T from './T.astro';
 interface Props { p: Program; i: number }
 const { p, i } = Astro.props;
-// Цвет младшей группы, в которую программа попадает. Диапазоны — те же, что у фильтра.
-const toneOf: Record<string, string> = { '3-5': 'pink', '5-7': 'mint', '7plus': 'blue' };
-const group = ['3-5', '5-7', '7plus'].find((id) => {
-  const b = site.ageBuckets.find((x) => x.id === id);
-  return !!b && p.ageFrom <= b.ageTo && p.ageTo >= b.ageFrom;
-});
-const tone = toneOf[group ?? '3-5'];
+// v4: цвет плашки не зависит от возраста (art/v4/SPEC.md §2); возраст — только чип.
+const tone = p.tone ?? 'mint';
+const tape = p.tape ?? 'yellow';
 ---
 <article class="prog3 patch patch--long" style={`--c:var(--${tone});--cd:var(--${tone}-d)`} data-prog={p.id} data-from={p.ageFrom} data-to={p.ageTo} data-spot={p.spot ? `/spots/${p.spot}` : ''}>
   <svg class="pbg" aria-hidden="true" filter="url(#crayon)"><rect x="6" y="6" rx="10" style="width:calc(100% - 12px);height:calc(100% - 12px)" /></svg>
-  <i class:list={['tape', { r: i % 2 }]}></i>
+  <i class:list={['tape', { r: i % 2 }]} style={`--t:var(--${tape})`}></i>
   {p.spot && <img src={`/spots/${p.spot}`} width="56" height="56" alt="" loading="lazy" />}
   <T as="h3" k={p.titleKey as any} />
   {p.ageKey ? <T k={p.ageKey as any} class="age" /> : <T k="programs.age" vars={{ from: p.ageFrom, to: p.ageTo }} class="age" />}

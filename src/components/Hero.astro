@@ -12,8 +12,12 @@ import c5 from '../assets/cub/bars-5.webp';
 import c6 from '../assets/cub/bars-6.webp';
 import c7 from '../assets/cub/bars-7.webp';
 const files = import.meta.glob<{ default: ImageMetadata }>('../assets/images/**/*.{jpg,jpeg,png,webp}', { eager: true });
-const photoSrc = site.hero.photo ? Object.entries(files).find(([k]) => k.endsWith('/images/' + site.hero.photo))?.[1].default : undefined;
-const photo = photoSrc ? await getImage({ src: photoSrc, width: 840, height: 560, fit: 'cover', format: 'webp', quality: 74 }) : undefined;
+// v4: три фото без подписей (art/v4/SPEC.md §1)
+const photos = await Promise.all((site.hero.photos ?? []).map(async (ph) => {
+  const src = Object.entries(files).find(([k]) => k.endsWith('/images/' + ph.file))?.[1].default;
+  return src ? { ...ph, img: await getImage({ src, width: 440, height: 560, fit: 'cover', format: 'webp', quality: 72 }) } : undefined;
+})).then((a) => a.filter((x) => !!x));
+const tapes = ['pink', 'mint', 'yellow'];
 const r = site.rating;
 const value = r ? r.value.toFixed(1).replace('.', ',') : '';
 const cubs = [{ p: 3, src: c3 }, { p: 5, src: c5 }, { p: 6, src: c6 }, { p: 7, src: c7 }];
@@ -60,12 +64,15 @@ const bandColor: Record<string, string> = { '3-5': 'pink', '5-7': 'mint', '7plus
           </a>
         )}
       </div>
-      {photo && (
-        <figure class="frame h3-photo">
-          <span class="tape" style="background:var(--pink)"></span>
-          <img src={photo.src} alt={t(site.hero.photoCapKey as any)} data-i18n-attr={`alt=${site.hero.photoCapKey}`} width="420" height="280" fetchpriority="high" decoding="async" />
-          <T as="figcaption" k={site.hero.photoCapKey as any} class="cap" />
-        </figure>
+      {photos.length > 0 && (
+        <div class="h3-trio">
+          {photos.map((ph, i) => (
+            <figure class:list={['frame', `f${i + 1}`]}>
+              <span class="tape" style={`background:var(--${tapes[i % 3]})`}></span>
+              <img src={ph.img.src} alt={t(ph.altKey as any)} data-i18n-attr={`alt=${ph.altKey}`} width="220" height="280" style={`object-position:${ph.pos}`} fetchpriority={i === 1 ? 'high' : 'auto'} decoding="async" />
+            </figure>
+          ))}
+        </div>
       )}
       <div class="h3-cta" id="cta"><WhatsAppButton place="hero" ariaKey="cta.trialAria" class="btn-big btn-wa3" /></div>
       <T as="p" k="hero.ask" class="h3-ask" />

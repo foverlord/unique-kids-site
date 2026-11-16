@@ -179,8 +179,8 @@ export const ru = {
   'trial.programAny': "Подскажите, что подойдёт",
   'trial.placeholder': "Например, Айгуль",
   'find.title': "Как нас найти",
-  'find.cap': "Вход под козырьком с вывеской «Unique kids»",
-  'find.open': "Открыть в 2ГИС →",
+  'find.cap': "Вывеска Unique kids, Кабанбай батыра 58а к1",
+  'find.open': "Открыть в 2ГИС",
   'find.meta': "Есиль, Астана · пн–пт 09:00–18:30, сб–вс выходной",
   'facts.hours': "Пн–пт 09:00–18:30",
   'facts.hoursOff': ", сб–вс выходной",
@@ -196,6 +196,13 @@ export const ru = {
   'facts.addr': "Кабанбай батыра 58а к1",
   'programs.forSchool': "Для школьников — вот что подойдёт",
   'programs.showFor': "Показать для возраста:",
+  'hero.ph1': "Ребёнок расписывает шопер",
+  'hero.ph2': "Занятие с поделками в кабинете",
+  'hero.ph3': "Дети за партами",
+  'find.route': "Построить маршрут",
+  'find.osm': "© OpenStreetMap",
+  'find.mapAlt': "Карта: Unique kids, Кабанбай батыра 58а к1, рядом EXPO Boulevard",
+  'find.hours': "Пн–пт 09:00–18:30, сб–вс выходной",
 } as const;
 
 export type DictKey = keyof typeof ru;

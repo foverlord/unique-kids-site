@@ -2,6 +2,7 @@ export type Locale = 'ru' | 'kk';
 export type NavItem = { href: string; labelKey: string };
 export type AgeBucket = { id: string; labelKey: string; ageFrom: number; ageTo: number; programIds: string[] };
 export type Program = {
+  /** цвет плашки и скотча (v4, art/v4/SPEC.md §2) */ tone?: string; tape?: string;
   id: string; slug: string; titleKey: string; summaryKey: string;
   ageFrom: number; ageTo: number;
   /** свой текст возраста вместо «от–до» (например, TODO) */ ageKey?: string; /** файл в public/spots/ */ spot?: string;
@@ -29,9 +30,9 @@ export type SiteConfig = {
   rating?: { value: number; count: number; source: '2gis'; url: string; asOf: string };
   logo?: string; defaultLocale: Locale; colors: Colors; fonts: { heading: string; body: string };
   nav: NavItem[]; trustBar: TrustItem[];
-  hero: { /** фото в рамке на десктопе, путь от src/assets/images/ */ photo?: string; photoCapKey?: string };
+  hero: { /** три фото в рамках (v4), путь от src/assets/images/ */ photos?: { file: string; altKey: string; pos: string }[] };
   about: { image?: string };
-  /** «Как нас найти»: фото входа, путь от src/assets/images/ */ find?: { photo: string; capKey: string };
+  /** «Как нас найти»: фото входа, путь от src/assets/images/ */ find?: { photo: string; capKey: string; map?: string; routeUrl?: string };
   ageBuckets: AgeBucket[]; defaultAgeBucket?: string;
   programs: Program[]; teachers: Teacher[]; reviews: Review[]; gallery: GalleryCategory[];
   priceGroups: PriceGroup[];

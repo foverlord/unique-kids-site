@@ -35,9 +35,13 @@ export const site: SiteConfig = {
     { icon: 'clock', labelKey: 'trust.hours' },
     { icon: 'pin', labelKey: 'trust.address' },
   ],
-  hero: { photo: 'classes/class-drawing-sun-pictures.webp', photoCapKey: 'gal.sun' },
+  hero: { photos: [
+    { file: 'classes/class-painting-strawberry-tote.webp', altKey: 'hero.ph1', pos: 'center 42%' },
+    { file: 'classes/class-paper-crafts-tables.webp', altKey: 'hero.ph2', pos: 'center 62%' },
+    { file: 'classes/class-desks-lesson.webp', altKey: 'hero.ph3', pos: 'center 55%' },
+  ] },
   about: {},
-  find: { photo: 'place/entrance-door-canopy.webp', capKey: 'find.cap' },
+  find: { photo: 'place/facade-entrance-eye-level.webp', capKey: 'find.cap', map: 'place/map-osm.webp', routeUrl: 'https://2gis.kz/astana/directions/to/71.407931,51.096367' },
   // Возраст v3 (DECISIONS.md 13.11 13:25): центр 3–10. Подтверждено отзывами: школа 5–7, продлёнка и лагерь 7+.
   // TODO: возраст логопеда, клубов, скорочтения, арифметики и робототехники — наш вариант, уточнить у директора.
   ageBuckets: [
@@ -48,14 +52,14 @@ export const site: SiteConfig = {
     { id: '7plus', labelKey: 'ages.7plus', ageFrom: 8, ageTo: 10, programIds: [] },
   ],
   programs: [
-    { id: 'school', slug: 'podgotovka-k-shkole', titleKey: 'programs.school.title', summaryKey: 'programs.school.summary', ageFrom: 5, ageTo: 7, spot: 'backpack.svg' },
-    { id: 'afterschool', slug: 'prodlyonka', titleKey: 'programs.afterschool.title', summaryKey: 'programs.afterschool.summary', ageFrom: 7, ageTo: 10, ageKey: 'programs.age7plus', spot: 'house.svg' },
-    { id: 'camp', slug: 'letniy-lager', titleKey: 'programs.camp.title', summaryKey: 'programs.camp.summary', ageFrom: 7, ageTo: 10, ageKey: 'programs.age7plus', spot: 'sun.svg' },
-    { id: 'logoped', slug: 'logoped', titleKey: 'programs.logoped.title', summaryKey: 'programs.logoped.summary', ageFrom: 3, ageTo: 7, spot: 'speech.svg' },
-    { id: 'speedread', slug: 'skorochtenie', titleKey: 'programs.speedread.title', summaryKey: 'programs.speedread.summary', ageFrom: 5, ageTo: 10, spot: 'book.svg' },
-    { id: 'mental', slug: 'mentalnaya-arifmetika', titleKey: 'programs.mental.title', summaryKey: 'programs.mental.summary', ageFrom: 5, ageTo: 10, spot: 'abacus.svg' },
-    { id: 'robotics', slug: 'robototehnika', titleKey: 'programs.robotics.title', summaryKey: 'programs.robotics.summary', ageFrom: 7, ageTo: 10, spot: 'robot.svg' },
-    { id: 'sport', slug: 'kluby', titleKey: 'programs.sport.title', summaryKey: 'programs.sport.summary', ageFrom: 3, ageTo: 10, spot: 'club.svg' },
+    { id: 'school', tone: 'blue', tape: 'yellow', slug: 'podgotovka-k-shkole', titleKey: 'programs.school.title', summaryKey: 'programs.school.summary', ageFrom: 5, ageTo: 7, spot: 'backpack.svg' },
+    { id: 'afterschool', tone: 'mint', tape: 'pink', slug: 'prodlyonka', titleKey: 'programs.afterschool.title', summaryKey: 'programs.afterschool.summary', ageFrom: 7, ageTo: 10, ageKey: 'programs.age7plus', spot: 'house.svg' },
+    { id: 'camp', tone: 'yellow', tape: 'lilac', slug: 'letniy-lager', titleKey: 'programs.camp.title', summaryKey: 'programs.camp.summary', ageFrom: 7, ageTo: 10, ageKey: 'programs.age7plus', spot: 'sun.svg' },
+    { id: 'logoped', tone: 'pink', tape: 'mint', slug: 'logoped', titleKey: 'programs.logoped.title', summaryKey: 'programs.logoped.summary', ageFrom: 3, ageTo: 7, spot: 'speech.svg' },
+    { id: 'speedread', tone: 'lilac', tape: 'blue', slug: 'skorochtenie', titleKey: 'programs.speedread.title', summaryKey: 'programs.speedread.summary', ageFrom: 5, ageTo: 10, spot: 'book.svg' },
+    { id: 'mental', tone: 'blue', tape: 'yellow', slug: 'mentalnaya-arifmetika', titleKey: 'programs.mental.title', summaryKey: 'programs.mental.summary', ageFrom: 5, ageTo: 10, spot: 'abacus.svg' },
+    { id: 'robotics', tone: 'pink', tape: 'mint', slug: 'robototehnika', titleKey: 'programs.robotics.title', summaryKey: 'programs.robotics.summary', ageFrom: 7, ageTo: 10, spot: 'robot.svg' },
+    { id: 'sport', tone: 'mint', tape: 'yellow', slug: 'kluby', titleKey: 'programs.sport.title', summaryKey: 'programs.sport.summary', ageFrom: 3, ageTo: 10, spot: 'club.svg' },
   ],
   // «Наши апай»: имена только из отзывов 2ГИС. TODO: подтвердить у центра, фото нет — инициалы.
   teachers: [
