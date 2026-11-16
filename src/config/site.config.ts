@@ -91,7 +91,7 @@ export const site: SiteConfig = {
     ] },
     { id: 'shkola', titleKey: 'gal.cat.shkola', videos: [], photos: [
       { src: 'classes/class-reading-book.webp', capKey: 'gal.reading' },
-      { src: 'classes/class-wooden-blocks.webp', capKey: 'gal.blocks' },
+      { src: 'classes/class-desks-lesson.webp', capKey: 'gal.desks' },
     ] },
     { id: 'prodlenka', titleKey: 'programs.afterschool.title', photos: [], videos: [] },
     { id: 'skorochtenie', titleKey: 'programs.speedread.title', photos: [], videos: [] },

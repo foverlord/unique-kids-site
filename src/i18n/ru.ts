@@ -203,6 +203,7 @@ export const ru = {
   'find.osm': "© OpenStreetMap",
   'find.mapAlt': "Карта: Unique kids, Кабанбай батыра 58а к1, рядом EXPO Boulevard",
   'find.hours': "Пн–пт 09:00–18:30, сб–вс выходной",
+  'gal.desks': "Дети за партами",
 } as const;
 
 export type DictKey = keyof typeof ru;

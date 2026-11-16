@@ -23,7 +23,7 @@ html { overflow-x: clip }
 .tabs3-l + .tabs3 { margin-top: 8px }
 .hero3 { position: relative; overflow: hidden; padding: 8px 0 20px }
 .h3-sun { position: absolute; right: 14px; top: 10px; pointer-events: none }
-.h3-grid { display: grid; grid-template-areas: "t" "p" "c" "a"; position: relative; z-index: 2 }
+.h3-grid { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-areas: "t" "p" "c" "a"; position: relative; z-index: 2 }
 .h3-text { grid-area: t }
 .h3-photo { grid-area: p; width: min(334px, 100%); aspect-ratio: 334 / 212; margin: 22px auto 0; transform: rotate(-1.5deg) }
 .h3-cta { grid-area: c; margin-top: 18px }
@@ -213,13 +213,14 @@ html { overflow-x: clip }
 }
 
 /* ---- v4 (art/v4/SPEC.md) ---- */
+/* до 389px кластер сжимается пропорционально (P2 Критика, 360×740) */
 :root { --lilac: #CDBEEB; --lilac-d: #9A84C8 }
-.h3-trio { grid-area: p; display: flex; justify-content: center; align-items: flex-end; height: 186px; margin: 14px -8px 0; position: relative; z-index: 2 }
+.h3-trio { grid-area: p; display: flex; justify-content: center; align-items: flex-end; min-height: 0; margin: 14px -8px 0; position: relative; z-index: 2 }
 .h3-trio .frame { flex: none; position: relative; padding: 6px; margin: 0 }
 .h3-trio img { width: 100%; height: 100%; object-fit: cover; display: block }
-.h3-trio .f1 { width: 132px; height: 158px; transform: rotate(-3deg); z-index: 2; margin-right: -22px }
-.h3-trio .f2 { width: 150px; height: 176px; transform: rotate(1.5deg); z-index: 3 }
-.h3-trio .f3 { width: 132px; height: 158px; transform: rotate(3deg); z-index: 2; margin-left: -22px }
+.h3-trio .f1 { width: min(132px, 35%); height: auto; aspect-ratio: 132 / 158; transform: rotate(-3deg); z-index: 2; margin-right: -6% }
+.h3-trio .f2 { width: min(150px, 40%); height: auto; aspect-ratio: 150 / 176; transform: rotate(1.5deg); z-index: 3 }
+.h3-trio .f3 { width: min(132px, 35%); height: auto; aspect-ratio: 132 / 158; transform: rotate(3deg); z-index: 2; margin-left: -6% }
 .find-photo { aspect-ratio: auto }
 .find-photo img { width: 100%; height: 248px; object-fit: cover }
 .find-map { margin: 0 0 14px; border: 1.5px solid var(--color-line); border-radius: 12px; overflow: hidden; background: #fff; max-width: 520px }
@@ -232,4 +233,12 @@ html { overflow-x: clip }
   .h3-trio .f2 { width: 220px; height: 280px }
   .h3-trio .f3 { width: 200px; height: 250px; margin-left: -28px }
   .find-photo img { height: 340px; object-position: center 30% }
+}
+@media (max-width: 389px) {
+  .h3-trio { margin: 14px 0 0 }
+  .hero3 .h3-sun { transform: scale(.72); transform-origin: top right; right: 6px; top: 4px }
+  .hero3 .kicker { padding-right: 34px; font-size: 13px; letter-spacing: -.01em }
+}
+@media (min-width: 1024px) {
+  .h3-trio .f1, .h3-trio .f3, .h3-trio .f2 { aspect-ratio: auto }
 }
