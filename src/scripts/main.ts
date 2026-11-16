@@ -280,17 +280,12 @@ if ('IntersectionObserver' in window) {
 
 addEventListener('resize', () => { if (hero) moveCub(hero.dataset.age || '3', false); }, { passive: true });
 
-/* ---------- v5: «Коротко о центре» — фон из 4 фото, смена каждые 6 с ---------- */
+/* ---------- v5: «Коротко о центре» — видео-фон; при reduced motion только обложка ---------- */
 {
-  const box = document.querySelector<HTMLElement>('[data-about-bg]');
-  if (box && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const imgs = $$<HTMLImageElement>('img', box); const dots = $$('.about-dots i', box);
-    let i = 0, timer = 0;
-    const tick = () => { i = (i + 1) % imgs.length; imgs.forEach((im, j) => im.classList.toggle('on', j === i)); dots.forEach((d, j) => d.classList.toggle('on', j === i)); };
-    // крутим только пока блок на экране; остальные фото грузятся при подходе к блоку
-    new IntersectionObserver(([e]) => {
-      if (e.isIntersecting && !timer) { imgs.forEach((im) => (im.loading = 'eager')); timer = window.setInterval(tick, 6000); }
-      else if (!e.isIntersecting && timer) { clearInterval(timer); timer = 0; }
-    }, { rootMargin: '200px' }).observe(box);
+  const v = document.querySelector<HTMLVideoElement>('[data-about-bg] video');
+  if (v) {
+    const rm = matchMedia('(prefers-reduced-motion: reduce)');
+    const apply = () => { if (rm.matches) { v.pause(); v.removeAttribute('autoplay'); v.preload = 'none'; } else { v.muted = true; v.play().catch(() => {}); } };
+    apply(); rm.addEventListener('change', apply);
   }
 }

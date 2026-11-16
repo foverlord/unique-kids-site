@@ -314,3 +314,9 @@ html { overflow-x: clip }
 }
 /* ---- P3 Критика: вкладки галереи на 360 в две строки ---- */
 @media (max-width: 419px) { [role="tablist"].tabs { flex-wrap: wrap; overflow: visible } }
+
+/* v5 video (16.11): видео поверх обложки, затемнение и карточка как были */
+.about-bg video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 45%; display: block; pointer-events: none }
+.about-bg img.on { position: relative }
+@media (min-width: 1024px) { .about-bg img.on { position: absolute } }
+@media (prefers-reduced-motion: reduce) { .about-bg video { display: none } }

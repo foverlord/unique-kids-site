@@ -17,8 +17,12 @@ const value = r ? r.value.toFixed(1).replace('.', ',') : '';
 <section class="v3 sec3 about-full" id="o-centre" aria-labelledby="about-h">
   <svg class="doodle" style="--doo-r:10px;top:14px" aria-hidden="true" width="34" height="34" viewBox="-16 -20 34 34" filter="url(#pencil)"><path class="doo" stroke="var(--mint-d)" d="M0 0c-8-4-4-14 3-10s2 12-6 9-6-16 4-17 14 10 7 18"/></svg>
   <figure class="about-bg" aria-hidden="true" data-about-bg>
-    {bgs.map((b, i) => <img class:list={{ on: i === 0 }} src={b.d.src} srcset={`${b.m.src} 800w, ${b.d.src} 1600w`} sizes="100vw" alt="" loading="lazy" decoding="async" width="1600" height="1200" />)}
-    <span class="about-dots">{bgs.map((_, i) => <i class:list={{ on: i === 0 }}></i>)}</span>
+    <img class="on" src="/video/about-poster.jpg" alt="" loading="lazy" decoding="async" width="1280" height="720" />
+    <video class="about-vid" autoplay muted loop playsinline preload="metadata" poster="/video/about-poster.jpg" disablepictureinpicture tabindex="-1">
+      <source src="/video/about-854.mp4" type="video/mp4" media="(max-width: 767px)" />
+      <source src="/video/about-1280.webm" type="video/webm" />
+      <source src="/video/about-1280.mp4" type="video/mp4" />
+    </video>
   </figure>
   <div class="wrap">
    <div class="about-card">
