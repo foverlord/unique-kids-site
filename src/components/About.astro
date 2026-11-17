@@ -1,6 +1,10 @@
 ---
 import { site } from '../config/site.config';
 import T from './T.astro';
+import cub from '../assets/cub/bars-6.webp';
+import { Image } from 'astro:assets';
+// 17.11 (Амир + Кэп): одна фраза, 4 цифры, 5 направлений, карточка на скотче с барсом
+const dirs = [['logoped','pink','speech'],['school','blue','backpack'],['afterschool','mint','house'],['camp','yellow','sun'],['speedread','lilac','book']] as const;
 import { getImage } from 'astro:assets';
 import b1 from '../assets/images/classes/playroom-window-tables.webp';
 import b2 from '../assets/images/classes/autumn-nature-crafts.webp';
@@ -26,14 +30,21 @@ const value = r ? r.value.toFixed(1).replace('.', ',') : '';
   </figure>
   <div class="wrap">
    <div class="about-card">
+    <span class="tape" style="--t:var(--yellow)" aria-hidden="true"></span>
+    <Image class="about-cub" src={cub} alt="" aria-hidden="true" width={160} loading="lazy" />
     <T as="span" k={'about.tag' as any} class="about-tag" />
     <T as="h2" id="about-h" k="about.title" />
     <T as="p" k="about.text" class="about-t" />
-    <div class="facts">
-      <span class="chip"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2"/></svg><span><b><T k="facts.hours" /></b><T k="facts.hoursOff" /></span></span>
-      <span class="chip"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 22c-5-6-7-9.5-7-13a7 7 0 0 1 14 0c0 3.5-2 7-7 13z"/><circle cx="12" cy="9" r="2.5" /></svg><span><b><T k="facts.addr" /></b><T k="facts.city" /></span></span>
-      {r && <a class="chip" href={r.url} target="_blank" rel="noopener"><span style="color:var(--color-rating)" aria-hidden="true">★</span><span><b>{value}</b><T k="facts.count" vars={{ count: r.count }} /></span></a>}
-    </div>
+    <dl class="about-stats">
+      <div><dt><T k={'about.s1' as any} /></dt><dd><T k={'about.s1l' as any} /></dd></div>
+      <div><dt>{value}<span style="color:var(--color-rating)" aria-hidden="true"> ★</span></dt><dd>{r ? <a href={r.url} target="_blank" rel="noopener"><T k={'about.s2l' as any} vars={{ count: r.count }} /></a> : null}</dd></div>
+      <div><dt><T k={'about.s3' as any} /></dt><dd><T k={'about.s3l' as any} /></dd></div>
+      <div><dt><T k={'about.s4' as any} /></dt><dd><T k={'about.s4l' as any} /></dd></div>
+    </dl>
+    <ul class="about-dirs" role="list">
+      {dirs.map(([id, c, icon]) => <li><a class="about-dir" href={`#p-${id}`} data-dir={id} style={`--c:var(--${c})`}><img src={`/spots/${icon}.svg`} alt="" width="20" height="20" aria-hidden="true" /><T k={`about.dir.${id}` as any} /></a></li>)}
+    </ul>
+    <p class="about-addr"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 22c-5-6-7-9.5-7-13a7 7 0 0 1 14 0c0 3.5-2 7-7 13z"/><circle cx="12" cy="9" r="2.5" /></svg><span><b><T k="facts.addr" /></b><T k="facts.city" /></span></p>
    </div>
   </div>
 </section>

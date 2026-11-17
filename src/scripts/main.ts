@@ -295,3 +295,11 @@ addEventListener('resize', () => { if (hero) moveCub(hero.dataset.age || '3', fa
     apply(); rm.addEventListener('change', apply);
   }
 }
+
+/* 17.11: чипы направлений в «О центре» ведут к карточке; если фильтр её скрыл, включаем «Все» */
+document.addEventListener('click', (e) => {
+  const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[data-dir]');
+  if (!a) return;
+  const card = document.getElementById(`p-${a.dataset.dir}`);
+  if (card && (card.hidden || card.offsetParent === null)) document.querySelector<HTMLButtonElement>('[data-bucket="all"]')?.click();
+});

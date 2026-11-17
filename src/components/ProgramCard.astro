@@ -9,7 +9,7 @@ const { p, i } = Astro.props;
 const tone = p.tone ?? 'mint';
 const tape = p.tape ?? 'yellow';
 ---
-<article class="prog3 patch patch--long" style={`--c:var(--${tone});--cd:var(--${tone}-d)`} data-prog={p.id} data-from={p.ageFrom} data-to={p.ageTo} data-spot={p.spot ? `/spots/${p.spot}` : ''}>
+<article id={`p-${p.id}`} class="prog3 patch patch--long" style={`--c:var(--${tone});--cd:var(--${tone}-d)`} data-prog={p.id} data-from={p.ageFrom} data-to={p.ageTo} data-spot={p.spot ? `/spots/${p.spot}` : ''}>
   <svg class="pbg" aria-hidden="true" filter="url(#crayon)"><rect x="6" y="6" rx="10" style="width:calc(100% - 12px);height:calc(100% - 12px)" /></svg>
   <i class:list={['tape', { r: i % 2 }]} style={`--t:var(--${tape})`}></i>
   {p.spot && <img src={`/spots/${p.spot}`} width="56" height="56" alt="" loading="lazy" />}
