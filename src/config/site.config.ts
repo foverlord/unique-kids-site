@@ -96,11 +96,11 @@ export const site: SiteConfig = {
       { src: 'classes/nauryz-table.webp', capKey: 'gal.nauryz' },
       { src: 'classes/kid-strawberry-apron.webp', capKey: 'gal.apron' },
       { src: 'classes/class-floor-game.webp', capKey: 'gal.floor' },
+      { src: 'classes/class-shape-sorter.webp', capKey: 'gal.sorter' },
+      { src: 'classes/class-color-blocks.webp', capKey: 'gal.colorBlocks' },
     ] },
     { id: 'shkola', titleKey: 'gal.cat.shkola', videos: [], photos: [
       { src: 'classes/class-reading-book.webp', capKey: 'gal.reading' },
-      { src: 'classes/class-shape-sorter.webp', capKey: 'gal.sorter' },
-      { src: 'classes/class-color-blocks.webp', capKey: 'gal.colorBlocks' },
       { src: 'classes/class-globes.webp', capKey: 'gal.globes' },
       { src: 'classes/class-chess.webp', capKey: 'gal.chess' },
     ] },
