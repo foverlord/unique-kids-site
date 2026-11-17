@@ -226,6 +226,18 @@ export const ru = {
   'about.dir.afterschool': "Продлёнка",
   'about.dir.camp': "Лагерь",
   'about.dir.speedread': "Скорочтение",
+  'gal.cat.lager': "Лагерь",
+  'gal.watercolor': "Рисуем акварелью",
+  'gal.cooking': "Мастер-класс на кухне",
+  'gal.nauryz': "Праздничный стол на Наурыз",
+  'gal.apron': "В фартуке с клубникой",
+  'gal.floor': "Подвижная игра на ковре",
+  'gal.sorter': "Сортер: цвета и формы",
+  'gal.colorBlocks': "Строим из цветных кубиков",
+  'gal.globes': "Знакомимся с глобусом",
+  'gal.chess': "Играем в шахматы",
+  'gal.ropePark': "Верёвочный парк в лагере",
+  'gal.campGroup': "Отряд лагеря в касках",
 } as const;
 
 export type DictKey = keyof typeof ru;
