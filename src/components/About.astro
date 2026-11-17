@@ -1,8 +1,6 @@
 ---
 import { site } from '../config/site.config';
 import T from './T.astro';
-import cub from '../assets/cub/bars-6.webp';
-import { Image } from 'astro:assets';
 // 17.11 (Амир + Кэп): одна фраза, 4 цифры, 5 направлений, карточка на скотче с барсом
 const dirs = ['logoped','school','afterschool','camp','speedread'] as const;
 import { getImage } from 'astro:assets';
@@ -30,7 +28,6 @@ const value = r ? r.value.toFixed(1).replace('.', ',') : '';
   </figure>
   <div class="wrap">
    <div class="about-hold">
-    <Image class="about-cub" src={cub} alt="" aria-hidden="true" width={280} loading="lazy" />
    <div class="about-card">
     <span class="tape" style="--t:var(--yellow)" aria-hidden="true"></span>
     <T as="span" k={'about.tag' as any} class="about-tag" />
