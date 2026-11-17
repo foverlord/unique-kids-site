@@ -356,3 +356,22 @@ html { overflow-x: clip }
   .about-hold { width: 100%; max-width: 760px; margin: 0 }
   .about-hold .about-cub { z-index: 0; top: auto; right: -64px; bottom: -78px }
 }
+/* 17.11 (Арт v6): вторые меловые каракули по боковым полям */
+.duo3 { position: relative }
+.doodle--b { position: absolute; z-index: 0; pointer-events: none; opacity: .7; display: none }
+@media (max-width: 767px) {
+  .doodle--b.doodle--mob { display: block; right: 10px; bottom: 6px; top: auto; left: auto; transform: scale(.75) rotate(var(--rot)); transform-origin: bottom right }
+}
+@media (min-width: 1296px) {
+  .doodle--b { display: block; top: var(--top); transform: translateY(-50%) rotate(var(--rot)) }
+  .doodle--l { left: max(8px, calc((100% - 1200px) / 2 - 64px)) }
+  .doodle--r { right: max(8px, calc((100% - 1200px) / 2 - 64px)) }
+}
+/* 17.11 (Арт): барс поза 6, жёлтый скотч, −1,2°; на десктопе 140px за правым нижним углом, на треть ширины за краем, низ по низу карточки */
+@media (min-width: 1024px) {
+  .about-hold .about-card { transform: rotate(-1.2deg) }
+  .about-hold .about-cub { width: 140px; right: -47px; bottom: 0; z-index: 0 }
+}
+@media (min-width: 1296px) { .duo3 > .doodle--l { left: -40px } .duo3 > .doodle--r { right: -40px } }
+@media (min-width: 1024px) { .about-stats dt { font-size: 34px } .about-stats { gap: 12px 16px } }
+@media (min-width: 1024px) { .about-hold .about-cub { right: -92px } }

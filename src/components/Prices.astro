@@ -1,6 +1,7 @@
 ---
 import { site } from '../config/site.config';
 import T from './T.astro';
+import DoodleB from './DoodleB.astro';
 import WhatsAppButton from './WhatsAppButton.astro';
 const ICO: Record<string, string> = {
   food: '<path d="M8 22h24a12 12 0 0 1-24 0z"/><path d="M14 16c0-3 3-3 3-6M20 16c0-3 3-3 3-6M26 16c0-3 3-3 3-6"/>',
@@ -16,6 +17,7 @@ const blob = (c: string) => `<svg viewBox="0 0 42 42" aria-hidden="true" filter=
 const steps = [['prices.step1', 'mint'], ['prices.step2', 'yellow'], ['prices.step3', 'pink']];
 ---
 <section class="v3 sec3" id="ceny" aria-labelledby="price-h">
+    <DoodleB n={6} side="l" top={50} rot={8} size={1.5} />
   <svg class="doodle" style="--doo-r:6px;top:18px" aria-hidden="true" width="66" height="40" viewBox="-8 -12 66 40" filter="url(#pencil)"><path class="doo" stroke="var(--blue-d)" fill="#E6F1FB" d="M0 20c-10 0-14-12-4-16 0-12 16-14 20-5 6-8 20-4 19 6 10 1 10 15 0 15z"/></svg>
   <div class="wrap">
     <T as="h2" id="price-h" k="prices.title" />

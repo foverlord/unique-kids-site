@@ -146,7 +146,14 @@ function setAge(age: string) {
   $$<HTMLAnchorElement>('a[data-wa]').forEach((a) => (a.href = waHref(a.dataset.program)));
   showAge();
 }
-chips.forEach((c) => c.addEventListener('click', () => { filter(c); setAge(''); }));
+chips.forEach((c) => c.addEventListener('click', () => {
+  filter(c); setAge('');
+  // 17.11 (Кэп): «Все» снимает выбор возраста на ростомере
+  if (c.dataset.bucket === 'all') {
+    $$<HTMLElement>('.hero3 [data-set-age]').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    const h = document.querySelector<HTMLElement>('[data-r5-hint]'); if (h) h.textContent = '';
+  }
+}));
 
 /* ---------- отзывы: scroll-snap + кнопки и точки ---------- */
 const track_ = document.querySelector<HTMLElement>('[data-rev-track]');

@@ -1,6 +1,7 @@
 ---
 import { site } from '../config/site.config';
 import T from './T.astro';
+import DoodleB from './DoodleB.astro';
 import Icon from './Icon.astro';
 import { waUrl } from '../scripts/wa';
 import { t } from '../i18n';
@@ -9,6 +10,7 @@ const ages = [['3-5', 'ages.3_5'], ['5-7', 'ages.5_7'], ['7plus', 'ages.7plus']]
 ---
 {site.trial.enabled && (
   <section class="v3 sec3" id="probnoe" aria-labelledby="trial-h" data-trial>
+    <DoodleB n={7} side="l" top={55} rot={-8} size={1.3} mob />
     <div class="wrap">
       <form class="form3 sheet" data-trial-form action={waUrl('ru')} method="get" target="_blank">
         <T as="h2" id="trial-h" k="trial.title" />

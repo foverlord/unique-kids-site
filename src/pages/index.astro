@@ -5,6 +5,7 @@ import AgeCard from '../components/AgeCard.astro';
 import About from '../components/About.astro';
 import AgePrograms from '../components/AgePrograms.astro';
 import Teachers from '../components/Teachers.astro';
+import DoodleB from '../components/DoodleB.astro';
 import Prices from '../components/Prices.astro';
 import Reviews from '../components/Reviews.astro';
 import Gallery from '../components/Gallery.astro';
@@ -15,6 +16,6 @@ import ContactsMap from '../components/ContactsMap.astro';
 <!-- порядок секций — art/v3/SPEC.md §6; фото-блок после «Программ» -->
 <BaseLayout schema>
   <Hero /><AgeCard /><About /><AgePrograms /><Gallery />
-  <div class="duo3"><Day /><Teachers /></div>
+  <div class="duo3"><DoodleB n={4} side="l" top={40} rot={-5} size={1.4} /><DoodleB n={2} side="r" top={62} rot={6} size={1} mob /><Day /><Teachers /></div>
   <Prices /><Reviews /><TrialCta /><ContactsMap />
 </BaseLayout>

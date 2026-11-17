@@ -1,0 +1,17 @@
+---
+// 17.11 (Арт, art/v6/doodles.html): вторая меловая каракуля секции, в боковом поле за контейнером
+interface Props { n: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8; side: 'l' | 'r'; top: number; rot: number; size?: number; mob?: boolean }
+const { n, side, top, rot, size = 1, mob = false } = Astro.props;
+const D: Record<number, { w: number; h: number; vb: string; body: string }> = {
+  1: { w: 56, h: 28, vb: '-20 -10 40 20', body: '<path class="doo" stroke="var(--blue-d)" d="M-18 5l6-9 6 9 6-9 6 9 6-9 6 9"/>' },
+  2: { w: 54, h: 40, vb: '-20 -14 40 28', body: '<path class="doo" stroke="var(--pink-d)" d="M-17 9c6-14 20-17 30-6M8-6l6 3-2 6"/>' },
+  3: { w: 36, h: 34, vb: '-14 -13 28 26', body: '<path class="doo" stroke="var(--pink-d)" fill="var(--pink)" d="M0 11c-11-6-15-13-11-18 3-4 8-3 11 2 3-5 8-6 11-2 4 5 0 12-11 18z"/>' },
+  4: { w: 32, h: 36, vb: '-12 -14 24 28', body: '<path class="doo" stroke="var(--mint-d)" d="M-9 12L0-12l9 24M-5 3c3 1 7 1 10-1"/>' },
+  5: { w: 60, h: 22, vb: '-22 -8 44 16', body: '<path class="doo" stroke="var(--lilac-d)" d="M-20 2c4-9 8 9 12 0s8 9 12 0 8 9 12 0 8 9 12 0"/>' },
+  6: { w: 34, h: 34, vb: '-13 -13 26 26', body: '<path class="doo" stroke="var(--yellow-d)" d="M0-11v22M-11 0h22M-7-7l14 14M7-7l-14 14"/>' },
+  7: { w: 38, h: 38, vb: '-15 -15 30 30', body: '<g class="doo" stroke="var(--mint-d)" fill="var(--mint)"><circle cy="-8" r="5"/><circle cx="7.6" cy="-2.5" r="5"/><circle cx="4.7" cy="6.5" r="5"/><circle cx="-4.7" cy="6.5" r="5"/><circle cx="-7.6" cy="-2.5" r="5"/></g><circle r="3.6" fill="var(--yellow)" class="doo" stroke="var(--yellow-d)"/>' },
+  8: { w: 52, h: 30, vb: '-20 -12 40 22', body: '<path class="doo" stroke="var(--pink-d)" d="M-17 9a17 17 0 0 1 34 0"/><path class="doo" stroke="var(--yellow-d)" d="M-11.5 9a11.5 11.5 0 0 1 23 0"/><path class="doo" stroke="var(--blue-d)" d="M-6 9a6 6 0 0 1 12 0"/>' },
+};
+const d = D[n];
+---
+<svg class:list={['doodle--b', `doodle--${side}`, { 'doodle--mob': mob }]} style={`--top:${top}%;--rot:${rot}deg`} aria-hidden="true" focusable="false" width={Math.round(d.w * size)} height={Math.round(d.h * size)} viewBox={d.vb} filter="url(#pencil)" set:html={d.body} />

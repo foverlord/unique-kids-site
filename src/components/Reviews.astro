@@ -1,12 +1,14 @@
 ---
 import { site } from '../config/site.config';
 import T from './T.astro';
+import DoodleB from './DoodleB.astro';
 const r = site.rating;
 const list = site.reviews;
 const value = r ? r.value.toFixed(1).replace('.', ',') : '';
 ---
 {list.length > 0 && (
   <section class="v3 sec3" id="otzyvy" aria-labelledby="rev-h">
+    <DoodleB n={5} side="r" top={40} rot={-4} size={1} mob />
     <svg class="doodle" style="--doo-r:16px;top:22px" aria-hidden="true" width="30" height="30" viewBox="-14 -2 28 28" filter="url(#pencil)"><path class="doo" stroke="var(--pink-d)" fill="var(--pink)" d="M0 0l3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1z"/></svg>
     <div class="wrap">
       <T as="h2" id="rev-h" k="reviews.title" />
