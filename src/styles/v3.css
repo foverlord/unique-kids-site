@@ -321,34 +321,38 @@ html { overflow-x: clip }
 @media (min-width: 1024px) { .about-bg img.on { position: absolute } }
 @media (prefers-reduced-motion: reduce) { .about-bg video { display: none } }
 
-/* 17.11: «О центре» — листок на скотче, цифры, направления, барс */
-.about-card { transform: rotate(-1.2deg); padding-top: 26px }
-.about-card .tape { top: -9px; left: 38px; margin-left: 0 }
-.about-cub { position: absolute; right: 14px; top: -58px; width: 64px; height: auto; pointer-events: none; z-index: 3 }
-.about-t { font-size: 18px; line-height: 1.45 }
-.about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; margin: 18px 0 0 }
+/* 17.11: «О центре» по спецификации Арта (цифры и чипы по решению Кэпа) */
+.about-full { overflow-x: clip }
+.about-card { background: #FFFDF8; border-radius: 18px; box-shadow: 0 10px 24px rgba(43,38,32,.12); transform: rotate(-1deg); margin: -28px 16px 0; padding: 28px 20px 24px }
+.about-card .tape { top: -9px; left: 50%; margin-left: -29px }
+.about-cub { position: absolute; right: 10px; top: -78px; width: 88px; height: auto; pointer-events: none; z-index: 3 }
+.about-t { font: 400 16px/1.5 var(--B) }
+.about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 16px; margin: 20px 0 0 }
 .about-stats > div { min-width: 0 }
-.about-stats dt { font: 800 24px/1.1 var(--H); letter-spacing: -.01em }
-.about-stats dd { margin: 4px 0 0; font: 500 13px/1.35 var(--B); color: var(--color-ink-muted) }
+.about-stats dt { font: 800 30px/1.1 var(--H); color: var(--color-ink); white-space: nowrap }
+.about-stats dd { margin: 4px 0 0; font: 400 13px/1.35 var(--B); color: rgba(43,38,32,.7) }
 .about-stats dd a { color: inherit; text-decoration: underline; text-underline-offset: 2px }
-.about-dirs { list-style: none; padding: 0; margin: 18px 0 0; display: flex; flex-wrap: wrap; gap: 8px }
-.about-dir { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px 0 10px; border-radius: 999px; background: var(--c); color: var(--color-ink); font: 700 14px/1 var(--B); text-decoration: none; border: 1.5px solid rgba(43,38,32,.18); transition: transform .12s }
+.about-dirs { list-style: none; padding: 0; margin: 20px 0 0; display: flex; flex-wrap: wrap; gap: 8px }
+.about-dir { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 999px; background: var(--c); border: 1.5px solid var(--cd); color: var(--color-ink); font: 700 15px/1.2 var(--H); text-decoration: none; transition: transform .12s }
 .about-dir:hover { transform: translateY(-2px) }
 .about-dir:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 2px }
-.about-dir img { width: 20px; height: 20px }
-.about-addr { display: flex; align-items: center; gap: 6px; margin: 16px 0 0; font: 400 14px/1.4 var(--B) }
+@media (max-width: 359px) { .about-stats dt { font-size: 26px } }
 @media (min-width: 1024px) {
-  .about-card { max-width: 620px; padding: 38px 40px 32px }
-  .about-cub { right: -46px; top: auto; bottom: 24px; width: 92px }
-  .about-stats { grid-template-columns: repeat(4, auto); gap: 12px 26px }
-  .about-stats dt { font-size: 26px }
+  .about-full .wrap { display: flex; justify-content: center }
+  .about-card { width: 100%; max-width: 760px; margin: 0; padding: 40px 44px 36px; transform: rotate(-1.5deg); box-shadow: 0 10px 24px rgba(43,38,32,.12); isolation: auto }
+  .about-t { font-size: 18px }
+  .about-stats { grid-template-columns: repeat(4, max-content); justify-content: space-between; gap: 12px 20px }
+  .about-stats dt { font-size: 40px }
+  .about-stats dd { font-size: 14px; max-width: 170px }
+  .about-cub { top: auto; right: -84px; bottom: -34px; width: 140px; z-index: -1 }
 }
-@media (max-width: 389px) { .about-stats dt { font-size: 21px } .about-card { transform: rotate(-.8deg) } }
 @media (prefers-reduced-motion: reduce) { .about-dir { transition: none } .about-dir:hover { transform: none } }
+.about-hold { position: relative; margin: -28px 16px 0 }
+.about-hold .about-card { margin: 0; position: relative; z-index: 1 }
+.about-hold .about-cub { z-index: 2; top: -96px; right: 12px }
+@media (max-width: 419px) { .about-stats dt { font-size: 24px } }
+@media (max-width: 359px) { .about-stats dt { font-size: 22px } }
 @media (min-width: 1024px) {
-  .about-card { max-width: 680px }
-  .about-stats { grid-template-columns: repeat(4, max-content); gap: 12px 24px }
-  .about-stats dt { font-size: 24px; white-space: nowrap }
-  .about-stats dd { max-width: 150px }
-  .about-cub { right: -78px; bottom: 18px }
+  .about-hold { width: 100%; max-width: 760px; margin: 0 }
+  .about-hold .about-cub { z-index: 0; top: auto; right: -64px; bottom: -78px }
 }
