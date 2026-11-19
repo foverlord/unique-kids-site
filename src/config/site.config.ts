@@ -41,7 +41,7 @@ export const site: SiteConfig = {
     { file: 'classes/class-desks-lesson.webp', altKey: 'hero.ph3', pos: 'center 55%' },
   ] },
   about: {},
-  find: { photo: 'place/facade-entrance-eye-level.webp', capKey: 'find.cap', map: 'place/map-osm.webp', routeUrl: 'https://2gis.kz/astana/directions/to/71.407931,51.096367' },
+  find: { photo: 'place/facade-entrance-eye-level.webp', capKey: 'find.cap', map: 'place/map-osm.webp', routeUrl: 'https://2gis.kz/astana/directions/points/%7C71.407931%2C51.096367%3B70000001063764314' },
   // Возраст v3 (DECISIONS.md 13.11 13:25): центр 3–10. Подтверждено отзывами: школа 5–7, продлёнка и лагерь 7+.
   // TODO: возраст логопеда, клубов, скорочтения, арифметики и робототехники — наш вариант, уточнить у директора.
   ageBuckets: [
